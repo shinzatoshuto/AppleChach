@@ -38,6 +38,7 @@ int v[3] = { -1,0,1 };
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int ENEMY_MAX = 8;
+
 const int ITEM_MAX = 3;
 
 //自機の初期値
@@ -69,7 +70,8 @@ struct PLAYER {
 //自機
 struct PLAYER g_player;
 
-//敵機の構造体
+//敵機の
+
 struct ENEMY {
 	int flg;
 	int type;

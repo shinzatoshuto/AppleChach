@@ -9,8 +9,10 @@ public:
 	int img;
 	int point;
 	int speed;
+	int appleimgs[4] = {A};
+	int A, B, C, D;
 public:
-	void CreateApple();
+	int CreateApple();
 	void AppleControl();
 	int HitBoxPlayer();
 };

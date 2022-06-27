@@ -6,7 +6,7 @@ void APPLE::AppleControl() {
 	for (int i = 0; i < APPLE_MAX; i++) {
 		if (flg == TRUE) {
 			//“G‚Ì•\Ž¦
-			DrawRotaGraph(x, y, 1.0f, 0, img, TRUE, FALSE);
+			DrawGraph(x, y, img, TRUE);
 
 			//if (g_player.flg == FALSE) continue;
 

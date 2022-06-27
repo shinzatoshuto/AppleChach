@@ -1,38 +1,14 @@
 #include<DxLib.h>
 #define _USE_MATH_DEFINES
 #include<math.h>
+#include"apple.h"
+#include"hensuu.h"
 
 #define  RANKING_DATA  5
+APPLE apple;
+HENSUU hen;
 
-//変数の宣言
-int g_OldKey;
-int g_NowKey;
-int g_KeyFlg;
 
-int g_GameState = 0;
-
-int g_TitleImage;
-int g_Menu, g_Cone;
-
-int g_Score = 0;
-int g_Time = 0;
-
-int g_RankingImage;
-
-int g_Item[2];
-
-int g_WaitTime = 0;  //待ち時間
-int g_EndImage;
-
-int g_Mileage; //走行距離
-int g_EnemyCount1, g_EnemyCount2, g_EnemyCount3, g_EnemyCount4; //敵カウント
-int g_Teki[4]; //キャラ画像変数
-
-int g_StageImage;
-
-int g_Car, g_Barrier;
-int g_Back = 0;
-int v[3] = { -1,0,1 };
 
 //定数の宣言
 const int SCREEN_WIDTH = 640;
@@ -113,13 +89,13 @@ void SortRanking(void);
 int SaveRanking(void);
 int ReadRanking(void);
 
-void ItemControl();
-int CreateItem();
+//void ItemControl();
+//int CreateItem();
 
 void EnemyControl(); //敵機処理
 int CreateEnemy(); //敵機生成処理
 
-void BackScrool();//背景画像スクロール処理
+//void BackScrool();//背景画像スクロール処理
 
 int LoadImages();
 void PlayerControl();
@@ -138,15 +114,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 
 
 	//ゲームループ
-	while (ProcessMessage() == 0 && g_GameState != 99 && !(g_KeyFlg & PAD_INPUT_START))
+	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_START))
 	{
-		g_OldKey = g_NowKey;
-		g_NowKey = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-		g_KeyFlg = g_NowKey & ~g_OldKey;
+		hen.g_OldKey = hen.g_NowKey;
+		hen.g_NowKey = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+		hen.g_KeyFlg = hen.g_NowKey & ~hen.g_OldKey;
 
 		ClearDrawScreen();
 
-		switch (g_GameState) {
+		switch (hen.g_GameState) {
 		case 0:DrawGameTitle();
 			break;
 		case 1:GameInit();
@@ -286,12 +262,9 @@ void DrawEnd(void) {
 
 //ゲームメイン
 void GameMain(void) {
-	BackScrool();
 
-	EnemyControl();
-
-	ItemControl();
-
+	apple.AppleControl();
+	apple.CreateApple();
 	PlayerControl();
 	////スペースキーでメニューに戻る
 	//if (g_KeyFlg & PAD_INPUT_M) g_GameState = 6;
@@ -348,7 +321,7 @@ void EnemyControl() {
 
 	//走行距離ごとに敵出現パターンを制御する
 	if (g_Mileage / 10 % 50 == 0) {
-		CreateEnemy();
+		apple.CreateApple();
 	}
 }
 
@@ -389,55 +362,6 @@ int HitBoxPlayer(PLAYER* p, ENEMY* e) {
 			return TRUE;
 		}
 	}
-	return FALSE;
-}
-
-void ItemControl() {
-	for (int i = 0; i < ITEM_MAX; i++) {
-		if (g_item[i].flg == TRUE) {
-			//アイテムの表示
-			DrawRotaGraph(g_item[i].x, g_item[i].y, 1.0f, 0, g_item[i].img, TRUE);
-			if (g_player.flg == FALSE)continue;
-
-			//真っすぐ下に移動
-			g_item[i].y += g_item[i].speed + g_player.speed - PLAYER_SPEED;
-			//画面をはみ出したら消去
-			if (g_item[i].y > SCREEN_HEIGHT) g_item[i].flg = FALSE;
-
-			//当たり判定
-			if (HitBoxPlayer(&g_player, &g_item[i]) == TRUE) {
-				g_item[i].flg = FALSE;
-				if (g_item[i].type == 0) g_player.fuel += g_item[i].point;
-				if (g_item[i].type == 1) {
-					g_player.hp += g_item[i].point;
-					if (g_player.hp > PLAYER_HP) g_player.hp = PLAYER_HP;
-				}
-			}
-		}
-	}
-
-	//走行距離ごとにアイテムの出現パターンを制御する
-	if (g_Mileage / 10 % 500 == 0) {
-		CreateItem();
-	}
-}
-
-int CreateItem() {
-	for (int i = 0; i < ITEM_MAX; i++) {
-		if (g_item[i].flg == FALSE) {
-			g_item[i] = g_item00;
-			g_item[i].type = GetRand(1);
-			g_item[i].img = g_Item[g_item[i].type];
-			g_item[i].x = GetRand(4) * 105 + 40;
-			g_item[i].speed = 1 + g_item[i].type * 3;
-			if (g_item[i].type == 0) g_item[i].point = 500;
-			if (g_item[i].type == 1) g_item[i].point = 50;
-
-			//成功
-			return TRUE;
-		}
-	}
-	//失敗
 	return FALSE;
 }
 
@@ -536,34 +460,6 @@ void PlayerControl() {
 	DrawBox(X, Y + 20, X + W, Y + 20 + H, 0x000000, FALSE);
 }
 
-void BackScrool() {
-	//g_Mileage += 5;
-	if (g_GameState != 6) {
-		g_Mileage += g_player.speed;
-		//ステージ画像表示
-
-		//描画可能エリアを設定
-		SetDrawArea(0, 0, 500, 480);
-		DrawGraph(0, g_Mileage % 480 - 480, g_StageImage, FALSE);
-		DrawGraph(0, g_Mileage % 480, g_StageImage, FALSE);
-
-		//エリアを戻す
-		SetDrawArea(0, 0, 640, 480);
-		//スコア等表示領域
-		DrawBox(500, 0, 640, 480, 0x009900, TRUE);
-	}
-	else if (g_GameState == 6) {
-		g_Back += g_player.speed;
-		SetDrawArea(0, 0, 500, 480);
-		DrawGraph(0, g_Back % 480 - 480, g_StageImage, FALSE);
-		DrawGraph(0, g_Back % 480, g_StageImage, FALSE);
-		SetDrawArea(0, 0, 640, 480);
-		DrawBox(500, 0, 640, 480, 0x009900, TRUE);
-	}
-
-
-}
-
 //ゲームオーバー画像描画処理
 void DrawGameOver(void) {
 	g_Score = (g_Mileage / 10 * 10) + g_EnemyCount3 * 50 + g_EnemyCount2 * 100 + g_EnemyCount1 * 200;
@@ -578,7 +474,7 @@ void DrawGameOver(void) {
 		}
 	}
 
-	BackScrool();
+	//BackScrool();
 
 
 	DrawBox(150, 150, 490, 330, 0x009900, TRUE);
@@ -697,33 +593,3 @@ int ReadRanking(void) {
 
 
 
-//画像読み込み
-int LoadImages() {
-	//タイトル
-	if ((g_TitleImage = LoadGraph("images/Title.bmp")) == -1)return-1;
-	//メニュー
-	if ((g_Menu = LoadGraph("images/menu.bmp")) == -1)return-1;
-	if ((g_Cone = LoadGraph("images/cone.bmp")) == -1)return-1;
-	//ランキング画像データの読み込み
-	if ((g_RankingImage = LoadGraph("images/Ranking.bmp")) == -1)return-1;
-
-	//アイテム
-	if ((g_Item[0] = LoadGraph("images/gasoline.bmp")) == -1)return-1;
-	if ((g_Item[1] = LoadGraph("images/supana.bmp")) == -1)return-1;
-
-	//エンディング
-	if ((g_EndImage = LoadGraph("images/End.bmp")) == -1)return-1;
-
-	//敵
-	if (LoadDivGraph("images/Car.bmp", 3, 3, 1, 63, 120, g_Teki) == -1)return-1;
-	if ((g_Teki[3] = LoadGraph("images/gentuki.bmp")) == -1)return-1;
-
-	//ステージ背景
-	if ((g_StageImage = LoadGraph("images/back.bmp")) == -1)return-1;
-
-	//プレイヤー
-	if ((g_Car = LoadGraph("images/car1pol.bmp")) == -1)return-1;
-	if ((g_Barrier = LoadGraph("images/barrier.png")) == -1)return-1;
-
-	return 0;
-}

@@ -32,3 +32,4 @@ public:
 	int g_Back = 0;
 	int v[3] = { -1,0,1 };
 };
+extern HENSUU hen;

@@ -16,3 +16,4 @@ public:
 	void AppleControl();
 	int HitBoxPlayer();
 };
+extern APPLE apple;

@@ -17,6 +17,9 @@ int LoadImages() {
 
 	//ƒŠƒ“ƒS
 	if ((apple.A = LoadGraph("images/apple/fruit_ringo.png")) == -1)return -1;
+	if ((apple.B = LoadGraph("images/apple/fruit_apple_yellow.png")) == -1)return -1;
+	if ((apple.C = LoadGraph("images/apple/fruit_ao_ringo.png")) == -1)return -1;
+	if ((apple.D = LoadGraph("images/apple/apple_doku_ringo.png")) == -1)return -1;
 
 	//ƒvƒŒƒCƒ„[
 

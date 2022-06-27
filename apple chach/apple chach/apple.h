@@ -9,8 +9,8 @@ public:
 	int img;
 	int point;
 	int speed;
-	int appleimgs[4] = {A};
 	int A, B, C, D;
+	int appleimgs[4] = {A, B, C, D};
 public:
 	int CreateApple();
 	void AppleControl();

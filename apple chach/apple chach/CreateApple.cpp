@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "apple.h"
+#include "hensuu.h"
 
 int applespeed[] = {1,5,7,10};
 
@@ -8,10 +9,10 @@ int APPLE::CreateApple() {
 		if (flg == FALSE) {
 			point = 0;
 			type = GetRand(4);
-			img = appleimgs[type];
+			img = hen.AppleImages[type];
 			x = GetRand(7) * 40 + 38;
 			y = 50;
-			speed = type * applespeed[GetRand(4)];
+			speed = applespeed[GetRand(4)];
 			flg = TRUE;
 			//ê¨å˜
 			return TRUE;

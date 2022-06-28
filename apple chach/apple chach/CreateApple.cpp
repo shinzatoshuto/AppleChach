@@ -10,6 +10,7 @@ int APPLE::CreateApple() {
 			type = GetRand(4);
 			img = appleimgs[type];
 			x = GetRand(7) * 40 + 38;
+			y = 50;
 			speed = type * applespeed[GetRand(4)];
 			flg = TRUE;
 			//¬Œ÷

@@ -112,7 +112,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	if (LoadImages() == -1)return-1;
 	if (ReadRanking() == -1)return-1;
 
-
 	//ÉQÅ[ÉÄÉãÅ[Év
 	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_START))
 	{

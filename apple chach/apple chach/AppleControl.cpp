@@ -5,7 +5,7 @@
 void APPLE::AppleControl() {
 	for (int i = 0; i < APPLE_MAX; i++) {
 		if (flg == TRUE) {
-			//“G‚Ì•\Ž¦
+			////“G‚Ì•\Ž¦
 			DrawGraph(x, y, img, TRUE);
 
 			//if (g_player.flg == FALSE) continue;

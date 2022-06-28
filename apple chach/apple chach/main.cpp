@@ -6,7 +6,7 @@
 
 #define  RANKING_DATA  5
 
-APPLE apple[7];
+APPLE apple[APPLE_MAX];
 HENSUU hen;
 
 //定数の宣言
@@ -200,9 +200,6 @@ void GameInit(void) {
 	g_player.bari = PLAYER_BARRIER;
 	g_player.bariup = PLAYER_BARRIERUP;
 
-	Time = 0;
-	nextTime = GetRand(3 * 60);
-
 	//エネミーの初期設定
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		g_enemy[i].flg = FALSE;
@@ -211,6 +208,9 @@ void GameInit(void) {
 	for (int i = 0; i < ITEM_MAX; i++) {
 		g_item[i].flg = FALSE;
 	}
+
+	Time = 0;
+	nextTime = GetRand(3 * 60);
 
 	//ゲームメイン処理へ
 	hen.g_GameState = 5;
@@ -277,9 +277,6 @@ void GameMain(void) {
 			}
 		}
 	}
-	
-	//apple.AppleControl();
-	//apple.CreateApple();
 	PlayerControl();
 	////スペースキーでメニューに戻る
 	//if (g_KeyFlg & PAD_INPUT_M) g_GameState = 6;

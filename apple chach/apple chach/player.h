@@ -1,6 +1,6 @@
 #pragma once
 class PLAYER {
-public:
+private:
 	int flg;
 	int x, y;
 	int w, h;
@@ -8,5 +8,6 @@ public:
 	int image;
 	int score;
 
+public:
 	void Move_Player;
 };

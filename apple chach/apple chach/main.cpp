@@ -6,7 +6,7 @@
 
 #define  RANKING_DATA  5
 
-APPLE apple;
+APPLE apple[7];
 HENSUU hen;
 
 //定数の宣言
@@ -100,6 +100,8 @@ int LoadImages();
 void PlayerControl();
 
 int HitBoxPlayer(PLAYER* p, ENEMY* e);  //当たり判定
+
+int Time, nextTime;
 
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
@@ -198,6 +200,9 @@ void GameInit(void) {
 	g_player.bari = PLAYER_BARRIER;
 	g_player.bariup = PLAYER_BARRIERUP;
 
+	Time = 0;
+	nextTime = GetRand(3 * 60);
+
 	//エネミーの初期設定
 	for (int i = 0; i < ENEMY_MAX; i++) {
 		g_enemy[i].flg = FALSE;
@@ -261,9 +266,20 @@ void DrawEnd(void) {
 
 //ゲームメイン
 void GameMain(void) {
-
-	apple.AppleControl();
-	apple.CreateApple();
+	for (int i = 0; i < APPLE_MAX; i++) {
+		apple[i].AppleControl();
+	}
+	if (++Time > nextTime) {
+		for (int i = 0; i < APPLE_MAX; i++) {
+			if (apple[i].CreateApple()) {
+				nextTime += GetRand(3 * 60);
+				break;
+			}
+		}
+	}
+	
+	//apple.AppleControl();
+	//apple.CreateApple();
 	PlayerControl();
 	////スペースキーでメニューに戻る
 	//if (g_KeyFlg & PAD_INPUT_M) g_GameState = 6;
@@ -320,7 +336,7 @@ void EnemyControl() {
 
 	//走行距離ごとに敵出現パターンを制御する
 	if (hen.g_Mileage / 10 % 50 == 0) {
-		apple.CreateApple();
+		//apple.CreateApple();
 	}
 }
 

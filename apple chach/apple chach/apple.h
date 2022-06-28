@@ -18,4 +18,4 @@ public:
 	int HitBoxPlayer();
 };
 
-extern APPLE apple;
+extern APPLE apple[APPLE_MAX];

@@ -2,7 +2,7 @@
 #include "apple.h"
 #include "hensuu.h"
 
-int applespeed[] = {1,5,7,10};
+int applespeed[] = {1,1,1,1};//‚µ‘‚«
 
 int APPLE::CreateApple() {
 	//for (int i = 0; i < APPLE_MAX; i++) {

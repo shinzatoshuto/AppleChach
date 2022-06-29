@@ -33,7 +33,8 @@ int LoadImages() {
 		if ((hen.AppleImages[2] = LoadGraph("images/apple/fruit_ao_ringo.png")) == -1)return -1;
 		if ((hen.AppleImages[3] = LoadGraph("images/apple/apple_doku_ringo.png")) == -1)return -1;
 	
-
+		if ((hen.g_Car = LoadGraph("images/car1pol.bmp")) == -1)return -1;
+		if ((hen.g_Barrier = LoadGraph("images/barrier.png")) == -1)return -1;
 	//ƒvƒŒƒCƒ„[
 		if ((hen.CharaImages[0] = LoadGraph("images/player/figure_aura2_orange.png")) == -1)return -1;
 	return 0;

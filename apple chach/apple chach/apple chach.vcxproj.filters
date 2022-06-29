@@ -19,7 +19,7 @@
     <Filter Include="main">
       <UniqueIdentifier>{870dfde8-f170-449f-b58a-0e68f3bfdf6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chara">
+    <Filter Include="player">
       <UniqueIdentifier>{ef62891c-7c92-4c93-be66-595d84faa526}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -36,8 +36,8 @@
     <ClCompile Include="LoadGraph.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="Characon.cpp">
-      <Filter>Chara</Filter>
+    <ClCompile Include="Playercon.cpp">
+      <Filter>player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,8 +47,8 @@
     <ClInclude Include="hensuu.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="Chara.h">
-      <Filter>Chara</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

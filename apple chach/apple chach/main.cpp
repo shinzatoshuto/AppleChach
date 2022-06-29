@@ -600,6 +600,7 @@ int ReadRanking(void) {
 
 	fclose(fp);
 
+	
 	return 0;
 }
 

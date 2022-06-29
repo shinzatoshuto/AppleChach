@@ -31,6 +31,6 @@ int LoadImages() {
 	
 
 	//ƒvƒŒƒCƒ„[
-
+		if ((hen.CharaImages[0] = LoadGraph("images/player/figure_aura2_orange.png")) == -1)return -1;
 	return 0;
 }

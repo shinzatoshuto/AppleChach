@@ -27,7 +27,9 @@ public:
 	int g_Teki[4]; //ƒLƒƒƒ‰‰æ‘œ•Ï”
 
 	int g_StageImage;
-	int AppleImages[4];
+	int AppleImages[4];//ƒŠƒ“ƒS‚Ì‰æ‘œ
+
+	int CharaImages[3];//ƒLƒƒƒ‰‰æ‘œ
 
 	int g_Car, g_Barrier;
 	int g_Back = 0;

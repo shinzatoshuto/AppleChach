@@ -11,7 +11,7 @@ int APPLE::CreateApple() {
 			type = GetRand(4);
 			img = hen.AppleImages[type];
 			x = GetRand(7) * 40 + 38;
-			y = 50;
+			y = -50;
 			speed = applespeed[GetRand(4)];
 			flg = TRUE;
 			//¬Œ÷

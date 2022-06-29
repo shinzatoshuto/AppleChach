@@ -390,8 +390,6 @@ void PlayerControl() {
 
 	//è„â∫ç∂âEà⁄ìÆ
 	if (g_player.flg == TRUE) {
-		if (hen.g_NowKey & PAD_INPUT_UP) g_player.y -= g_player.speed;
-		if (hen.g_NowKey & PAD_INPUT_DOWN) g_player.y += g_player.speed;
 		if (hen.g_NowKey & PAD_INPUT_LEFT) g_player.x -= g_player.speed;
 		if (hen.g_NowKey & PAD_INPUT_RIGHT) g_player.x += g_player.speed;
 	}

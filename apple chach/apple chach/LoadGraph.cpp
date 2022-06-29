@@ -3,6 +3,7 @@
 ********************************************************************/
 #include"DxLib.h"
 #include"apple.h"
+#include"Chara.h"
 #include"hensuu.h"
 
 //‰æ‘œ“Ç‚İ‚İ

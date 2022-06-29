@@ -19,6 +19,9 @@
     <Filter Include="main">
       <UniqueIdentifier>{870dfde8-f170-449f-b58a-0e68f3bfdf6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chara">
+      <UniqueIdentifier>{ef62891c-7c92-4c93-be66-595d84faa526}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

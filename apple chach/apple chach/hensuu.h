@@ -13,7 +13,7 @@ public:
 	int g_Menu, g_Cone;
 
 	int g_Score = 0;  // ƒXƒRƒA
-	int g_Time = 0;
+	int g_Time = 0;   //ŠÔ
 
 	int g_RankingImage;
 

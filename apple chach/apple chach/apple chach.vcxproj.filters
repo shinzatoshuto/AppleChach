@@ -36,6 +36,9 @@
     <ClCompile Include="LoadGraph.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="Characon.cpp">
+      <Filter>Chara</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
@@ -43,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="hensuu.h">
       <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="Chara.h">
+      <Filter>Chara</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

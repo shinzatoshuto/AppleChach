@@ -3,7 +3,7 @@
 ********************************************************************/
 #include"DxLib.h"
 #include"apple.h"
-#include"Chara.h"
+#include"Player.h"
 #include"hensuu.h"
 
 //‰æ‘œ“Ç‚İ‚İ

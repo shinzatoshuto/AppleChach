@@ -3,16 +3,16 @@
 class HENSUU {
 public:
 	//変数の宣言
-	int g_OldKey;
-	int g_NowKey;
-	int g_KeyFlg;
+	int g_OldKey;    // 前回の入力キー
+	int g_NowKey;    // 今回の入力キー
+	int g_KeyFlg;    // 入力キー情報
 
 	int g_GameState = 0;
 
 	int g_TitleImage;
 	int g_Menu, g_Cone;
 
-	int g_Score = 0;
+	int g_Score = 0;  // スコア
 	int g_Time = 0;
 
 	int g_RankingImage;

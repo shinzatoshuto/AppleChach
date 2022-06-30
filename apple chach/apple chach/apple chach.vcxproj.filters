@@ -39,6 +39,9 @@
     <ClCompile Include="Playercon.cpp">
       <Filter>player</Filter>
     </ClCompile>
+    <ClCompile Include="HItBoxPlayer.cpp">
+      <Filter>Apple</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">

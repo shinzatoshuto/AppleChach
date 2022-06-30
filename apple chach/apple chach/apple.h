@@ -1,4 +1,5 @@
 #pragma once
+#include"hensuu.h"
 const int APPLE_MAX = 7;
 
 class APPLE {
@@ -15,7 +16,7 @@ public:
 public:
 	int CreateApple();
 	void AppleControl();
-	int HitBoxPlayer();
+	int HitBoxPlayer(PLAYER* p);
 };
 
 extern APPLE apple[APPLE_MAX];

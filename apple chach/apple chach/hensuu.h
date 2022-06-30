@@ -4,6 +4,22 @@ const int SCREEN_HEIGHT = 480;
 const int ENEMY_MAX = 8;
 const int ITEM_MAX = 3;
 
+struct PLAYER {
+	int flg;
+	int x, y;
+	int w, h;
+	double angle;
+	int count;
+	int speed;
+	int hp;
+	int fuel;
+	int bari;
+	int baricnt;
+	int bariup;
+};
+
+extern PLAYER g_player;
+
 class HENSUU {
 public:
 	//•Ï”‚ÌéŒ¾
@@ -34,6 +50,8 @@ public:
 	int AppleImages[4];//ƒŠƒ“ƒS‚Ì‰æ‘œ
 
 	int CharaImages[3];//ƒLƒƒƒ‰‰æ‘œ
+
+	int Backimg;
 
 	int g_Car, g_Barrier;
 	int g_Back = 0;

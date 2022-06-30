@@ -38,14 +38,14 @@ void APPLE::AppleControl() {
 			}*/
 
 			//“–‚½‚è”»’è
-			/*if (HitBoxPlayer(&g_player, &g_enemy[i]) == TRUE && g_player.baricnt <= 0) {
-				g_player.flg = FALSE;
-				g_player.speed = PLAYER_SPEED;
-				g_player.count = 0;
-				g_player.hp -= 100;
-				g_enemy[i].flg = FALSE;
-				if (g_player.hp <= 0)  g_GameState = 6;
-			}*/
+			if (HitBoxPlayer(&g_player) == TRUE && g_player.baricnt <= 0) {
+				//g_player.flg = FALSE;
+				//g_player.speed = PLAYER_SPEED;
+				//g_player.count = 0;
+				//g_player.hp -= 100;
+				flg = FALSE;
+				//if (g_player.hp <= 0)  g_GameState = 6;
+			}
 		}
 	}
 

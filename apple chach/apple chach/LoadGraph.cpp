@@ -35,6 +35,9 @@ int LoadImages() {
 	
 		if ((hen.g_Car = LoadGraph("images/player/figure_aura2_orange.png")) == -1)return -1;
 		if ((hen.g_Barrier = LoadGraph("images/barrier.png")) == -1)return -1;
+
+		//”wŒi‰æ‘œ
+		if ((hen.Backimg = LoadGraph("images/back/bg_natural_mori.jpg")) == -1)return-1;
 	
 	return 0;
 }

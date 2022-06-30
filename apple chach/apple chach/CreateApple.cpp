@@ -14,6 +14,8 @@ int APPLE::CreateApple() {
 			y = -50;
 			speed = applespeed[GetRand(4)];
 			flg = TRUE;
+			w = 40;
+			h = 40;
 			//¬Œ÷
 			return TRUE;
 		}

@@ -27,22 +27,22 @@ const int PLAYER_BARRIER = 3;
 const int PLAYER_BARRIERUP = 10;
 
 //自機の構造体
-struct PLAYER {
-	int flg;
-	int x, y;
-	int w, h;
-	double angle;
-	int count;
-	int speed;
-	int hp;
-	int fuel;
-	int bari;
-	int baricnt;
-	int bariup;
-};
+//struct PLAYER {
+//	int flg;
+//	int x, y;
+//	int w, h;
+//	double angle;
+//	int count;
+//	int speed;
+//	int hp;
+//	int fuel;
+//	int bari;
+//	int baricnt;
+//	int bariup;
+//};
 
 //自機
-struct PLAYER g_player;
+PLAYER g_player;
 
 //敵機の構造体
 struct ENEMY {
@@ -266,6 +266,8 @@ void DrawEnd(void) {
 
 //ゲームメイン
 void GameMain(void) {
+	DrawGraph(0, 0, hen.Backimg, FALSE);
+	PlayerControl();
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].AppleControl();
 	}
@@ -277,7 +279,7 @@ void GameMain(void) {
 			}
 		}
 	}
-	PlayerControl();
+
 	////スペースキーでメニューに戻る
 	//if (g_KeyFlg & PAD_INPUT_M) g_GameState = 6;
 
@@ -384,9 +386,9 @@ void PlayerControl() {
 	if (g_player.fuel <= 0)  hen.g_GameState = 6;
 
 	//Zキーで加速
-	if (hen.g_KeyFlg & PAD_INPUT_A && g_player.speed < 10) g_player.speed += 1;
+	//if (hen.g_KeyFlg & PAD_INPUT_A && g_player.speed < 10) g_player.speed += 1;
 	//Xキーで減速
-	if (hen.g_KeyFlg & PAD_INPUT_B && g_player.speed > 1) g_player.speed -= 1;
+	//if (hen.g_KeyFlg & PAD_INPUT_B && g_player.speed > 1) g_player.speed -= 1;
 
 	//上下左右移動
 	if (g_player.flg == TRUE) {
@@ -412,17 +414,17 @@ void PlayerControl() {
 			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Car, TRUE, FALSE);
 		}
 
-		if (hen.g_KeyFlg & PAD_INPUT_C && g_player.bari > 0 && g_player.baricnt <= 0) {
-			g_player.bari--;
-			g_player.baricnt = 1000;
-		}
-		if (g_player.baricnt > 0) {
-			g_player.baricnt -= g_player.speed;
-			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Barrier, TRUE, FALSE);
-		}
-		else {
-			g_player.baricnt = 0;
-		}
+		//if (hen.g_KeyFlg & PAD_INPUT_C && g_player.bari > 0 && g_player.baricnt <= 0) {
+		//	g_player.bari--;
+		//	g_player.baricnt = 1000;
+		//}
+		//if (g_player.baricnt > 0) {
+		//	g_player.baricnt -= g_player.speed;
+		//	DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Barrier, TRUE, FALSE);
+		//}
+		//else {
+		//	g_player.baricnt = 0;
+		//}
 	}
 	else {
 		DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 8 * (++g_player.count / 5), hen.g_Car, TRUE, FALSE);
@@ -449,9 +451,9 @@ void PlayerControl() {
 	DrawFormatString(555, 260, 0xFFFFFF, "%08d", g_player.speed);
 
 	//バリアの表示
-	for (int i = 0; i < g_player.bari; i++) {
-		DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, hen.g_Barrier, TRUE, FALSE);
-	}
+	//for (int i = 0; i < g_player.bari; i++) {
+	//	DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, hen.g_Barrier, TRUE, FALSE);
+	//}
 
 	//燃料ゲージの表示
 	int F_X = 510; int F_Y = 390; int F_W = 100; int F_H = 20;

@@ -1,5 +1,6 @@
 #define _USE_MATH_DEFINES
 #include "apple.h"
+#include "hensuu.h"
 #include "DxLib.h"
 
 void APPLE::AppleControl() {
@@ -15,7 +16,7 @@ void APPLE::AppleControl() {
 			y += speed;
 
 			//画面をはみ出したら消去
-			//if (g_enemy[i].y > SCREEN_HEIGHT + g_enemy[i].h) g_enemy[i].flg = FALSE;
+			if (apple[i].y > SCREEN_HEIGHT + apple[i].h) apple[i].flg = FALSE;
 
 			//敵機を追い越したらカウント
 			/*if (g_enemy[i].y > g_player.y && g_enemy[i].point == 1) {

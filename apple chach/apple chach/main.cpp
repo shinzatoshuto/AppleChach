@@ -10,10 +10,10 @@ APPLE apple[APPLE_MAX];
 HENSUU hen;
 
 //’è”‚ÌéŒ¾
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-const int ENEMY_MAX = 8;
-const int ITEM_MAX = 3;
+//const int SCREEN_WIDTH = 640;
+//const int SCREEN_HEIGHT = 480;
+//const int ENEMY_MAX = 8;
+//const int ITEM_MAX = 3;
 
 //©‹@‚Ì‰Šú’l
 const int PLAYER_POS_X = SCREEN_WIDTH / 2;

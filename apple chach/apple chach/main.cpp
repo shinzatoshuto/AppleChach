@@ -10,10 +10,10 @@ APPLE apple[APPLE_MAX];
 HENSUU hen;
 
 //íËêîÇÃêÈåæ
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-const int ENEMY_MAX = 8;
-const int ITEM_MAX = 3;
+//const int SCREEN_WIDTH = 640;
+//const int SCREEN_HEIGHT = 480;
+//const int ENEMY_MAX = 8;
+//const int ITEM_MAX = 3;
 
 //é©ã@ÇÃèâä˙íl
 const int PLAYER_POS_X = SCREEN_WIDTH / 2;
@@ -390,8 +390,6 @@ void PlayerControl() {
 
 	//è„â∫ç∂âEà⁄ìÆ
 	if (g_player.flg == TRUE) {
-		if (hen.g_NowKey & PAD_INPUT_UP) g_player.y -= g_player.speed;
-		if (hen.g_NowKey & PAD_INPUT_DOWN) g_player.y += g_player.speed;
 		if (hen.g_NowKey & PAD_INPUT_LEFT) g_player.x -= g_player.speed;
 		if (hen.g_NowKey & PAD_INPUT_RIGHT) g_player.x += g_player.speed;
 	}
@@ -600,6 +598,7 @@ int ReadRanking(void) {
 
 	fclose(fp);
 
+	
 	return 0;
 }
 

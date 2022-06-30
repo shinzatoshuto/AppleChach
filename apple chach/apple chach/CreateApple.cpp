@@ -2,7 +2,7 @@
 #include "apple.h"
 #include "hensuu.h"
 
-int applespeed[] = {1,5,7,10};
+int applespeed[] = {1,1,1,1};//‚µ‘‚«
 
 int APPLE::CreateApple() {
 	//for (int i = 0; i < APPLE_MAX; i++) {
@@ -11,7 +11,7 @@ int APPLE::CreateApple() {
 			type = GetRand(4);
 			img = hen.AppleImages[type];
 			x = GetRand(7) * 40 + 38;
-			y = 50;
+			y = -50;
 			speed = applespeed[GetRand(4)];
 			flg = TRUE;
 			//¬Œ÷

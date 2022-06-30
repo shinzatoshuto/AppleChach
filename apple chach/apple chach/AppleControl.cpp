@@ -1,11 +1,12 @@
 #define _USE_MATH_DEFINES
 #include "apple.h"
+#include "hensuu.h"
 #include "DxLib.h"
 
 void APPLE::AppleControl() {
 	for (int i = 0; i < APPLE_MAX; i++) {
 		if (flg == TRUE) {
-			////“G‚Ì•\Ž¦
+			//“G‚Ì•\Ž¦
 			DrawGraph(x, y, img, TRUE);
 
 			//if (g_player.flg == FALSE) continue;
@@ -15,7 +16,7 @@ void APPLE::AppleControl() {
 			y += speed;
 
 			//‰æ–Ê‚ð‚Í‚Ýo‚µ‚½‚çÁ‹Ž
-			//if (g_enemy[i].y > SCREEN_HEIGHT + g_enemy[i].h) g_enemy[i].flg = FALSE;
+			if (apple[i].y > SCREEN_HEIGHT + apple[i].h) apple[i].flg = FALSE;
 
 			//“G‹@‚ð’Ç‚¢‰z‚µ‚½‚çƒJƒEƒ“ƒg
 			/*if (g_enemy[i].y > g_player.y && g_enemy[i].point == 1) {

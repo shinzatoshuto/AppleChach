@@ -21,6 +21,8 @@ struct PLAYER {
 
 extern PLAYER g_player;
 
+extern int g_AppleCount[4];
+
 class HENSUU {
 public:
 	//•Ï”‚ÌéŒ¾

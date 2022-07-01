@@ -102,7 +102,7 @@ void PlayerControl();
 int HitBoxPlayer(PLAYER* p, ENEMY* e);  //当たり判定
 
 int nextTime;
-
+int g_AppleCount[4];
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
 {
@@ -207,6 +207,10 @@ void GameInit(void) {
 	//アイテムの初期設定
 	for (int i = 0; i < ITEM_MAX; i++) {
 		g_item[i].flg = FALSE;
+	}
+	//リンゴのカウントの初期化
+	for (int i = 0; i < 4; i++) {
+		g_AppleCount[i] = 0;
 	}
 
 	hen.g_Time = 1800;
@@ -435,6 +439,16 @@ void PlayerControl() {
 	SetFontSize(25);
 	DrawFormatString(520, 20, 0x000000, "制限時間");
 	DrawFormatString(560, 60, 0xffffff, "%d", hen.g_Time / 60);
+	DrawRotaGraph(528, 120, 0.5f, 0, hen.AppleImages[0], TRUE, FALSE);
+	DrawRotaGraph(558, 120, 0.5f, 0, hen.AppleImages[1], TRUE, FALSE);
+	DrawRotaGraph(588, 120, 0.5f, 0, hen.AppleImages[2], TRUE, FALSE);
+	DrawRotaGraph(618, 120, 0.5f, 0, hen.AppleImages[3], TRUE, FALSE);
+
+	SetFontSize(16);
+	DrawFormatString(520, 140, 0xFFFFFF, "%02d", g_AppleCount[0]);
+	DrawFormatString(550, 140, 0xFFFFFF, "%02d", g_AppleCount[1]);
+	DrawFormatString(580, 140, 0xFFFFFF, "%02d", g_AppleCount[2]);
+	DrawFormatString(610, 140, 0xFFFFFF, "%02d", g_AppleCount[3]);
 
 	/*DrawFormatString(510, 20, 0x000000, "ハイスコア");
 	DrawFormatString(560, 40, 0xFFFFFF, "%08d", g_Ranking[0].score);

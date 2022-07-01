@@ -43,6 +43,7 @@ void APPLE::AppleControl() {
 				//g_player.speed = PLAYER_SPEED;
 				//g_player.count = 0;
 				//g_player.hp -= 100;
+				g_AppleCount[type]++;
 				flg = FALSE;
 				//if (g_player.hp <= 0)  g_GameState = 6;
 			}

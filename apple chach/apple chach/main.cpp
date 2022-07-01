@@ -103,6 +103,8 @@ int HitBoxPlayer(PLAYER* p, ENEMY* e);  //当たり判定
 
 int nextTime;
 int g_AppleCount[4];
+int GameSound;
+
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
 {
@@ -113,6 +115,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 	if (LoadImages() == -1)return-1;
 	if (ReadRanking() == -1)return-1;
+	if ((GameSound = LoadSoundMem("sounds/Game.mp3")) == -1) return -1;
 
 	//ゲームループ
 	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_START))
@@ -155,7 +158,8 @@ void DrawGameTitle(void) {
 	//メニューカーソル移動処理
 	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
 		if (++MenuNo > 3)MenuNo = 0;
-	}if (hen.g_KeyFlg & PAD_INPUT_UP) {
+	}
+	if (hen.g_KeyFlg & PAD_INPUT_UP) {
 		if (--MenuNo < 0)MenuNo = 3;
 	}
 
@@ -216,6 +220,7 @@ void GameInit(void) {
 	hen.g_Time = 1800;
 	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
 
+	PlaySoundMem(GameSound, DX_PLAYTYPE_BACK);
 	//ゲームメイン処理へ
 	hen.g_GameState = 5;
 }
@@ -387,7 +392,10 @@ void PlayerControl() {
 	//燃料の消費
 	//g_player.fuel -= g_player.speed;
 	//ゲームオーバー処理へ
-	if (hen.g_Time <= 0)  hen.g_GameState = 6;
+	if (hen.g_Time <= 0) {
+		StopSoundMem(GameSound);
+		hen.g_GameState = 6;
+	}
 
 	//Zキーで加速
 	//if (hen.g_KeyFlg & PAD_INPUT_A && g_player.speed < 10) g_player.speed += 1;

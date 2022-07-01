@@ -14,7 +14,9 @@ int LoadImages() {
 	//if ((hen.g_Menu = LoadGraph("images/menu.bmp")) == -1)return-1;
 	if ((hen.applecursor = LoadGraph("images/apple/fruit_ringo.png")) == -1)return-1;
 	//ランキング画像データの読み込み
-	if ((hen.g_RankingImage = LoadGraph("images/Ranking.bmp")) == -1)return-1;
+	if ((hen.g_RankingImage = LoadGraph("images/back/Ranking.jpg")) == -1)return-1;
+	//ヘルプ
+	if ((hen.HelpImage = LoadGraph("images/back/Help.jpg")) == -1)return-1;
 
 	//エンディング
 	if ((hen.g_EndImage = LoadGraph("images/End.bmp")) == -1)return-1;

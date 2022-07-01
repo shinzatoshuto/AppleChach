@@ -44,6 +44,7 @@ public:
 
 	int g_WaitTime = 0;  //待ち時間
 	int g_EndImage;
+	int HelpImage;
 
 	int g_Mileage; //走行距離
 	int g_EnemyCount1, g_EnemyCount2, g_EnemyCount3, g_EnemyCount4; //敵カウント

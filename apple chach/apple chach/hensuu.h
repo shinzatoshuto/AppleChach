@@ -33,7 +33,7 @@ public:
 	int g_GameState = 0;
 
 	int g_TitleImage;
-	int g_Menu, g_Cone;
+	int g_Menu, applecursor;
 
 	int Score = 0;  // ƒXƒRƒA
 	int g_Time;   //ŠÔ

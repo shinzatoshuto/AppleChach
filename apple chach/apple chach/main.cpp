@@ -170,10 +170,10 @@ void DrawGameTitle(void) {
 	DrawGraph(0, 0, hen.g_TitleImage, FALSE);
 
 	//メニュー
-	DrawGraph(120, 200, hen.g_Menu, TRUE);
+	//DrawGraph(120, 200, hen.g_Menu, TRUE);
 
 	//メニューカーソル
-	DrawRotaGraph(90, 220 + MenuNo * 40, 0.7f, M_PI / 2, hen.g_Cone, TRUE);
+	DrawRotaGraph(430, 300 + MenuNo * 42, 0.7f, 0, hen.applecursor, TRUE);
 }
 
 //ゲーム初期処理

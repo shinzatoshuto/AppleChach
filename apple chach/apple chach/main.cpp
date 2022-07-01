@@ -101,7 +101,7 @@ void PlayerControl();
 
 int HitBoxPlayer(PLAYER* p, ENEMY* e);  //当たり判定
 
-int Time, nextTime;
+int nextTime;
 
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
@@ -175,7 +175,7 @@ void DrawGameTitle(void) {
 //ゲーム初期処理
 void GameInit(void) {
 	//スコアの初期化
-	hen.g_Score = 0;
+	hen.Score = 0;
 
 	//走行距離を初期化
 	hen.g_Mileage = 0;
@@ -201,16 +201,16 @@ void GameInit(void) {
 	g_player.bariup = PLAYER_BARRIERUP;
 
 	//エネミーの初期設定
-	for (int i = 0; i < ENEMY_MAX; i++) {
-		g_enemy[i].flg = FALSE;
+	for (int i = 0; i < APPLE_MAX; i++) {
+		apple[i].flg = FALSE;
 	}
 	//アイテムの初期設定
 	for (int i = 0; i < ITEM_MAX; i++) {
 		g_item[i].flg = FALSE;
 	}
 
-	Time = 0;
-	nextTime = GetRand(3 * 60);
+	hen.g_Time = 1800;
+	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
 
 	//ゲームメイン処理へ
 	hen.g_GameState = 5;
@@ -271,10 +271,10 @@ void GameMain(void) {
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].AppleControl();
 	}
-	if (++Time > nextTime) {
+	if (--hen.g_Time < nextTime) {
 		for (int i = 0; i < APPLE_MAX; i++) {
 			if (apple[i].CreateApple()) {
-				nextTime += GetRand(3 * 60);
+				nextTime -= GetRand(MAX_INTERVAL);
 				break;
 			}
 		}
@@ -381,9 +381,9 @@ int HitBoxPlayer(PLAYER* p, ENEMY* e) {
 
 void PlayerControl() {
 	//燃料の消費
-	g_player.fuel -= g_player.speed;
+	//g_player.fuel -= g_player.speed;
 	//ゲームオーバー処理へ
-	if (g_player.fuel <= 0)  hen.g_GameState = 6;
+	if (hen.g_Time <= 0)  hen.g_GameState = 6;
 
 	//Zキーで加速
 	//if (hen.g_KeyFlg & PAD_INPUT_A && g_player.speed < 10) g_player.speed += 1;
@@ -432,8 +432,11 @@ void PlayerControl() {
 	}
 
 	//敵を避けた数を表示
-	SetFontSize(16);
-	DrawFormatString(510, 20, 0x000000, "ハイスコア");
+	SetFontSize(25);
+	DrawFormatString(520, 20, 0x000000, "制限時間");
+	DrawFormatString(560, 60, 0xffffff, "%d", hen.g_Time / 60);
+
+	/*DrawFormatString(510, 20, 0x000000, "ハイスコア");
 	DrawFormatString(560, 40, 0xFFFFFF, "%08d", g_Ranking[0].score);
 	DrawFormatString(510, 80, 0x000000, "避けた数");
 	DrawRotaGraph(523, 120, 0.3f, 0, hen.g_Teki[0], TRUE, FALSE);
@@ -448,7 +451,7 @@ void PlayerControl() {
 	DrawFormatString(510, 200, 0x000000, "走行距離");
 	DrawFormatString(555, 220, 0xFFFFFF, "%08d", hen.g_Mileage / 10);
 	DrawFormatString(510, 240, 0x000000, "スピード");
-	DrawFormatString(555, 260, 0xFFFFFF, "%08d", g_player.speed);
+	DrawFormatString(555, 260, 0xFFFFFF, "%08d", g_player.speed);*/
 
 	//バリアの表示
 	//for (int i = 0; i < g_player.bari; i++) {
@@ -456,29 +459,29 @@ void PlayerControl() {
 	//}
 
 	//燃料ゲージの表示
-	int F_X = 510; int F_Y = 390; int F_W = 100; int F_H = 20;
-	DrawString(F_X, F_Y, "FUEL METER", 0x000000, 0);
-	//内臓ゲージ
-	DrawBox(F_X, F_Y + 20, F_X + (int)(g_player.fuel * F_W / PLAYER_FUEL), F_Y + 20 + F_H, 0x0066cc, TRUE);
-	//外側ゲージ枠
-	DrawBox(F_X, F_Y + 20, F_X + F_W, F_Y + 20 + F_H, 0x0066cc, FALSE);
+	//int F_X = 510; int F_Y = 390; int F_W = 100; int F_H = 20;
+	//DrawString(F_X, F_Y, "FUEL METER", 0x000000, 0);
+	////内臓ゲージ
+	//DrawBox(F_X, F_Y + 20, F_X + (int)(g_player.fuel * F_W / PLAYER_FUEL), F_Y + 20 + F_H, 0x0066cc, TRUE);
+	////外側ゲージ枠
+	//DrawBox(F_X, F_Y + 20, F_X + F_W, F_Y + 20 + F_H, 0x0066cc, FALSE);
 
-	//体力ゲージの表示
-	int X = 510; int Y = 430; int W = 100; int H = 20;
-	DrawString(X, Y, "PLAYER HP", 0x000000, 0);
-	//内側のゲージ
-	DrawBox(X, Y + 20, X + (int)(g_player.hp * W / PLAYER_HP), Y + 20 + H, 0xff0000, TRUE);
-	//外側のゲージ枠
-	DrawBox(X, Y + 20, X + W, Y + 20 + H, 0x000000, FALSE);
+	////体力ゲージの表示
+	//int X = 510; int Y = 430; int W = 100; int H = 20;
+	//DrawString(X, Y, "PLAYER HP", 0x000000, 0);
+	////内側のゲージ
+	//DrawBox(X, Y + 20, X + (int)(g_player.hp * W / PLAYER_HP), Y + 20 + H, 0xff0000, TRUE);
+	////外側のゲージ枠
+	//DrawBox(X, Y + 20, X + W, Y + 20 + H, 0x000000, FALSE);
 }
 
 //ゲームオーバー画像描画処理
 void DrawGameOver(void) {
-	hen.g_Score = (hen.g_Mileage / 10 * 10) + hen.g_EnemyCount3 * 50 + hen.g_EnemyCount2 * 100 + hen.g_EnemyCount1 * 200;
+	hen.Score = (hen.g_Mileage / 10 * 10) + hen.g_EnemyCount3 * 50 + hen.g_EnemyCount2 * 100 + hen.g_EnemyCount1 * 200;
 
 	//スペースキーでメニューに戻る
 	if (hen.g_KeyFlg & PAD_INPUT_M) {
-		if (g_Ranking[RANKING_DATA - 1].score >= hen.g_Score) {
+		if (g_Ranking[RANKING_DATA - 1].score >= hen.Score) {
 			hen.g_GameState = 0;
 		}
 		else {
@@ -509,7 +512,7 @@ void DrawGameOver(void) {
 	DrawFormatString(260, 285, 0xFFFFFF, "%6d x 300 = %6d", hen.g_EnemyCount4, hen.g_EnemyCount4 * 300);
 
 	DrawString(310, 310, "スコア", 0x000000);
-	DrawFormatString(260, 310, 0xFFFFFF, "             = %6d", hen.g_Score);
+	DrawFormatString(260, 310, 0xFFFFFF, "             = %6d", hen.Score);
 	DrawString(150, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0);
 }
 
@@ -528,7 +531,7 @@ void InputRanking(void) {
 	DrawBox(160, 305, 300, 335, 0x000055, TRUE);
 
 	if (KeyInputSingleCharString(170, 310, 10, g_Ranking[4].name, FALSE) == 1) {
-		g_Ranking[4].score = hen.g_Score;
+		g_Ranking[4].score = hen.Score;
 		SortRanking();
 		SaveRanking();
 		hen.g_GameState = 2;

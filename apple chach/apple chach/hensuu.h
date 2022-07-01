@@ -3,6 +3,7 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int ENEMY_MAX = 8;
 const int ITEM_MAX = 3;
+const int MAX_INTERVAL = 3 * 60;
 
 struct PLAYER {
 	int flg;
@@ -32,8 +33,8 @@ public:
 	int g_TitleImage;
 	int g_Menu, g_Cone;
 
-	int g_Score = 0;  // スコア
-	int g_Time = 0;   //時間
+	int Score = 0;  // スコア
+	int g_Time;   //時間
 
 	int g_RankingImage;
 

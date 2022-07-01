@@ -4,7 +4,7 @@
 #include "DxLib.h"
 
 void APPLE::AppleControl() {
-	for (int i = 0; i < APPLE_MAX; i++) {
+	//for (int i = 0; i < APPLE_MAX; i++) {
 		if (flg == TRUE) {
 			//敵の表示
 			DrawGraph(x, y, img, TRUE);
@@ -16,7 +16,7 @@ void APPLE::AppleControl() {
 			y += speed;
 
 			//画面をはみ出したら消去
-			if (apple[i].y > SCREEN_HEIGHT + apple[i].h) apple[i].flg = FALSE;
+			if (y > SCREEN_HEIGHT + h) flg = FALSE;
 
 			//敵機を追い越したらカウント
 			/*if (g_enemy[i].y > g_player.y && g_enemy[i].point == 1) {
@@ -38,7 +38,7 @@ void APPLE::AppleControl() {
 			}*/
 
 			//当たり判定
-			if (HitBoxPlayer(&g_player) == TRUE && g_player.baricnt <= 0) {
+			if (HitBoxPlayer(&g_player) == TRUE) {
 				//g_player.flg = FALSE;
 				//g_player.speed = PLAYER_SPEED;
 				//g_player.count = 0;
@@ -47,7 +47,7 @@ void APPLE::AppleControl() {
 				//if (g_player.hp <= 0)  g_GameState = 6;
 			}
 		}
-	}
+	//}
 
 	//走行距離ごとに敵出現パターンを制御する
 	/*if (g_Mileage / 10 % 50 == 0) {

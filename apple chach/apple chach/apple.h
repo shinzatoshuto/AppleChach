@@ -12,6 +12,7 @@ public:
 	int speed;
 	int A, B, C, D;
 	int appleimgs[4];
+	int applespeed[4] = { 1,5,7,10 };//‚µ‘‚«
 
 public:
 	int CreateApple();

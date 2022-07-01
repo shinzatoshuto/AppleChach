@@ -447,16 +447,12 @@ void PlayerControl() {
 	SetFontSize(25);
 	DrawFormatString(520, 20, 0x000000, "制限時間");
 	DrawFormatString(560, 60, 0xffffff, "%d", hen.g_Time / 60);
-	DrawRotaGraph(528, 120, 0.5f, 0, hen.AppleImages[0], TRUE, FALSE);
-	DrawRotaGraph(558, 120, 0.5f, 0, hen.AppleImages[1], TRUE, FALSE);
-	DrawRotaGraph(588, 120, 0.5f, 0, hen.AppleImages[2], TRUE, FALSE);
-	DrawRotaGraph(618, 120, 0.5f, 0, hen.AppleImages[3], TRUE, FALSE);
 
 	SetFontSize(16);
-	DrawFormatString(520, 140, 0xFFFFFF, "%02d", g_AppleCount[0]);
-	DrawFormatString(550, 140, 0xFFFFFF, "%02d", g_AppleCount[1]);
-	DrawFormatString(580, 140, 0xFFFFFF, "%02d", g_AppleCount[2]);
-	DrawFormatString(610, 140, 0xFFFFFF, "%02d", g_AppleCount[3]);
+	for (int i = 0; i < 4; i++) {
+		DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
+		DrawFormatString(520 + i * 30, 140, 0xFFFFFF, "%02d", g_AppleCount[i]);
+	}
 
 	/*DrawFormatString(510, 20, 0x000000, "ハイスコア");
 	DrawFormatString(560, 40, 0xFFFFFF, "%08d", g_Ranking[0].score);

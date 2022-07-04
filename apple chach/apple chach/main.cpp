@@ -448,7 +448,7 @@ void PlayerControl() {
 
 //ゲームオーバー画像描画処理
 void DrawGameOver(void) {
-	hen.Score = (hen.g_Mileage / 10 * 10) + hen.g_EnemyCount3 * 50 + hen.g_EnemyCount2 * 100 + hen.g_EnemyCount1 * 200;
+	hen.Score = g_AppleCount[0] * 150 + g_AppleCount[1] * 300 + g_AppleCount[2] * 500 + g_AppleCount[3] * -1000;
 
 	//スペースキーでメニューに戻る
 	if (hen.g_KeyFlg & PAD_INPUT_M) {
@@ -468,19 +468,18 @@ void DrawGameOver(void) {
 
 	SetFontSize(20);
 	DrawString(220, 170, "ゲームオーバー", 0xcc0000);
-	SetFontSize(16);
-	DrawString(180, 200, "走行距離　　　", 0x000000);
+	SetFontSize(18);
+	//DrawString(180, 200, "走行距離　　　", 0x000000);
 
-	DrawRotaGraph(230, 230, 0.3f, M_PI / 2, hen.g_Teki[2], TRUE, FALSE);
-	DrawRotaGraph(230, 250, 0.3f, M_PI / 2, hen.g_Teki[1], TRUE, FALSE);
-	DrawRotaGraph(230, 270, 0.3f, M_PI / 2, hen.g_Teki[0], TRUE, FALSE);
-	DrawRotaGraph(230, 290, 0.3f, M_PI / 2, hen.g_Teki[3], TRUE, FALSE);
+	DrawRotaGraph(230, 220, 0.3f, 0, hen.AppleImages[0], TRUE, FALSE);
+	DrawRotaGraph(230, 240, 0.3f, 0, hen.AppleImages[1], TRUE, FALSE);
+	DrawRotaGraph(230, 260, 0.3f, 0, hen.AppleImages[2], TRUE, FALSE);
+	DrawRotaGraph(230, 280, 0.3f, 0, hen.AppleImages[3], TRUE, FALSE);
 
-	DrawFormatString(260, 200, 0xFFFFFF, "%6d x  10 = %6d", hen.g_Mileage / 10, hen.g_Mileage / 10 * 10);
-	DrawFormatString(260, 222, 0xFFFFFF, "%6d x  50 = %6d", hen.g_EnemyCount3, hen.g_EnemyCount3 * 50);
-	DrawFormatString(260, 243, 0xFFFFFF, "%6d x 100 = %6d", hen.g_EnemyCount2, hen.g_EnemyCount2 * 100);
-	DrawFormatString(260, 264, 0xFFFFFF, "%6d x 200 = %6d", hen.g_EnemyCount1, hen.g_EnemyCount1 * 200);
-	DrawFormatString(260, 285, 0xFFFFFF, "%6d x 300 = %6d", hen.g_EnemyCount4, hen.g_EnemyCount4 * 300);
+	DrawFormatString(260, 212, 0xFFFFFF, "%6d x  50 = %6d", g_AppleCount[0], g_AppleCount[0] * 150);
+	DrawFormatString(260, 233, 0xFFFFFF, "%6d x 100 = %6d", g_AppleCount[1], g_AppleCount[1] * 300);
+	DrawFormatString(260, 254, 0xFFFFFF, "%6d x 200 = %6d", g_AppleCount[2], g_AppleCount[2] * 500);
+	DrawFormatString(260, 275, 0xFFFFFF, "%6d x 300 = %6d", g_AppleCount[3], g_AppleCount[3] * -1000);
 
 	DrawString(310, 310, "スコア", 0x000000);
 	DrawFormatString(260, 310, 0xFFFFFF, "             = %6d", hen.Score);

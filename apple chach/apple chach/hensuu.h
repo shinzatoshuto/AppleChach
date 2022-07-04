@@ -58,6 +58,7 @@ public:
 	int Backimg;
 
 	int g_Car, g_Barrier;
+	int g_Player[3];
 	int g_Back = 0;
 	int v[3] = { -1,0,1 };
 };

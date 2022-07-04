@@ -389,18 +389,11 @@ int HitBoxPlayer(PLAYER* p, ENEMY* e) {
 }
 
 void PlayerControl() {
-	//燃料の消費
-	//g_player.fuel -= g_player.speed;
 	//ゲームオーバー処理へ
 	if (hen.g_Time <= 0) {
 		StopSoundMem(GameSound);
 		hen.g_GameState = 6;
 	}
-
-	//Zキーで加速
-	//if (hen.g_KeyFlg & PAD_INPUT_A && g_player.speed < 10) g_player.speed += 1;
-	//Xキーで減速
-	//if (hen.g_KeyFlg & PAD_INPUT_B && g_player.speed > 1) g_player.speed -= 1;
 
 	//上下左右移動
 	if (g_player.flg == TRUE) {
@@ -417,33 +410,26 @@ void PlayerControl() {
 	//プレイヤーの表示
 	if (g_player.flg == TRUE) {
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
-			DrawRotaGraph(g_player.x, g_player.y, 1.0f, -M_PI / 18, hen.g_Car, TRUE, FALSE);
+			DrawRotaGraph(g_player.x, g_player.y, 1.0f, -M_PI / 18, hen.g_Player[0], TRUE, FALSE);
+			//DrawGraph(g_player.x, g_player.y, hen.g_Player[0], TRUE);
 		}
 		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
-			DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 18, hen.g_Car, TRUE, FALSE);
+			DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 18, hen.g_Player[1], TRUE, FALSE);
+			//DrawGraph(g_player.x, g_player.y, hen.g_Player[1], TRUE);
 		}
 		else {
-			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Car, TRUE, FALSE);
+			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
+			//DrawGraph(g_player.x, g_player.y, hen.g_Player[2], TRUE);
 		}
-
-		//if (hen.g_KeyFlg & PAD_INPUT_C && g_player.bari > 0 && g_player.baricnt <= 0) {
-		//	g_player.bari--;
-		//	g_player.baricnt = 1000;
-		//}
-		//if (g_player.baricnt > 0) {
-		//	g_player.baricnt -= g_player.speed;
-		//	DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Barrier, TRUE, FALSE);
-		//}
-		//else {
-		//	g_player.baricnt = 0;
-		//}
 	}
 	else {
 		DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 8 * (++g_player.count / 5), hen.g_Car, TRUE, FALSE);
 		if (g_player.count >= 80)  g_player.flg = TRUE;
 	}
 
-	//敵を避けた数を表示
+	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ff00, TRUE);
+
+	//りんごを取った数を表示
 	SetFontSize(25);
 	DrawFormatString(520, 20, 0x000000, "制限時間");
 	DrawFormatString(560, 60, 0xffffff, "%d", hen.g_Time / 60);
@@ -453,44 +439,6 @@ void PlayerControl() {
 		DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
 		DrawFormatString(520 + i * 30, 140, 0xFFFFFF, "%02d", g_AppleCount[i]);
 	}
-
-	/*DrawFormatString(510, 20, 0x000000, "ハイスコア");
-	DrawFormatString(560, 40, 0xFFFFFF, "%08d", g_Ranking[0].score);
-	DrawFormatString(510, 80, 0x000000, "避けた数");
-	DrawRotaGraph(523, 120, 0.3f, 0, hen.g_Teki[0], TRUE, FALSE);
-	DrawRotaGraph(553, 120, 0.3f, 0, hen.g_Teki[1], TRUE, FALSE);
-	DrawRotaGraph(583, 120, 0.3f, 0, hen.g_Teki[2], TRUE, FALSE);
-	DrawRotaGraph(613, 120, 0.3f, 0, hen.g_Teki[3], TRUE, FALSE);
-
-	DrawFormatString(515, 140, 0xFFFFFF, "%02d", hen.g_EnemyCount1);
-	DrawFormatString(545, 140, 0xFFFFFF, "%02d", hen.g_EnemyCount2);
-	DrawFormatString(575, 140, 0xFFFFFF, "%02d", hen.g_EnemyCount3);
-	DrawFormatString(605, 140, 0xFFFFFF, "%02d", hen.g_EnemyCount4);
-	DrawFormatString(510, 200, 0x000000, "走行距離");
-	DrawFormatString(555, 220, 0xFFFFFF, "%08d", hen.g_Mileage / 10);
-	DrawFormatString(510, 240, 0x000000, "スピード");
-	DrawFormatString(555, 260, 0xFFFFFF, "%08d", g_player.speed);*/
-
-	//バリアの表示
-	//for (int i = 0; i < g_player.bari; i++) {
-	//	DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, hen.g_Barrier, TRUE, FALSE);
-	//}
-
-	//燃料ゲージの表示
-	//int F_X = 510; int F_Y = 390; int F_W = 100; int F_H = 20;
-	//DrawString(F_X, F_Y, "FUEL METER", 0x000000, 0);
-	////内臓ゲージ
-	//DrawBox(F_X, F_Y + 20, F_X + (int)(g_player.fuel * F_W / PLAYER_FUEL), F_Y + 20 + F_H, 0x0066cc, TRUE);
-	////外側ゲージ枠
-	//DrawBox(F_X, F_Y + 20, F_X + F_W, F_Y + 20 + F_H, 0x0066cc, FALSE);
-
-	////体力ゲージの表示
-	//int X = 510; int Y = 430; int W = 100; int H = 20;
-	//DrawString(X, Y, "PLAYER HP", 0x000000, 0);
-	////内側のゲージ
-	//DrawBox(X, Y + 20, X + (int)(g_player.hp * W / PLAYER_HP), Y + 20 + H, 0xff0000, TRUE);
-	////外側のゲージ枠
-	//DrawBox(X, Y + 20, X + W, Y + 20 + H, 0x000000, FALSE);
 }
 
 //ゲームオーバー画像描画処理

@@ -56,7 +56,9 @@ public:
 	int CharaImages[3];//ƒLƒƒƒ‰‰æ‘œ
 
 	int Backimg;
+	int EndImg;
 
+	int PosY;
 	int g_Car, g_Barrier;
 	int g_Player[3];
 	int g_Back = 0;

@@ -106,6 +106,8 @@ int g_AppleCount[4];
 int GameSound;
 
 int font00;
+int fonten;
+int fontensc;
 
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
@@ -120,6 +122,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	if ((GameSound = LoadSoundMem("sounds/Game.mp3")) == -1) return -1;
 
 	font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);
+	fonten = CreateFontToHandle("Tsunagi Gothic Black", 50, 1, DX_FONTTYPE_NORMAL);
+	fontensc = CreateFontToHandle("Tsunagi Gothic Black", 50, 1, DX_FONTTYPE_NORMAL);
 
 	//ゲームループ
 	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_START))
@@ -269,13 +273,27 @@ void DrawHelp(void) {
 
 //ゲームエンド描画処理
 void DrawEnd(void) {
+	
+
 	//エンド画像表示
-	DrawGraph(0, 0, hen.g_EndImage, FALSE);
-	SetFontSize(24);
-	DrawString(360, 480 - 24, "Thank you for Playing", 0xffffff, 0);
+	DrawGraph(0, 0, hen.EndImg, FALSE);
+	//SetFontSize(80);
+
+	DrawStringToHandle(65, 50, "Thank you for Playing !!", 0xffffff, fonten);
+
+	if (++hen.g_WaitTime < 600)hen.PosY = 300 - hen.g_WaitTime / 2;
+	DrawStringToHandle(65, 100 + hen.PosY, "タイトル　　AppleChach", 0xffffff, fontensc);
+	DrawStringToHandle(65, 130 + hen.PosY, "制作者　国際電子ビジネス専門学校", 0xffffff, fontensc);
+	DrawStringToHandle(65, 160 + hen.PosY, "　　　　　金城　大洋", 0xffffff, fontensc);
+	DrawStringToHandle(65, 190 + hen.PosY, "　　　　　志出盛　賢斗", 0xffffff, fontensc);
+	DrawStringToHandle(65, 220 + hen.PosY, "　　　　　城間　愛夢", 0xffffff, fontensc);
+	DrawStringToHandle(65, 250 + hen.PosY, "　　　　　新里　柊斗", 0xffffff, fontensc);
+	DrawStringToHandle(65, 280 + hen.PosY, "素材利用", 0xffffff, fontensc);
+	DrawStringToHandle(65, 310 + hen.PosY, "BGM　　　　魔王魂", 0xffffff, fontensc);
+	DrawStringToHandle(65, 340 + hen.PosY, "SE　　　　魔王魂", 0xffffff, fontensc);
 
 	//タイムの加算処理&終了
-	if (++hen.g_WaitTime > 180) hen.g_GameState = 99;
+	if (++hen.g_WaitTime > 900) hen.g_GameState = 99;
 }
 
 //ゲームメイン

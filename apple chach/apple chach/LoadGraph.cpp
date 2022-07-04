@@ -44,6 +44,9 @@ int LoadImages() {
 
 		//”wŒi‰æ‘œ
 		if ((hen.Backimg = LoadGraph("images/back/bg_natural_mori.jpg")) == -1)return-1;
+
+		//ƒGƒ“ƒh‰æ‘œ
+		if ((hen.EndImg = LoadGraph("images/back/bg_yamamichi.jpg")) == -1)return-1;
 	
 	return 0;
 }

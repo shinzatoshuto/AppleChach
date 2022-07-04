@@ -427,7 +427,9 @@ void PlayerControl() {
 		if (g_player.count >= 80)  g_player.flg = TRUE;
 	}
 
-	//“G‚ğ”ğ‚¯‚½”‚ğ•\¦
+	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ff00, TRUE);
+
+	//‚è‚ñ‚²‚ğæ‚Á‚½”‚ğ•\¦
 	SetFontSize(25);
 	DrawFormatString(520, 20, 0x000000, "§ŒÀŠÔ");
 	DrawFormatString(560, 60, 0xffffff, "%d", hen.g_Time / 60);

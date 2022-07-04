@@ -21,10 +21,10 @@ const int PLAYER_POS_Y = SCREEN_HEIGHT - 100;
 const int PLAYER_WIDTH = 63;
 const int PLAYER_HEIGHT = 120;
 const int PLAYER_SPEED = 5;
-const int PLAYER_HP = 1000;
-const int PLAYER_FUEL = 20000;
-const int PLAYER_BARRIER = 3;
-const int PLAYER_BARRIERUP = 10;
+//const int PLAYER_HP = 1000;
+//const int PLAYER_FUEL = 20000;
+//const int PLAYER_BARRIER = 3;
+//const int PLAYER_BARRIERUP = 10;
 
 //自機の構造体
 //struct PLAYER {
@@ -44,24 +44,24 @@ const int PLAYER_BARRIERUP = 10;
 //自機
 PLAYER g_player;
 
-//敵機の構造体
-struct ENEMY {
-	int flg;
-	int type;
-	int img;
-	int x, y, w, h;
-	int speed;
-	int point;
-	int cnt;
-};
-
-//敵機
-struct ENEMY g_enemy[ENEMY_MAX];
-struct ENEMY g_enemy00 = { TRUE,0,0,0,-50,63,120,0,1 };
-struct ENEMY g_enemyCn = { TRUE,4,0,0,-50,18,18,0,1 };
-
-struct ENEMY g_item[ITEM_MAX];
-struct ENEMY g_item00 = { TRUE,0,0,0,-50,50,50,0,1 };
+////敵機の構造体
+//struct ENEMY {
+//	int flg;
+//	int type;
+//	int img;
+//	int x, y, w, h;
+//	int speed;
+//	int point;
+//	int cnt;
+//};
+//
+////敵機
+//struct ENEMY g_enemy[ENEMY_MAX];
+//struct ENEMY g_enemy00 = { TRUE,0,0,0,-50,63,120,0,1 };
+//struct ENEMY g_enemyCn = { TRUE,4,0,0,-50,18,18,0,1 };
+//
+//struct ENEMY g_item[ITEM_MAX];
+//struct ENEMY g_item00 = { TRUE,0,0,0,-50,50,50,0,1 };
 
 //ランキングデータ（構造体）
 struct RankingData {
@@ -88,18 +88,8 @@ void SortRanking(void);
 int SaveRanking(void);
 int ReadRanking(void);
 
-//void ItemControl();
-//int CreateItem();
-
-void EnemyControl(); //敵機処理
-int CreateEnemy(); //敵機生成処理
-
-//void BackScrool();//背景画像スクロール処理
-
 int LoadImages();
 void PlayerControl();
-
-int HitBoxPlayer(PLAYER* p, ENEMY* e);  //当たり判定
 
 int nextTime;
 int g_AppleCount[4];
@@ -189,14 +179,14 @@ void GameInit(void) {
 	//スコアの初期化
 	hen.Score = 0;
 
-	//走行距離を初期化
-	hen.g_Mileage = 0;
+	////走行距離を初期化
+	//hen.g_Mileage = 0;
 
-	//敵１を避けた数の初期値
-	hen.g_EnemyCount1 = 0;
-	hen.g_EnemyCount2 = 0;
-	hen.g_EnemyCount3 = 0;
-	hen.g_EnemyCount4 = 0;
+	////敵１を避けた数の初期値
+	//hen.g_EnemyCount1 = 0;
+	//hen.g_EnemyCount2 = 0;
+	//hen.g_EnemyCount3 = 0;
+	//hen.g_EnemyCount4 = 0;
 
 	//プレイヤーの初期設定
 	g_player.flg = TRUE;
@@ -204,22 +194,22 @@ void GameInit(void) {
 	g_player.y = PLAYER_POS_Y;
 	g_player.w = PLAYER_WIDTH;
 	g_player.h = PLAYER_HEIGHT;
-	g_player.angle = 0.0;
+	//g_player.angle = 0.0;
 	g_player.count = 0;
 	g_player.speed = PLAYER_SPEED;
-	g_player.hp = PLAYER_HP;
+	/*g_player.hp = PLAYER_HP;
 	g_player.fuel = PLAYER_FUEL;
 	g_player.bari = PLAYER_BARRIER;
-	g_player.bariup = PLAYER_BARRIERUP;
+	g_player.bariup = PLAYER_BARRIERUP;*/
 
-	//エネミーの初期設定
+	//りんごの初期設定
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].flg = FALSE;
 	}
-	//アイテムの初期設定
-	for (int i = 0; i < ITEM_MAX; i++) {
-		g_item[i].flg = FALSE;
-	}
+	////アイテムの初期設定
+	//for (int i = 0; i < ITEM_MAX; i++) {
+	//	g_item[i].flg = FALSE;
+	//}
 	//リンゴのカウントの初期化
 	for (int i = 0; i < 4; i++) {
 		g_AppleCount[i] = 0;
@@ -320,97 +310,6 @@ void GameMain(void) {
 	//DrawString(150, 450, "---- スペースキーを押してゲームオーバーへ ----", 0xffffff, 0);
 }
 
-void EnemyControl() {
-	for (int i = 0; i < ENEMY_MAX; i++) {
-		if (g_enemy[i].flg == TRUE) {
-			//敵の表示
-			DrawRotaGraph(g_enemy[i].x, g_enemy[i].y, 1.0f, 0, g_enemy[i].img, TRUE, FALSE);
-
-			if (g_player.flg == FALSE) continue;
-
-			//まっすぐ下に移動
-			g_enemy[i].y += g_enemy[i].speed + g_player.speed - PLAYER_SPEED + 1;
-
-			//画面をはみ出したら消去
-			if (g_enemy[i].y > SCREEN_HEIGHT + g_enemy[i].h) g_enemy[i].flg = FALSE;
-
-			//敵機を追い越したらカウント
-			if (g_enemy[i].y > g_player.y && g_enemy[i].point == 1) {
-				g_enemy[i].point = 0;
-				if (g_enemy[i].type == 0)hen.g_EnemyCount1++;
-				if (g_enemy[i].type == 1)hen.g_EnemyCount2++;
-				if (g_enemy[i].type == 2)hen.g_EnemyCount3++;
-				if (g_enemy[i].type == 3)hen.g_EnemyCount4++;
-			}
-
-			if (++hen.g_Time < 120) {
-				if (g_enemy[i].type == 3)g_enemy[i].x += hen.v[g_enemy[i].cnt] + g_enemy[i].speed - PLAYER_SPEED + 3;
-			}
-			else if (++hen.g_Time < 240) {
-				if (g_enemy[i].type == 3)g_enemy[i].x -= hen.v[g_enemy[i].cnt] + g_enemy[i].speed - PLAYER_SPEED + 3;
-			}
-			else if (hen.g_Time > 300) {
-				hen.g_Time = 0;
-			}
-
-			//当たり判定
-			if (HitBoxPlayer(&g_player, &g_enemy[i]) == TRUE && g_player.baricnt <= 0) {
-				g_player.flg = FALSE;
-				g_player.speed = PLAYER_SPEED;
-				g_player.count = 0;
-				g_player.hp -= 100;
-				g_enemy[i].flg = FALSE;
-				if (g_player.hp <= 0)  hen.g_GameState = 6;
-			}
-		}
-	}
-
-	//走行距離ごとに敵出現パターンを制御する
-	if (hen.g_Mileage / 10 % 50 == 0) {
-		//apple.CreateApple();
-	}
-}
-
-int CreateEnemy() {
-	for (int i = 0; i < ENEMY_MAX; i++) {
-		if (g_enemy[i].flg == FALSE) {
-			g_enemy[i].cnt = 0;
-			g_enemy[i] = g_enemy00;
-			g_enemy[i].type = GetRand(3);
-			g_enemy[i].img = hen.g_Teki[g_enemy[i].type];
-			g_enemy[i].x = GetRand(4) * 105 + 40;
-			g_enemy[i].speed = g_enemy[i].type * 2;
-			//成功
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
-
-int HitBoxPlayer(PLAYER* p, ENEMY* e) {
-	//x,yは中心座標とする
-	int sx1 = p->x - (p->w / 2);
-	int sy1 = p->y - (p->h / 2);
-	int sx2 = sx1 + p->w;
-	int sy2 = sy1 + e->h;
-
-	int dx1 = e->x - (e->w / 2);
-	int dy1 = e->y - (e->h / 2);
-	int dx2 = dx1 + e->w;
-	int dy2 = dy1 + e->h;
-
-	//短形が重なっていれば当たり
-	if (sx1 < dx2 - 5 && dx1 < sx2 - 5 && sy1 < dy2 - 5 && dy1 < sy2 - 5) {
-		return TRUE;
-	}
-	if (hen.g_EnemyCount4) {
-		if (sx1 < dx2 - 150 && dx1 < sx2 - 150 && sy1 < dy2 - 150 && dy1 < sy2 - 150) {
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
-
 void PlayerControl() {
 	//ゲームオーバー処理へ
 	if (hen.g_Time <= 0) {
@@ -433,11 +332,11 @@ void PlayerControl() {
 	//プレイヤーの表示
 	if (g_player.flg == TRUE) {
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
-			DrawRotaGraph(g_player.x, g_player.y, 1.0f, -M_PI / 18, hen.g_Player[0], TRUE, FALSE);
+			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[0], TRUE, FALSE);
 			//DrawGraph(g_player.x, g_player.y, hen.g_Player[0], TRUE);
 		}
 		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
-			DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 18, hen.g_Player[1], TRUE, FALSE);
+			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[1], TRUE, FALSE);
 			//DrawGraph(g_player.x, g_player.y, hen.g_Player[1], TRUE);
 		}
 		else {
@@ -450,13 +349,15 @@ void PlayerControl() {
 		if (g_player.count >= 80)  g_player.flg = TRUE;
 	}
 
+	//UIの枠表示
 	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ff00, TRUE);
 
-	//りんごを取った数を表示
+	//制限時間の表示
 	SetFontSize(25);
 	DrawFormatString(520, 20, 0x000000, "制限時間");
 	DrawFormatString(560, 60, 0xffffff, "%d", hen.g_Time / 60);
 
+	//りんごを取った数を表示
 	SetFontSize(16);
 	for (int i = 0; i < 4; i++) {
 		DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
@@ -594,6 +495,3 @@ int ReadRanking(void) {
 	
 	return 0;
 }
-
-
-

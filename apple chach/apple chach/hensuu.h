@@ -9,14 +9,14 @@ struct PLAYER {
 	int flg;
 	int x, y;
 	int w, h;
-	double angle;
+	//double angle;
 	int count;
 	int speed;
-	int hp;
+	/*int hp;
 	int fuel;
 	int bari;
 	int baricnt;
-	int bariup;
+	int bariup;*/
 };
 
 extern PLAYER g_player;
@@ -46,11 +46,11 @@ public:
 	int g_EndImage;
 	int HelpImage;
 
-	int g_Mileage; //走行距離
-	int g_EnemyCount1, g_EnemyCount2, g_EnemyCount3, g_EnemyCount4; //敵カウント
-	int g_Teki[4]; //キャラ画像変数
+	//int g_Mileage; //走行距離
+	//int g_EnemyCount1, g_EnemyCount2, g_EnemyCount3, g_EnemyCount4; //敵カウント
+	//int g_Teki[4]; //キャラ画像変数
 
-	int g_StageImage;
+	//int g_StageImage;
 	int AppleImages[4];//リンゴの画像
 
 	int CharaImages[3];//キャラ画像
@@ -62,6 +62,6 @@ public:
 	int g_Car, g_Barrier;
 	int g_Player[3];
 	int g_Back = 0;
-	int v[3] = { -1,0,1 };
+	//int v[3] = { -1,0,1 };
 };
 extern HENSUU hen;

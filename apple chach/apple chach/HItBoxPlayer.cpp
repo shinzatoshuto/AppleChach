@@ -4,10 +4,10 @@
 
 int APPLE::HitBoxPlayer(PLAYER* p) {
 	//x,y‚Í’†SÀ•W‚Æ‚·‚é
-	int sx1 = p->x - (p->w / 2);
-	int sy1 = p->y - (p->h / 2);
-	int sx2 = sx1 + p->w;
-	int sy2 = sy1 + p->h;
+	int sx1 = p->x - p->w;
+	int sy1 = p->y - p->h;
+	int sx2 = p->x + p->w;
+	int sy2 = p->y + p->h;
 
 	int dx1 = this->x - (this->w / 2);
 	int dy1 = this->y - (this->h / 2);

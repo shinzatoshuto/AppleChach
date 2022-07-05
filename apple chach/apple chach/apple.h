@@ -12,12 +12,13 @@ public:
 	int speed;
 	int A, B, C, D;
 	int appleimgs[4];
-	int applespeed[4] = { 1,5,7,10 };//‚µ‘‚«
+	int applespeed[4] = { 2, 5, 10, 1 };//‚µ‘‚«
 
 public:
 	int CreateApple();
 	void AppleControl();
 	int HitBoxPlayer(PLAYER* p);
+	int GetType();
 };
 
 extern APPLE apple[APPLE_MAX];

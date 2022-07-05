@@ -98,11 +98,13 @@ int GameSound;
 int font00;
 int fonten;
 int fontensc;
+int fontran;
+int fontrans;
 
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
 {
-	SetMainWindowText("Drive & Avoid");   //タイトルを設定
+	SetMainWindowText("Apple Chach");   //タイトルを設定
 	ChangeWindowMode(TRUE);
 	SetWindowSize(640, 480);
 	if (DxLib_Init() == -1)return-1;
@@ -113,7 +115,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 
 	font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);
 	fonten = CreateFontToHandle("Tsunagi Gothic Black", 50, 1, DX_FONTTYPE_NORMAL);
-	fontensc = CreateFontToHandle("Tsunagi Gothic Black", 50, 1, DX_FONTTYPE_NORMAL);
+	fontensc = CreateFontToHandle("游ゴシック Medium", 20, 3, DX_FONTTYPE_NORMAL);
+	fontran = CreateFontToHandle("Tsunagi Gothic Black", 40, 1, DX_FONTTYPE_NORMAL);
+	fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL);
+
 
 	//ゲームループ
 	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_START))
@@ -232,7 +237,7 @@ void DrawRanking(void) {
 	//ランキング一覧を表示
 	SetFontSize(18);
 	for (int i = 0; i < RANKING_DATA; i++) {
-		DrawFormatString(50, 170 + i * 25, 0xffffff, "%2d %10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
+		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontran,"%2d %10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
 	}
 	DrawString(100, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0);
 }
@@ -248,7 +253,9 @@ void DrawHelp(void) {
 
 
 	DrawStringToHandle(20, 120, "ヘルプ画面", 0xffffff, font00);
-	DrawString(20, 160, "これは障害物を避けながら", 0xffffff, 0);
+
+
+/*	DrawString(20, 160, "これは障害物を避けながら", 0xffffff, 0);
 	DrawString(20, 180, "走り続けるゲームです", 0xffffff, 0);
 	DrawString(20, 200, "燃料が尽きるか障害物に", 0xffffff, 0);
 	DrawString(20, 220, "数回当たるとゲームオーバーです", 0xffffff, 0);
@@ -258,7 +265,7 @@ void DrawHelp(void) {
 	DrawGraph(20, 335, hen.g_Item[1], TRUE);
 	DrawString(20, 385, "ダメージを受けている時に取ると耐久回復", 0xffffff, 0);
 	DrawString(20, 405, "耐久が減っていなかったら燃料が少し回復するよ。", 0xffffff, 0);
-	DrawString(20, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0);
+	DrawString(20, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0)*/;
 }
 
 //ゲームエンド描画処理
@@ -269,21 +276,21 @@ void DrawEnd(void) {
 	DrawGraph(0, 0, hen.EndImg, FALSE);
 	//SetFontSize(80);
 
-	DrawStringToHandle(65, 50, "Thank you for Playing !!", 0xffffff, fonten);
+	DrawStringToHandle(65, 30, "Thank you for Playing !!", 0xffff00, fonten);
 
-	if (++hen.g_WaitTime < 600)hen.PosY = 300 - hen.g_WaitTime / 2;
-	DrawStringToHandle(65, 100 + hen.PosY, "タイトル　　AppleChach", 0xffffff, fontensc);
-	DrawStringToHandle(65, 130 + hen.PosY, "制作者　国際電子ビジネス専門学校", 0xffffff, fontensc);
-	DrawStringToHandle(65, 160 + hen.PosY, "　　　　　金城　大洋", 0xffffff, fontensc);
-	DrawStringToHandle(65, 190 + hen.PosY, "　　　　　志出盛　賢斗", 0xffffff, fontensc);
-	DrawStringToHandle(65, 220 + hen.PosY, "　　　　　城間　愛夢", 0xffffff, fontensc);
-	DrawStringToHandle(65, 250 + hen.PosY, "　　　　　新里　柊斗", 0xffffff, fontensc);
-	DrawStringToHandle(65, 280 + hen.PosY, "素材利用", 0xffffff, fontensc);
-	DrawStringToHandle(65, 310 + hen.PosY, "BGM　　　　魔王魂", 0xffffff, fontensc);
-	DrawStringToHandle(65, 340 + hen.PosY, "SE　　　　魔王魂", 0xffffff, fontensc);
+	if (++hen.g_WaitTime < 90)hen.PosY = 90 - hen.g_WaitTime / 2;
+	DrawStringToHandle(80, 70 + hen.PosY, "タイトル　　AppleChach", 0xffffff, fontensc);
+	DrawStringToHandle(80, 110 + hen.PosY, "制作者　国際電子ビジネス専門学校", 0xffffff, fontensc);
+	DrawStringToHandle(80, 150 + hen.PosY, "　　　　　金城　大洋", 0xffffff, fontensc);
+	DrawStringToHandle(80, 190 + hen.PosY, "　　　　　志出盛　賢斗", 0xffffff, fontensc);
+	DrawStringToHandle(80, 230 + hen.PosY, "　　　　　城間　愛夢", 0xffffff, fontensc);
+	DrawStringToHandle(80, 270 + hen.PosY, "　　　　　新里　柊斗", 0xffffff, fontensc);
+	DrawStringToHandle(80, 310 + hen.PosY, "素材利用", 0xffffff, fontensc);
+	DrawStringToHandle(80, 350 + hen.PosY, "BGM　　　　魔王魂", 0xffffff, fontensc);
+	DrawStringToHandle(80, 390 + hen.PosY, "SE　　　　   魔王魂", 0xffffff, fontensc);
 
 	//タイムの加算処理&終了
-	if (++hen.g_WaitTime > 900) hen.g_GameState = 99;
+	if (++hen.g_WaitTime > 180) hen.g_GameState = 99;
 }
 
 //ゲームメイン
@@ -412,14 +419,14 @@ void InputRanking(void) {
 	SetFontSize(20);
 
 	//名前入力指示文字列の描画
-	DrawString(150, 240, "ランキングに登録します", 0xffffff);
-	DrawString(150, 270, "名前を英字で入力してください", 0xffffff);
+	DrawStringToHandle(110, 240, "ランキングに登録します", 0xffffff, fontrans);
+	DrawStringToHandle(110, 270, "名前を英字で入力してください", 0xffffff, fontrans);
 
 	//名前の入力
-	DrawString(150, 310, ">", 0xffffff);
-	DrawBox(160, 305, 300, 335, 0x000055, TRUE);
+	DrawString(110, 310, ">", 0xffffff);
+	DrawBox(120, 305, 260, 335, 0x000055, TRUE);
 
-	if (KeyInputSingleCharString(170, 310, 10, g_Ranking[4].name, FALSE) == 1) {
+	if (KeyInputSingleCharString(130, 310, 10, g_Ranking[4].name, FALSE) == 1) {
 		g_Ranking[4].score = hen.Score;
 		SortRanking();
 		SaveRanking();
@@ -488,6 +495,10 @@ int ReadRanking(void) {
 	if ((fp = fopen("rankingdata.txt", "r")) == NULL) {
 		printf("Ranking Data Error\n");
 		return-1;
+	}
+
+	for (int i = 0; i < 5; i++) {
+		fscanf(fp, "%2d %10s %10d\n", &g_Ranking[i].no, g_Ranking[i].name, &g_Ranking[i].score);
 	}
 
 	fclose(fp);

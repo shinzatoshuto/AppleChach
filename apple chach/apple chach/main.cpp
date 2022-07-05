@@ -452,7 +452,7 @@ void SortRanking(void) {
 
 	//順位付け
 	for (i = 0; i < 5; i++) {
-		g_Ranking[i].no = i + 1;
+		g_Ranking[i].no = 1;
 	}
 	//得点が同じだった場合は、同じ順位とする
 	//同順位があった場合の次の順位はデータ個数が加算された順位とする

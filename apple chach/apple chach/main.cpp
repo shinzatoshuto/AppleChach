@@ -221,11 +221,18 @@ void GameInit(void) {
 	}
 
 	hen.g_Time = 1800;
+
+
+
+
 	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
 
 	PlaySoundMem(GameSound, DX_PLAYTYPE_BACK);
 	//ゲームメイン処理へ
 	hen.g_GameState = 5;
+
+	//ポーズフラグ
+	hen.g_PauseFlg = 0;
 }
 
 //ゲームランキング描画表示
@@ -300,11 +307,13 @@ void GameMain(void) {
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].AppleControl();
 	}
-	if (--hen.g_Time < nextTime) {
-		for (int i = 0; i < APPLE_MAX; i++) {
-			if (apple[i].CreateApple()) {
-				nextTime -= GetRand(MAX_INTERVAL);
-				break;
+	if (hen.g_PauseFlg == 0) {
+		if (--hen.g_Time < nextTime) {
+			for (int i = 0; i < APPLE_MAX; i++) {
+				if (apple[i].CreateApple()) {
+					nextTime -= GetRand(MAX_INTERVAL);
+					break;
+				}
 			}
 		}
 	}
@@ -325,11 +334,12 @@ void PlayerControl() {
 	}
 
 	//上下左右移動
-	if (g_player.flg == TRUE) {
-		if (hen.g_NowKey & PAD_INPUT_LEFT) g_player.x -= g_player.speed;
-		if (hen.g_NowKey & PAD_INPUT_RIGHT) g_player.x += g_player.speed;
+	if (hen.g_PauseFlg == 0) {
+		if (g_player.flg == TRUE) {
+			if (hen.g_NowKey & PAD_INPUT_LEFT) g_player.x -= g_player.speed;
+			if (hen.g_NowKey & PAD_INPUT_RIGHT) g_player.x += g_player.speed;
+		}
 	}
-
 	//画面をはみ出さないようにする
 	if (g_player.x < 32)  g_player.x = 32;
 	if (g_player.x > SCREEN_WIDTH - 180)  g_player.x = SCREEN_WIDTH - 180;
@@ -340,12 +350,26 @@ void PlayerControl() {
 	//プレイヤーの表示
 	if (g_player.flg == TRUE) {
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
-			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[0], TRUE, FALSE);
-			//DrawGraph(g_player.x, g_player.y, hen.g_Player[0], TRUE);
+			//po-zu
+			if (hen.g_PauseFlg == 0) {
+				DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[0], TRUE, FALSE);
+				//DrawGraph(g_player.x, g_player.y, hen.g_Player[0], TRUE);
+			}
+			else {
+				DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
+				//DrawGraph(g_player.x, g_player.y, hen.g_Player[2], TRUE);
+			}
 		}
 		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
-			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[1], TRUE, FALSE);
-			//DrawGraph(g_player.x, g_player.y, hen.g_Player[1], TRUE);
+			//po-zu
+			if (hen.g_PauseFlg == 0) {
+				DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[1], TRUE, FALSE);
+				//DrawGraph(g_player.x, g_player.y, hen.g_Player[1], TRUE);
+			}
+			else {
+				DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
+				//DrawGraph(g_player.x, g_player.y, hen.g_Player[2], TRUE);
+			}
 		}
 		else {
 			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
@@ -356,7 +380,13 @@ void PlayerControl() {
 		DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 8 * (++g_player.count / 5), hen.g_Car, TRUE, FALSE);
 		if (g_player.count >= 80)  g_player.flg = TRUE;
 	}
-
+	//ポーズフラグ
+	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == 0) {
+		hen.g_PauseFlg = 1;
+	}
+	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == 1) {
+		hen.g_PauseFlg = 0;
+	}
 	//UIの枠表示
 	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ff00, TRUE);
 
@@ -420,14 +450,14 @@ void InputRanking(void) {
 	SetFontSize(20);
 
 	//名前入力指示文字列の描画
-	DrawStringToHandle(110, 240, "ランキングに登録します", 0xffffff, fontrans);
-	DrawStringToHandle(110, 270, "名前を英字で入力してください", 0xffffff, fontrans);
+	DrawStringToHandle(110, 140, "ランキングに登録します", 0xffffff, fontrans);
+	DrawStringToHandle(110, 170, "名前を英字で入力してください", 0xffffff, fontrans);
 
 	//名前の入力
-	DrawString(110, 310, ">", 0xffffff);
-	DrawBox(120, 305, 260, 335, 0x000055, TRUE);
+	DrawString(110, 210, ">", 0xffffff);
+	DrawBox(120, 205, 260, 235, 0x000055, TRUE);
 
-	if (KeyInputSingleCharString(130, 310, 10, g_Ranking[4].name, FALSE) == 1) {
+	if (KeyInputSingleCharString(130, 210, 10, g_Ranking[4].name, FALSE) == 1) {
 		g_Ranking[4].score = hen.Score;
 		SortRanking();
 		SaveRanking();

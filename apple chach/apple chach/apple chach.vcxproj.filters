@@ -22,6 +22,9 @@
     <Filter Include="player">
       <UniqueIdentifier>{ef62891c-7c92-4c93-be66-595d84faa526}</UniqueIdentifier>
     </Filter>
+    <Filter Include="pad">
+      <UniqueIdentifier>{07ba442a-a881-4b3f-bd73-f4fd74b69b45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,6 +45,9 @@
     <ClCompile Include="HItBoxPlayer.cpp">
       <Filter>Apple</Filter>
     </ClCompile>
+    <ClCompile Include="pad.cpp">
+      <Filter>pad</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
@@ -52,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="pad.h">
+      <Filter>pad</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

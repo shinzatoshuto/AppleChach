@@ -13,7 +13,11 @@ void APPLE::AppleControl() {
 
 			//‚Ü‚Á‚·‚®‰º‚ÉˆÚ“®
 			//g_enemy[i].y += g_enemy[i].speed + g_player.speed - PLAYER_SPEED + 1;
-			y += speed;
+			if (hen.g_PauseFlg == 1) {
+			}
+			if (hen.g_PauseFlg == 0) {
+				y += speed;
+			}
 
 			//‰æ–Ê‚ð‚Í‚Ýo‚µ‚½‚çÁ‹Ž
 			if (y > SCREEN_HEIGHT + h) flg = FALSE;

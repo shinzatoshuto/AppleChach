@@ -63,5 +63,7 @@ public:
 	int g_Player[3];
 	int g_Back = 0;
 	//int v[3] = { -1,0,1 };
+
+	int g_PauseFlg;  //ポーズフラグ
 };
 extern HENSUU hen;

@@ -13,8 +13,8 @@ void APPLE::AppleControl() {
 
 			//‚Ü‚Á‚·‚®‰º‚ÉˆÚ“®
 			//g_enemy[i].y += g_enemy[i].speed + g_player.speed - PLAYER_SPEED + 1;
-			if (hen.g_PauseFlg == 1) {
-			}
+			//if (hen.g_PauseFlg == 1) {
+			//}
 			if (hen.g_PauseFlg == 0) {
 				y += speed;
 			}

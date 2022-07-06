@@ -18,8 +18,8 @@ HENSUU hen;
 //自機の初期値
 const int PLAYER_POS_X = SCREEN_WIDTH / 2;
 const int PLAYER_POS_Y = SCREEN_HEIGHT - 100;
-const int PLAYER_WIDTH = 30;
-const int PLAYER_HEIGHT = 90;
+const int PLAYER_WIDTH = 60;
+const int PLAYER_HEIGHT = 180;
 const int PLAYER_SPEED = 5;
 //const int PLAYER_HP = 1000;
 //const int PLAYER_FUEL = 20000;
@@ -346,34 +346,34 @@ void PlayerControl() {
 	if (g_player.y < 60)  g_player.y = 60;
 	if (g_player.y > SCREEN_HEIGHT - 60)  g_player.y = SCREEN_HEIGHT - 60;
 
-	DrawBox(g_player.x - g_player.w, g_player.y - g_player.h, g_player.x + g_player.w, g_player.y + g_player.h, 0xff0000, TRUE);
+	//DrawBox(g_player.x - g_player.w / 2, g_player.y - g_player.h / 2, g_player.x + g_player.w / 2, g_player.y + g_player.h / 2, 0xff0000, TRUE);
 	//プレイヤーの表示
 	if (g_player.flg == TRUE) {
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
 			if (hen.g_PauseFlg == 0) {
-				DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[0], TRUE, FALSE);
-				//DrawGraph(g_player.x, g_player.y, hen.g_Player[0], TRUE);
+				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[0], TRUE, FALSE);
+				DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[0], TRUE);
 			}
 			else {
-				DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
-				//DrawGraph(g_player.x, g_player.y, hen.g_Player[2], TRUE);
+				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
+				DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 			}
 		}
 		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
 			//po-zu
 			if (hen.g_PauseFlg == 0) {
-				DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[1], TRUE, FALSE);
-				//DrawGraph(g_player.x, g_player.y, hen.g_Player[1], TRUE);
+				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[1], TRUE, FALSE);
+				DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[1], TRUE);
 			}
 			else {
-				DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
-				//DrawGraph(g_player.x, g_player.y, hen.g_Player[2], TRUE);
+				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
+				DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 			}
 		}
 		else {
-			DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
-			//DrawGraph(g_player.x, g_player.y, hen.g_Player[2], TRUE);
+			//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
+			DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 		}
 	}
 	else {

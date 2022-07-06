@@ -1,8 +1,8 @@
 #pragma once
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-const int ENEMY_MAX = 8;
-const int ITEM_MAX = 3;
+//const int ENEMY_MAX = 8;
+//const int ITEM_MAX = 3;
 const int MAX_INTERVAL = 3 * 60;
 
 struct PLAYER {

@@ -50,6 +50,7 @@ void APPLE::AppleControl() {
 				g_AppleCount[type]++;
 				flg = FALSE;
 				if (type == 3) {
+					PlaySoundMem(hen.PoisonSE, DX_PLAYTYPE_BACK);
 					g_player.flg = FALSE;
 					g_player.count = 120;
 				}

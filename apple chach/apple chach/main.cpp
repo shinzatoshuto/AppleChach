@@ -335,7 +335,7 @@ void PlayerControl() {
 
 	//上下左右移動
 	if (hen.g_PauseFlg == 0) {
-		if (g_player.flg == TRUE) {
+		if (g_player.flg == TRUE || true) {
 			if (hen.g_NowKey & PAD_INPUT_LEFT) g_player.x -= g_player.speed;
 			if (hen.g_NowKey & PAD_INPUT_RIGHT) g_player.x += g_player.speed;
 		}
@@ -348,7 +348,8 @@ void PlayerControl() {
 
 	//DrawBox(g_player.x - g_player.w / 2, g_player.y - g_player.h / 2, g_player.x + g_player.w / 2, g_player.y + g_player.h / 2, 0xff0000, TRUE);
 	//プレイヤーの表示
-	if (g_player.flg == TRUE) {
+	//if (g_player.flg == TRUE) {
+	if (g_player.flg == TRUE || (g_player.flg == FALSE && --g_player.count % 10 == 0))
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
 			if (hen.g_PauseFlg == 0) {
@@ -375,11 +376,14 @@ void PlayerControl() {
 			//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
 			DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 		}
-	}
-	else {
-		DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 8 * (++g_player.count / 5), hen.g_Car, TRUE, FALSE);
-		if (g_player.count >= 80)  g_player.flg = TRUE;
-	}
+	//}
+	//else {
+		//DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 8 * (++g_player.count / 5), hen.g_Car, TRUE, FALSE);
+		//if (g_player.count >= 80)  g_player.flg = TRUE;
+		
+		//DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
+		if (g_player.count <= 0) g_player.flg = TRUE;
+	//}
 	//ポーズフラグ
 	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == 0) {
 		hen.g_PauseFlg = 1;

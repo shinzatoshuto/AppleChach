@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClCompile Include="AppleControl.cpp" />
     <ClCompile Include="HItBoxPlayer.cpp" />
+    <ClCompile Include="LoadSound.cpp" />
     <ClCompile Include="pad.cpp" />
     <ClCompile Include="Playercon.cpp" />
     <ClCompile Include="CreateApple.cpp" />

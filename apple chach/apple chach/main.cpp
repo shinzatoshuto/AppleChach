@@ -111,7 +111,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 	if (LoadImages() == -1)return-1;
 	if (ReadRanking() == -1)return-1;
+	if (LoadSound() == -1)return-1;
 	if ((GameSound = LoadSoundMem("sounds/Game.mp3")) == -1) return -1;
+	ChangeVolumeSoundMem(100, GameSound);
 
 	font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);
 	fonten = CreateFontToHandle("Tsunagi Gothic Black", 50, 1, DX_FONTTYPE_NORMAL);
@@ -351,7 +353,7 @@ void PlayerControl() {
 	if (g_player.flg == TRUE) {
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
-			if (hen.g_PauseFlg == 0) {
+			if (hen.g_PauseFlg == Posing) {
 				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[0], TRUE, FALSE);
 				DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[0], TRUE);
 			}
@@ -362,7 +364,7 @@ void PlayerControl() {
 		}
 		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
 			//po-zu
-			if (hen.g_PauseFlg == 0) {
+			if (hen.g_PauseFlg == Posing) {
 				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[1], TRUE, FALSE);
 				DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[1], TRUE);
 			}
@@ -381,12 +383,15 @@ void PlayerControl() {
 		if (g_player.count >= 80)  g_player.flg = TRUE;
 	}
 	//ポーズフラグ
-	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == 0) {
-		hen.g_PauseFlg = 1;
+	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == Posing) {
+		hen.g_PauseFlg = Play;
+		StopSoundMem(GameSound);
 	}
-	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == 1) {
-		hen.g_PauseFlg = 0;
+	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == Play) {
+		hen.g_PauseFlg = Posing;
+		PlaySoundMem(GameSound, DX_PLAYTYPE_BACK, FALSE);
 	}
+	
 	//UIの枠表示
 	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ff00, TRUE);
 

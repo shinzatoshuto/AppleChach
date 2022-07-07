@@ -23,6 +23,12 @@ extern PLAYER g_player;
 
 extern int g_AppleCount[4];
 
+int LoadSound();
+enum {
+	Posing,
+	Play
+};
+
 class HENSUU {
 public:
 	//変数の宣言
@@ -65,5 +71,6 @@ public:
 	//int v[3] = { -1,0,1 };
 
 	int g_PauseFlg;  //ポーズフラグ
+	int FallSE, ChachSE, PoisonSE;
 };
 extern HENSUU hen;

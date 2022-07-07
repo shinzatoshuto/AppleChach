@@ -14,6 +14,7 @@ int APPLE::CreateApple() {
 			flg = TRUE;
 			w = 40;
 			h = 40;
+			PlaySoundMem(hen.FallSE, DX_PLAYTYPE_BACK);
 			//ê¨å˜
 			return TRUE;
 		}

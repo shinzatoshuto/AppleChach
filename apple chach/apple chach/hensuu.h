@@ -24,10 +24,6 @@ extern PLAYER g_player;
 extern int g_AppleCount[4];
 
 int LoadSound();
-enum {
-	Posing,
-	Play
-};
 
 class HENSUU {
 public:

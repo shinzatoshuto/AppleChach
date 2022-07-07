@@ -116,12 +116,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	if ((GameSound = LoadSoundMem("sounds/Game.mp3")) == -1) return -1;
 	ChangeVolumeSoundMem(100, GameSound);
 
+	//フォント
 	font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);
 	fonten = CreateFontToHandle("Tsunagi Gothic Black", 50, 1, DX_FONTTYPE_NORMAL);
 	fontensc = CreateFontToHandle("游ゴシック Medium", 20, 3, DX_FONTTYPE_NORMAL);
 	fontran = CreateFontToHandle("Tsunagi Gothic Black", 40, 1, DX_FONTTYPE_NORMAL);
 	fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL);
-	fontpose = CreateFontToHandle("wb_font", 50, 3, DX_FONTTYPE_NORMAL);
+	fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL);
 
 
 	//ゲームループ
@@ -188,37 +189,19 @@ void GameInit(void) {
 	//スコアの初期化
 	hen.Score = 0;
 
-	////走行距離を初期化
-	//hen.g_Mileage = 0;
-
-	////敵１を避けた数の初期値
-	//hen.g_EnemyCount1 = 0;
-	//hen.g_EnemyCount2 = 0;
-	//hen.g_EnemyCount3 = 0;
-	//hen.g_EnemyCount4 = 0;
-
 	//プレイヤーの初期設定
 	g_player.flg = TRUE;
 	g_player.x = PLAYER_POS_X;
 	g_player.y = PLAYER_POS_Y;
 	g_player.w = PLAYER_WIDTH;
 	g_player.h = PLAYER_HEIGHT;
-	//g_player.angle = 0.0;
 	g_player.count = 0;
 	g_player.speed = PLAYER_SPEED;
-	/*g_player.hp = PLAYER_HP;
-	g_player.fuel = PLAYER_FUEL;
-	g_player.bari = PLAYER_BARRIER;
-	g_player.bariup = PLAYER_BARRIERUP;*/
 
 	//りんごの初期設定
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].flg = FALSE;
 	}
-	////アイテムの初期設定
-	//for (int i = 0; i < ITEM_MAX; i++) {
-	//	g_item[i].flg = FALSE;
-	//}
 	//リンゴのカウントの初期化
 	for (int i = 0; i < 4; i++) {
 		g_AppleCount[i] = 0;
@@ -264,19 +247,6 @@ void DrawHelp(void) {
 
 
 	DrawStringToHandle(20, 120, "ヘルプ画面", 0xffffff, font00);
-
-
-/*	DrawString(20, 160, "これは障害物を避けながら", 0xffffff, 0);
-	DrawString(20, 180, "走り続けるゲームです", 0xffffff, 0);
-	DrawString(20, 200, "燃料が尽きるか障害物に", 0xffffff, 0);
-	DrawString(20, 220, "数回当たるとゲームオーバーです", 0xffffff, 0);
-	DrawString(20, 250, "アイテム一覧", 0xffffff, 0);
-	DrawGraph(20, 260, hen.g_Item[0], TRUE);
-	DrawString(20, 315, "取ると燃料が回復するよ。", 0xffffff, 0);
-	DrawGraph(20, 335, hen.g_Item[1], TRUE);
-	DrawString(20, 385, "ダメージを受けている時に取ると耐久回復", 0xffffff, 0);
-	DrawString(20, 405, "耐久が減っていなかったら燃料が少し回復するよ。", 0xffffff, 0);
-	DrawString(20, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0)*/;
 }
 
 //ゲームエンド描画処理
@@ -285,7 +255,6 @@ void DrawEnd(void) {
 
 	//エンド画像表示
 	DrawGraph(0, 0, hen.EndImg, FALSE);
-	//SetFontSize(80);
 
 	DrawStringToHandle(65, 30, "Thank you for Playing !!", 0xffff00, fonten);
 
@@ -321,13 +290,6 @@ void GameMain(void) {
 			}
 		}
 	}
-
-	////スペースキーでメニューに戻る
-	//if (g_KeyFlg & PAD_INPUT_M) g_GameState = 6;
-
-	//SetFontSize(16);
-	//DrawString(20, 20, "ゲームメイン", 0xffffff, 0);
-	//DrawString(150, 450, "---- スペースキーを押してゲームオーバーへ ----", 0xffffff, 0);
 }
 
 void PlayerControl() {
@@ -357,40 +319,30 @@ void PlayerControl() {
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
 			if (hen.g_PauseFlg == FALSE) {
-				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[0], TRUE, FALSE);
 				DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[0], TRUE);
 			}
 			else {
-				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
 				DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 			}
 		}
 		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
 			//po-zu
 			if (hen.g_PauseFlg == FALSE) {
-				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[1], TRUE, FALSE);
 				DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[1], TRUE);
 			}
 			else {
-				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
 				DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 			}
 		}
 		else {
-			//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
 			DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 		}
 	}
 	if (hen.g_PauseFlg == TRUE) {
 		DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 	}
-	//else {
-		//DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 8 * (++g_player.count / 5), hen.g_Car, TRUE, FALSE);
-		//if (g_player.count >= 80)  g_player.flg = TRUE;
-		
-		//DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 		if (g_player.count <= 0) g_player.flg = TRUE;
-	//}
+
 	//ポーズフラグ
 	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == FALSE) {
 		hen.g_PauseFlg = TRUE;
@@ -406,28 +358,28 @@ void PlayerControl() {
 	}
 	
 	//UIの枠表示
-	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ff00, TRUE);
+	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ffff, TRUE);
 
 	//制限時間の表示
 	SetFontSize(25);
 	DrawFormatString(520, 20, 0x000000, "制限時間");
-	DrawFormatString(560, 60, 0xffffff, "%d", hen.g_Time / 60);
+	DrawFormatString(560, 60, 0x000000, "%d", hen.g_Time / 60);
 
 	//りんごを取った数を表示
 	SetFontSize(16);
 	for (int i = 0; i < 4; i++) {
 		DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
-		DrawFormatString(520 + i * 30, 140, 0xFFFFFF, "%02d", g_AppleCount[i]);
+		DrawFormatString(520 + i * 30, 140, 0x000000, "%02d", g_AppleCount[i]);
 	}
 
-	DrawFormatString(520, 160, 0xFFFFFF, "スコア");
-	DrawFormatString(560, 200, 0xFFFFFF, "%d", hen.Score);
+	SetFontSize(30);
+	DrawFormatString(530, 180, 0x000000, "スコア");
+	SetFontSize(20);
+	DrawFormatString(543, 220, 0x000000, "%06d", hen.Score);
 }
 
 //ゲームオーバー画像描画処理
 void DrawGameOver(void) {
-	//hen.Score = g_AppleCount[0] * 150 + g_AppleCount[1] * 300 + g_AppleCount[2] * 500 + g_AppleCount[3] * -1000;
-
 	//スペースキーでメニューに戻る
 	if (hen.g_KeyFlg & PAD_INPUT_M) {
 		if (g_Ranking[RANKING_DATA - 1].score >= hen.Score) {
@@ -438,30 +390,26 @@ void DrawGameOver(void) {
 		}
 	}
 
-	//BackScrool();
-
-
 	DrawBox(150, 150, 490, 330, 0x009900, TRUE);
 	DrawBox(150, 150, 490, 330, 0x000000, FALSE);
 
 	SetFontSize(20);
 	DrawString(220, 170, "ゲームオーバー", 0xcc0000);
 	SetFontSize(18);
-	//DrawString(180, 200, "走行距離　　　", 0x000000);
 
-	DrawRotaGraph(230, 220, 0.3f, 0, hen.AppleImages[0], TRUE, FALSE);
-	DrawRotaGraph(230, 240, 0.3f, 0, hen.AppleImages[1], TRUE, FALSE);
-	DrawRotaGraph(230, 260, 0.3f, 0, hen.AppleImages[2], TRUE, FALSE);
-	DrawRotaGraph(230, 280, 0.3f, 0, hen.AppleImages[3], TRUE, FALSE);
+	DrawRotaGraph(215, 220, 0.5f, 0, hen.AppleImages[0], TRUE, FALSE);
+	DrawRotaGraph(215, 240, 0.5f, 0, hen.AppleImages[1], TRUE, FALSE);
+	DrawRotaGraph(215, 260, 0.5f, 0, hen.AppleImages[2], TRUE, FALSE);
+	DrawRotaGraph(215, 280, 0.5f, 0, hen.AppleImages[3], TRUE, FALSE); 
 
-	DrawFormatString(240, 212, 0xFFFFFF, "%6d x   150 = %6d", g_AppleCount[0], g_AppleCount[0] * 150);
-	DrawFormatString(240, 233, 0xFFFFFF, "%6d x   300 = %6d", g_AppleCount[1], g_AppleCount[1] * 300);
-	DrawFormatString(240, 254, 0xFFFFFF, "%6d x   500 = %6d", g_AppleCount[2], g_AppleCount[2] * 500);
-	DrawFormatString(240, 275, 0xFFFFFF, "%6d x -1000 = %6d", g_AppleCount[3], g_AppleCount[3] * -1000);
+	DrawFormatString(210, 212, 0xFFFFFF, "%6d x   150 = %6d", g_AppleCount[0], g_AppleCount[0] * 150);
+	DrawFormatString(210, 233, 0xFFFFFF, "%6d x   300 = %6d", g_AppleCount[1], g_AppleCount[1] * 300);
+	DrawFormatString(210, 254, 0xFFFFFF, "%6d x   500 = %6d", g_AppleCount[2], g_AppleCount[2] * 500);
+	DrawFormatString(210, 275, 0xFFFFFF, "%6d x -1000 = %6d", g_AppleCount[3], g_AppleCount[3] * -1000);
 
 	DrawString(310, 310, "スコア", 0x000000);
 	DrawFormatString(260, 310, 0xFFFFFF, "             = %6d", hen.Score);
-	DrawString(150, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0);
+	DrawString(120, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0);
 }
 
 //ランキング入力処理

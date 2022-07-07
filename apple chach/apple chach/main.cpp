@@ -354,7 +354,7 @@ void PlayerControl() {
 	if (g_player.flg == TRUE || (g_player.flg == FALSE && --g_player.count % 10 == 0))
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
-			if (hen.g_PauseFlg == Posing) {
+			if (hen.g_PauseFlg == FALSE) {
 				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[0], TRUE, FALSE);
 				DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[0], TRUE);
 			}
@@ -365,7 +365,7 @@ void PlayerControl() {
 		}
 		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
 			//po-zu
-			if (hen.g_PauseFlg == Posing) {
+			if (hen.g_PauseFlg == FALSE) {
 				//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[1], TRUE, FALSE);
 				DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[1], TRUE);
 			}
@@ -387,12 +387,12 @@ void PlayerControl() {
 		if (g_player.count <= 0) g_player.flg = TRUE;
 	//}
 	//ポーズフラグ
-	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == Posing) {
-		hen.g_PauseFlg = Play;
+	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == FALSE) {
+		hen.g_PauseFlg = TRUE;
 		StopSoundMem(GameSound);
 	}
-	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == Play) {
-		hen.g_PauseFlg = Posing;
+	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == TRUE) {
+		hen.g_PauseFlg = FALSE;
 		PlaySoundMem(GameSound, DX_PLAYTYPE_BACK, FALSE);
 	}
 	

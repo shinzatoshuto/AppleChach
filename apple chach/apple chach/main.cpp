@@ -353,7 +353,7 @@ void PlayerControl() {
 	//DrawBox(g_player.x - g_player.w / 2, g_player.y - g_player.h / 2, g_player.x + g_player.w / 2, g_player.y + g_player.h / 2, 0xff0000, TRUE);
 	//プレイヤーの表示
 	//if (g_player.flg == TRUE) {
-	if (g_player.flg == TRUE || (hen.g_PauseFlg == Posing && g_player.flg == FALSE && --g_player.count % 20 == 0))
+	if (g_player.flg == TRUE || (hen.g_PauseFlg == FALSE && g_player.flg == FALSE && --g_player.count % 20 == 0)) {
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
 			if (hen.g_PauseFlg == FALSE) {
@@ -380,7 +380,10 @@ void PlayerControl() {
 			//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
 			DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 		}
-	//}
+	}
+	if (hen.g_PauseFlg == TRUE) {
+		DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
+	}
 	//else {
 		//DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 8 * (++g_player.count / 5), hen.g_Car, TRUE, FALSE);
 		//if (g_player.count >= 80)  g_player.flg = TRUE;
@@ -398,7 +401,7 @@ void PlayerControl() {
 		PlaySoundMem(GameSound, DX_PLAYTYPE_BACK, FALSE);
 		
 	}
-	if (hen.g_PauseFlg == Play) {
+	if (hen.g_PauseFlg == TRUE) {
 		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, fontpose);
 	}
 	

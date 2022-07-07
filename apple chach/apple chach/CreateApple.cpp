@@ -1,12 +1,14 @@
 #include "DxLib.h"
 #include "apple.h"
 #include "hensuu.h"
- 
+
+int applePoints[4] = { 150, 300, 500, -1000 };
+
 int APPLE::CreateApple() {
 	//for (int i = 0; i < APPLE_MAX; i++) {
 		if (flg == FALSE) {
-			point = 0;
 			type = GetType();
+			point = applePoints[type];
 			img = hen.AppleImages[type];
 			x = GetRand(6) * 60 + 40;
 			y = -50;

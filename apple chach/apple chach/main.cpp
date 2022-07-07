@@ -353,7 +353,7 @@ void PlayerControl() {
 	//DrawBox(g_player.x - g_player.w / 2, g_player.y - g_player.h / 2, g_player.x + g_player.w / 2, g_player.y + g_player.h / 2, 0xff0000, TRUE);
 	//プレイヤーの表示
 	//if (g_player.flg == TRUE) {
-	if (g_player.flg == TRUE || (hen.g_PauseFlg == Posing && g_player.flg == FALSE && --g_player.count % 20 == 0))
+	if (g_player.flg == TRUE || (hen.g_PauseFlg == FALSE && g_player.flg == FALSE && --g_player.count % 20 == 0)) {
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
 			if (hen.g_PauseFlg == FALSE) {
@@ -380,7 +380,10 @@ void PlayerControl() {
 			//DrawRotaGraph(g_player.x, g_player.y, 1.0f, 0, hen.g_Player[2], TRUE, FALSE);
 			DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 		}
-	//}
+	}
+	if (hen.g_PauseFlg == TRUE) {
+		DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
+	}
 	//else {
 		//DrawRotaGraph(g_player.x, g_player.y, 1.0f, M_PI / 8 * (++g_player.count / 5), hen.g_Car, TRUE, FALSE);
 		//if (g_player.count >= 80)  g_player.flg = TRUE;
@@ -398,7 +401,7 @@ void PlayerControl() {
 		PlaySoundMem(GameSound, DX_PLAYTYPE_BACK, FALSE);
 		
 	}
-	if (hen.g_PauseFlg == Play) {
+	if (hen.g_PauseFlg == TRUE) {
 		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, fontpose);
 	}
 	
@@ -416,11 +419,14 @@ void PlayerControl() {
 		DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
 		DrawFormatString(520 + i * 30, 140, 0xFFFFFF, "%02d", g_AppleCount[i]);
 	}
+
+	DrawFormatString(520, 160, 0xFFFFFF, "スコア");
+	DrawFormatString(560, 200, 0xFFFFFF, "%d", hen.Score);
 }
 
 //ゲームオーバー画像描画処理
 void DrawGameOver(void) {
-	hen.Score = g_AppleCount[0] * 150 + g_AppleCount[1] * 300 + g_AppleCount[2] * 500 + g_AppleCount[3] * -1000;
+	//hen.Score = g_AppleCount[0] * 150 + g_AppleCount[1] * 300 + g_AppleCount[2] * 500 + g_AppleCount[3] * -1000;
 
 	//スペースキーでメニューに戻る
 	if (hen.g_KeyFlg & PAD_INPUT_M) {

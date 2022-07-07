@@ -48,6 +48,7 @@ void APPLE::AppleControl() {
 				//g_player.count = 0;
 				//g_player.hp -= 100;
 				g_AppleCount[type]++;
+				hen.Score += point;
 				flg = FALSE;
 				if (type == 3) {
 					PlaySoundMem(hen.PoisonSE, DX_PLAYTYPE_BACK);

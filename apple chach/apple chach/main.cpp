@@ -100,6 +100,7 @@ int fonten;
 int fontensc;
 int fontran;
 int fontrans;
+int fontpose;
 
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
@@ -120,6 +121,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	fontensc = CreateFontToHandle("游ゴシック Medium", 20, 3, DX_FONTTYPE_NORMAL);
 	fontran = CreateFontToHandle("Tsunagi Gothic Black", 40, 1, DX_FONTTYPE_NORMAL);
 	fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL);
+	fontpose = CreateFontToHandle("wb_font", 50, 3, DX_FONTTYPE_NORMAL);
 
 
 	//ゲームループ
@@ -351,7 +353,7 @@ void PlayerControl() {
 	//DrawBox(g_player.x - g_player.w / 2, g_player.y - g_player.h / 2, g_player.x + g_player.w / 2, g_player.y + g_player.h / 2, 0xff0000, TRUE);
 	//プレイヤーの表示
 	//if (g_player.flg == TRUE) {
-	if (g_player.flg == TRUE || (g_player.flg == FALSE && --g_player.count % 10 == 0))
+	if (g_player.flg == TRUE || (hen.g_PauseFlg == Posing && g_player.flg == FALSE && --g_player.count % 20 == 0))
 		if (hen.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
 			if (hen.g_PauseFlg == Posing) {
@@ -394,6 +396,10 @@ void PlayerControl() {
 	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == Play) {
 		hen.g_PauseFlg = Posing;
 		PlaySoundMem(GameSound, DX_PLAYTYPE_BACK, FALSE);
+		
+	}
+	if (hen.g_PauseFlg == Play) {
+		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, fontpose);
 	}
 	
 	//UIの枠表示
@@ -442,10 +448,10 @@ void DrawGameOver(void) {
 	DrawRotaGraph(230, 260, 0.3f, 0, hen.AppleImages[2], TRUE, FALSE);
 	DrawRotaGraph(230, 280, 0.3f, 0, hen.AppleImages[3], TRUE, FALSE);
 
-	DrawFormatString(260, 212, 0xFFFFFF, "%6d x  50 = %6d", g_AppleCount[0], g_AppleCount[0] * 150);
-	DrawFormatString(260, 233, 0xFFFFFF, "%6d x 100 = %6d", g_AppleCount[1], g_AppleCount[1] * 300);
-	DrawFormatString(260, 254, 0xFFFFFF, "%6d x 200 = %6d", g_AppleCount[2], g_AppleCount[2] * 500);
-	DrawFormatString(260, 275, 0xFFFFFF, "%6d x 300 = %6d", g_AppleCount[3], g_AppleCount[3] * -1000);
+	DrawFormatString(240, 212, 0xFFFFFF, "%6d x   150 = %6d", g_AppleCount[0], g_AppleCount[0] * 150);
+	DrawFormatString(240, 233, 0xFFFFFF, "%6d x   300 = %6d", g_AppleCount[1], g_AppleCount[1] * 300);
+	DrawFormatString(240, 254, 0xFFFFFF, "%6d x   500 = %6d", g_AppleCount[2], g_AppleCount[2] * 500);
+	DrawFormatString(240, 275, 0xFFFFFF, "%6d x -1000 = %6d", g_AppleCount[3], g_AppleCount[3] * -1000);
 
 	DrawString(310, 310, "スコア", 0x000000);
 	DrawFormatString(260, 310, 0xFFFFFF, "             = %6d", hen.Score);

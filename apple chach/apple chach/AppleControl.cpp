@@ -49,6 +49,10 @@ void APPLE::AppleControl() {
 				//g_player.hp -= 100;
 				g_AppleCount[type]++;
 				flg = FALSE;
+				if (type == 3) {
+					g_player.flg = FALSE;
+					g_player.count = 120;
+				}
 				//if (g_player.hp <= 0)  g_GameState = 6;
 			}
 		}

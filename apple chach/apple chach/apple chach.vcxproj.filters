@@ -74,5 +74,8 @@
     <ClInclude Include="Ranking.h">
       <Filter>Ranking</Filter>
     </ClInclude>
+    <ClInclude Include="Rankingimage.h">
+      <Filter>Ranking</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

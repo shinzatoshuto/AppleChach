@@ -172,6 +172,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="hensuu.h" />
     <ClInclude Include="Ranking.h" />
+    <ClInclude Include="Rankingimage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

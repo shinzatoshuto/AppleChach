@@ -54,9 +54,6 @@
     <ClCompile Include="LoadSound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Font</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">

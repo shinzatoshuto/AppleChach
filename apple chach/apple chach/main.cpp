@@ -5,12 +5,14 @@
 #include"Player.h"
 #include"hensuu.h"
 #include"pad.h"
+#include"Font.h"
 
 #define  RANKING_DATA  5
 
 APPLE apple[APPLE_MAX];
 HENSUU hen;
 PAD pad;
+FONT font;
 //自機
 PLAYER g_player;
 //定数の宣言
@@ -98,12 +100,12 @@ int nextTime;
 int g_AppleCount[4];
 int GameSound;
 
-int font00;
-int fonten;
-int fontensc;
-int fontran;
-int fontrans;
-int fontpose;
+//int font00;
+//int fonten;
+//int fontensc;
+//int fontran;
+//int fontrans;
+//int fontpose;
 
 void DrawInput(void) {
 	static int cursorX = 0;
@@ -158,12 +160,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	ChangeVolumeSoundMem(100, GameSound);
 
 	//フォント
-	font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);
+	/*font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);
 	fonten = CreateFontToHandle("Tsunagi Gothic Black", 50, 1, DX_FONTTYPE_NORMAL);
 	fontensc = CreateFontToHandle("游ゴシック Medium", 20, 3, DX_FONTTYPE_NORMAL);
 	fontran = CreateFontToHandle("Tsunagi Gothic Black", 40, 1, DX_FONTTYPE_NORMAL);
 	fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL);
-	fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL);
+	fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL);*/
 
 
 	//ゲームループ
@@ -174,7 +176,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 		hen.g_KeyFlg = hen.g_NowKey & ~hen.g_OldKey;
 
 		ClearDrawScreen();
-		if (false)
 		switch (hen.g_GameState) {
 		case 0:DrawGameTitle();
 			break;
@@ -193,7 +194,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 		case 7:InputRanking();
 			break;
 		}
-		DrawInput();
 
 		ScreenFlip();
 	}
@@ -278,7 +278,7 @@ void DrawRanking(void) {
 	//ランキング一覧を表示
 	//SetFontSize(18);
 	for (int i = 0; i < RANKING_DATA; i++) {
-		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontran,"%2d %10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
+		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, font.fontran,"%2d %10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
 	}
 	SetFontSize(25);
 	DrawString(150, 450, "---- Bボタンで戻る ----", 0xffffff, 0);
@@ -315,7 +315,7 @@ void DrawHelp(void) {
 	DrawString(490, 450, "ゲームへ[Aボタン]", 0x000000, 0);
 	DrawString(524, 430, "戻る[Bボタン]", 0x000000, 0);
 
-	DrawStringToHandle(20, 120, "ヘルプ画面", 0xffffff, font00);
+	DrawStringToHandle(20, 120, "ヘルプ画面", 0xffffff, font.font00);
 }
 
 
@@ -326,18 +326,18 @@ void DrawEnd(void) {
 	//エンド画像表示
 	DrawGraph(0, 0, hen.EndImg, FALSE);
 
-	DrawStringToHandle(65, 30, "Thank you for Playing !!", 0xffff00, fonten);
+	DrawStringToHandle(65, 30, "Thank you for Playing !!", 0xffff00, font.fonten);
 
 	if (++hen.g_WaitTime < 90)hen.PosY = 90 - hen.g_WaitTime / 2;
-	DrawStringToHandle(80, 70 + hen.PosY, "タイトル　　AppleChach", 0xffffff, fontensc);
-	DrawStringToHandle(80, 110 + hen.PosY, "制作者　国際電子ビジネス専門学校", 0xffffff, fontensc);
-	DrawStringToHandle(80, 150 + hen.PosY, "　　　　　金城　大洋", 0xffffff, fontensc);
-	DrawStringToHandle(80, 190 + hen.PosY, "　　　　　志出盛　賢斗", 0xffffff, fontensc);
-	DrawStringToHandle(80, 230 + hen.PosY, "　　　　　城間　愛夢", 0xffffff, fontensc);
-	DrawStringToHandle(80, 270 + hen.PosY, "　　　　　新里　柊斗", 0xffffff, fontensc);
-	DrawStringToHandle(80, 310 + hen.PosY, "素材利用", 0xffffff, fontensc);
-	DrawStringToHandle(80, 350 + hen.PosY, "BGM　　　　魔王魂", 0xffffff, fontensc);
-	DrawStringToHandle(80, 390 + hen.PosY, "SE　　　　   魔王魂", 0xffffff, fontensc);
+	DrawStringToHandle(80, 70 + hen.PosY, "タイトル　　AppleChach", 0xffffff, font.fontensc);
+	DrawStringToHandle(80, 110 + hen.PosY, "制作者　国際電子ビジネス専門学校", 0xffffff, font.fontensc);
+	DrawStringToHandle(80, 150 + hen.PosY, "　　　　　金城　大洋", 0xffffff, font.fontensc);
+	DrawStringToHandle(80, 190 + hen.PosY, "　　　　　志出盛　賢斗", 0xffffff, font.fontensc);
+	DrawStringToHandle(80, 230 + hen.PosY, "　　　　　城間　愛夢", 0xffffff, font.fontensc);
+	DrawStringToHandle(80, 270 + hen.PosY, "　　　　　新里　柊斗", 0xffffff, font.fontensc);
+	DrawStringToHandle(80, 310 + hen.PosY, "素材利用", 0xffffff, font.fontensc);
+	DrawStringToHandle(80, 350 + hen.PosY, "BGM　　　　魔王魂", 0xffffff, font.fontensc);
+	DrawStringToHandle(80, 390 + hen.PosY, "SE　　　　   魔王魂", 0xffffff, font.fontensc);
 
 	//タイムの加算処理&終了
 	if (++hen.g_WaitTime > 160) hen.g_GameState = 99;
@@ -430,7 +430,7 @@ void PlayerControl() {
 		
 	}
 	if (hen.g_PauseFlg == TRUE) {
-		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, fontpose);
+		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, font.fontpose);
 	}
 	
 	//UIの枠表示
@@ -496,8 +496,8 @@ void InputRanking(void) {
 	SetFontSize(20);
 
 	//名前入力指示文字列の描画
-	DrawStringToHandle(110, 140, "ランキングに登録します", 0xffffff, fontrans);
-	DrawStringToHandle(110, 170, "名前を英字で入力してください", 0xffffff, fontrans);
+	DrawStringToHandle(110, 140, "ランキングに登録します", 0xffffff, font.fontrans);
+	DrawStringToHandle(110, 170, "名前を英字で入力してください", 0xffffff, font.fontrans);
 
 	//名前の入力
 	DrawString(110, 210, ">", 0xffffff);

@@ -236,7 +236,7 @@ void DrawRanking(void) {
 	DrawString(100, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0);
 }
 
-//ゲームヘルプ描画処理
+////ゲームヘルプ描画処理
 void DrawHelp(void) {
 	//スペースキーでメニューに戻る
 	if (hen.g_KeyFlg & PAD_INPUT_M) hen.g_GameState = 0;

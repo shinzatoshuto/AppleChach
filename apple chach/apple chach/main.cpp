@@ -166,7 +166,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 
 
 	//ÉQÅ[ÉÄÉãÅ[Év
-	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_START))
+	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_7))
 	{
 		hen.g_OldKey = hen.g_NowKey;
 		hen.g_NowKey = GetJoypadInputState(DX_INPUT_KEY_PAD1);
@@ -193,9 +193,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 			break;
 		}
 		DrawInput();
-		if (hen.g_KeyFlg & PAD_INPUT_7) {
-			hen.g_GameState = 99;
-		}
 
 		ScreenFlip();
 	}

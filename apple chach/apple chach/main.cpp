@@ -105,10 +105,48 @@ int fontran;
 int fontrans;
 int fontpose;
 
+void DrawInput(void) {
+	static int cursorX = 0;
+	static int cursorY = 0;
+
+	if (hen.g_KeyFlg & PAD_INPUT_RIGHT) {
+		if (++cursorX > 12)cursorX = 0;
+	}
+	if (hen.g_KeyFlg & PAD_INPUT_LEFT) {
+		if (--cursorX < 0)cursorX = 12;
+	}
+	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
+		if (++cursorY > 4)cursorY = 0;
+	}
+	if (hen.g_KeyFlg & PAD_INPUT_UP) {
+		if (--cursorY < 0)cursorY = 4;
+	}
+
+	int x = cursorX * 32;
+	int y = cursorY * 32;
+	DrawBox(x, y, x + 32, y + 32, 0x0000FF, 1);
+
+	const char* ALPHAchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	for (int i = 0; i < 26; i++) {
+		SetFontSize(32);
+		DrawFormatString(0 + i % 13 * 32, i / 13 * 32, 0xffff00, "%c", ALPHAchar[i]);
+	}
+	const char* alphachar = "abcdefghijklmnopqrstuvwxyz";
+	for (int i = 0; i < 26; i++) {
+		SetFontSize(32);
+		DrawFormatString(0 + i % 13 * 32, i / 13 * 32 + 64, 0xffff00, "%c", alphachar[i]);
+	}
+	const char* numchar = "0123456789";
+	for (int i = 0; i < 10; i++) {
+		SetFontSize(32);
+		DrawFormatString(0 + i * 32, 128, 0xffff00, "%c", numchar[i]);
+	}
+}
+
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
 {
-	SetMainWindowText("Apple Chach");   //タイトルを設定
+	SetMainWindowText("Apple Catch");   //タイトルを設定
 	ChangeWindowMode(TRUE);
 	SetWindowSize(640, 480);
 	if (DxLib_Init() == -1)return-1;
@@ -129,14 +167,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 
 
 	//ゲームループ
-	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_START))
+	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_7))
 	{
 		hen.g_OldKey = hen.g_NowKey;
 		hen.g_NowKey = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 		hen.g_KeyFlg = hen.g_NowKey & ~hen.g_OldKey;
 
 		ClearDrawScreen();
-
+		if (false)
 		switch (hen.g_GameState) {
 		case 0:DrawGameTitle();
 			break;
@@ -155,10 +193,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 		case 7:InputRanking();
 			break;
 		}
-
-		if (hen.g_KeyFlg & PAD_INPUT_7) {
-			hen.g_GameState = 99;
-		}
+		DrawInput();
 
 		ScreenFlip();
 	}
@@ -191,8 +226,8 @@ void DrawGameTitle(void) {
 	//メニューカーソル
 	DrawRotaGraph(430, 300 + MenuNo * 42, 0.7f, 0, hen.applecursor, TRUE);
 
-	for (int i = 0; i < 13; i++) {
-		DrawGraph(i * 47, 200, pad.ALAN[i], TRUE);
+	for (int i = 0; i < 14; i++) {
+		DrawRotaGraph(i * 45, 200, 0.5, 0, pad.ALAN[i], TRUE);
 	}
 }
 
@@ -237,15 +272,16 @@ void GameInit(void) {
 //ゲームランキング描画表示
 void DrawRanking(void) {
 	//スペースキーでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_M)  hen.g_GameState = 0;
+	if (hen.g_KeyFlg & PAD_INPUT_2)  hen.g_GameState = 0;
 	//ランキング画像表示
 	DrawGraph(0, 0, hen.g_RankingImage, FALSE);
 	//ランキング一覧を表示
-	SetFontSize(18);
+	//SetFontSize(18);
 	for (int i = 0; i < RANKING_DATA; i++) {
 		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontran,"%2d %10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
 	}
-	DrawString(100, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0);
+	SetFontSize(25);
+	DrawString(150, 450, "---- Bボタンで戻る ----", 0xffffff, 0);
 }
 
 ////ゲームヘルプ描画処理
@@ -304,7 +340,7 @@ void DrawEnd(void) {
 	DrawStringToHandle(80, 390 + hen.PosY, "SE　　　　   魔王魂", 0xffffff, fontensc);
 
 	//タイムの加算処理&終了
-	if (++hen.g_WaitTime > 180) hen.g_GameState = 99;
+	if (++hen.g_WaitTime > 160) hen.g_GameState = 99;
 }
 
 //ゲームメイン
@@ -449,7 +485,8 @@ void DrawGameOver(void) {
 
 	DrawString(310, 310, "スコア", 0x000000);
 	DrawFormatString(260, 310, 0xFFFFFF, "             = %6d", hen.Score);
-	DrawString(120, 450, "---- スペースキーを押してタイトルへ戻る ----", 0xffffff, 0);
+	SetFontSize(25);
+	DrawString(150, 450, "---- Bボタンで戻る ----", 0xffffff, 0);
 }
 
 //ランキング入力処理

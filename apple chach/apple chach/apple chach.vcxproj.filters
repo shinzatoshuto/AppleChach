@@ -25,6 +25,9 @@
     <Filter Include="pad">
       <UniqueIdentifier>{07ba442a-a881-4b3f-bd73-f4fd74b69b45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Font">
+      <UniqueIdentifier>{a80080e4-f505-46ea-b36a-ebbbbd13dd77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="LoadSound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
@@ -64,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="pad.h">
       <Filter>pad</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

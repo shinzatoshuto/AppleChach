@@ -2,6 +2,7 @@
 #define _USE_MATH_DEFINES
 #include<math.h>
 #include"apple.h"
+#include"Player.h"
 #include"hensuu.h"
 #include"pad.h"
 
@@ -10,7 +11,8 @@
 APPLE apple[APPLE_MAX];
 HENSUU hen;
 PAD pad;
-
+//自機
+PLAYER g_player;
 //定数の宣言
 //const int SCREEN_WIDTH = 640;
 //const int SCREEN_HEIGHT = 480;
@@ -43,8 +45,7 @@ const int PLAYER_SPEED = 5;
 //	int bariup;
 //};
 
-//自機
-PLAYER g_player;
+
 
 ////敵機の構造体
 //struct ENEMY {

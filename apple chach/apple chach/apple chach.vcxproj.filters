@@ -33,9 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="AppleControl.cpp">
       <Filter>Apple</Filter>
     </ClCompile>
@@ -54,11 +51,14 @@
     <ClCompile Include="pad.cpp">
       <Filter>pad</Filter>
     </ClCompile>
-    <ClCompile Include="LoadSound.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Help.cpp">
       <Filter>Help</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadSound.cpp">
+      <Filter>main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

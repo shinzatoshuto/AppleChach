@@ -25,11 +25,14 @@
     <Filter Include="pad">
       <UniqueIdentifier>{07ba442a-a881-4b3f-bd73-f4fd74b69b45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Font">
+      <UniqueIdentifier>{a80080e4-f505-46ea-b36a-ebbbbd13dd77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Help">
+      <UniqueIdentifier>{880d040c-b18a-44e3-8017-5291c92befb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="AppleControl.cpp">
       <Filter>Apple</Filter>
     </ClCompile>
@@ -48,8 +51,14 @@
     <ClCompile Include="pad.cpp">
       <Filter>pad</Filter>
     </ClCompile>
+    <ClCompile Include="Help.cpp">
+      <Filter>Help</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
     <ClCompile Include="LoadSound.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +73,12 @@
     </ClInclude>
     <ClInclude Include="pad.h">
       <Filter>pad</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Help.h">
+      <Filter>Help</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

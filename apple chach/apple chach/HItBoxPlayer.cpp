@@ -8,6 +8,7 @@ int APPLE::HitBoxPlayer(PLAYER* p) {
 	int sy1 = p->y - p->h / 2;
 	int sx2 = p->x + p->w / 2;
 	int sy2 = p->y + p->h / 2;
+	//DrawBox(sx1 + 10, sy1, sx2 + 10, sy2, 0xff0000, TRUE);
 
 	int dx1 = this->x;// -(this->w / 2);
 	int dy1 = this->y;// -(this->h / 2);

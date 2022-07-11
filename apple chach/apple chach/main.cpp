@@ -3,11 +3,13 @@
 #include<math.h>
 #include"apple.h"
 #include"hensuu.h"
+#include"pad.h"
 
 #define  RANKING_DATA  5
 
 APPLE apple[APPLE_MAX];
 HENSUU hen;
+PAD pad;
 
 //定数の宣言
 //const int SCREEN_WIDTH = 640;
@@ -152,6 +154,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 		case 7:InputRanking();
 			break;
 		}
+
+		if (hen.g_KeyFlg & PAD_INPUT_7) {
+			hen.g_GameState = 99;
+		}
+
 		ScreenFlip();
 	}
 	DxLib_End();
@@ -182,6 +189,10 @@ void DrawGameTitle(void) {
 
 	//メニューカーソル
 	DrawRotaGraph(430, 300 + MenuNo * 42, 0.7f, 0, hen.applecursor, TRUE);
+
+	for (int i = 0; i < 13; i++) {
+		DrawGraph(i * 47, 200, pad.ALAN[i], TRUE);
+	}
 }
 
 //ゲーム初期処理
@@ -425,6 +436,9 @@ void InputRanking(void) {
 	//名前の入力
 	DrawString(110, 210, ">", 0xffffff);
 	DrawBox(120, 205, 260, 235, 0x000055, TRUE);
+	for (int i = 0; i < 13; i++) {
+		DrawGraph(i * 50, 200, pad.ALAN[i], TRUE);
+	}
 
 	if (KeyInputSingleCharString(130, 210, 10, g_Ranking[4].name, FALSE) == 1) {
 		g_Ranking[4].score = hen.Score;

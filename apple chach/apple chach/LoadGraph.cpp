@@ -5,6 +5,7 @@
 #include"apple.h"
 #include"Player.h"
 #include"hensuu.h"
+#include"pad.h"
 
 //‰æ‘œ“Ç‚İ‚İ
 int LoadImages() {
@@ -47,6 +48,13 @@ int LoadImages() {
 
 		//ƒGƒ“ƒh‰æ‘œ
 		if ((hen.EndImg = LoadGraph("images/back/bg_yamamichi.jpg")) == -1)return-1;
+
+		//•¶š‰æ‘œ
+		if (LoadDivGraph("images/ALAN.png", 13, 13, 1, 45, 80, pad.ALAN) == -1)return-1;
+		if (LoadDivGraph("images/ALOZ.png", 12, 12, 1, 45, 80, pad.ALOZ) == -1)return-1;
+		if (LoadDivGraph("images/ALAN_ko.png", 13, 13, 1, 49, 90, pad.alan) == -1)return-1;
+		if (LoadDivGraph("images/ALOZ_ko.png", 12, 12, 1, 45, 82, pad.aloz) == -1)return-1;
+		if (LoadDivGraph("images/suuji.png", 10, 10, 1, 44, 74, pad.suuji) == -1)return-1;
 	
 	return 0;
 }

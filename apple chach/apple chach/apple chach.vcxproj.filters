@@ -25,6 +25,9 @@
     <Filter Include="pad">
       <UniqueIdentifier>{07ba442a-a881-4b3f-bd73-f4fd74b69b45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ranking">
+      <UniqueIdentifier>{a4a8083f-eb9d-4606-a5b3-759aaf47c86f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="LoadSound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Ranking.cpp">
+      <Filter>Ranking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
@@ -64,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="pad.h">
       <Filter>pad</Filter>
+    </ClInclude>
+    <ClInclude Include="Ranking.h">
+      <Filter>Ranking</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -164,12 +164,14 @@
     <ClCompile Include="CreateApple.cpp" />
     <ClCompile Include="LoadGraph.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Ranking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h" />
     <ClInclude Include="pad.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="hensuu.h" />
+    <ClInclude Include="Ranking.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

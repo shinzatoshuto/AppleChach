@@ -104,6 +104,44 @@ int fontran;
 int fontrans;
 int fontpose;
 
+void DrawInput(void) {
+	static int cursorX = 0;
+	static int cursorY = 0;
+
+	if (hen.g_KeyFlg & PAD_INPUT_RIGHT) {
+		if (++cursorX > 12)cursorX = 0;
+	}
+	if (hen.g_KeyFlg & PAD_INPUT_LEFT) {
+		if (--cursorX < 0)cursorX = 12;
+	}
+	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
+		if (++cursorY > 4)cursorY = 0;
+	}
+	if (hen.g_KeyFlg & PAD_INPUT_UP) {
+		if (--cursorY < 0)cursorY = 4;
+	}
+
+	int x = cursorX * 32;
+	int y = cursorY * 32;
+	DrawBox(x, y, x + 32, y + 32, 0x0000FF, 1);
+
+	const char* ALPHAchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	for (int i = 0; i < 26; i++) {
+		SetFontSize(32);
+		DrawFormatString(0 + i % 13 * 32, i / 13 * 32, 0xffff00, "%c", ALPHAchar[i]);
+	}
+	const char* alphachar = "abcdefghijklmnopqrstuvwxyz";
+	for (int i = 0; i < 26; i++) {
+		SetFontSize(32);
+		DrawFormatString(0 + i % 13 * 32, i / 13 * 32 + 64, 0xffff00, "%c", alphachar[i]);
+	}
+	const char* numchar = "0123456789";
+	for (int i = 0; i < 10; i++) {
+		SetFontSize(32);
+		DrawFormatString(0 + i * 32, 128, 0xffff00, "%c", numchar[i]);
+	}
+}
+
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
 {
@@ -135,7 +173,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 		hen.g_KeyFlg = hen.g_NowKey & ~hen.g_OldKey;
 
 		ClearDrawScreen();
-
+		if (false)
 		switch (hen.g_GameState) {
 		case 0:DrawGameTitle();
 			break;
@@ -154,7 +192,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 		case 7:InputRanking();
 			break;
 		}
-
+		DrawInput();
 		if (hen.g_KeyFlg & PAD_INPUT_7) {
 			hen.g_GameState = 99;
 		}

@@ -3,7 +3,7 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 //const int ENEMY_MAX = 8;
 //const int ITEM_MAX = 3;
-const int MAX_INTERVAL = 2 * 60;
+const int MAX_INTERVAL = 1 * 60;
 
 struct PLAYER {
 	int flg;

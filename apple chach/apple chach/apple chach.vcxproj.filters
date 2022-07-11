@@ -28,6 +28,9 @@
     <Filter Include="Font">
       <UniqueIdentifier>{a80080e4-f505-46ea-b36a-ebbbbd13dd77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Help">
+      <UniqueIdentifier>{880d040c-b18a-44e3-8017-5291c92befb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,6 +57,9 @@
     <ClCompile Include="LoadSound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Help.cpp">
+      <Filter>Help</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
@@ -70,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Help.h">
+      <Filter>Help</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -103,44 +103,45 @@ int fontensc;
 int fontran;
 int fontrans;
 int fontpose;
+int fontking;
 
-void DrawInput(void) {
-	static int cursorX = 0;
-	static int cursorY = 0;
-
-	if (hen.g_KeyFlg & PAD_INPUT_RIGHT) {
-		if (++cursorX > 12)cursorX = 0;
-	}
-	if (hen.g_KeyFlg & PAD_INPUT_LEFT) {
-		if (--cursorX < 0)cursorX = 12;
-	}
-	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
-		if (++cursorY > 4)cursorY = 0;
-	}
-	if (hen.g_KeyFlg & PAD_INPUT_UP) {
-		if (--cursorY < 0)cursorY = 4;
-	}
-
-	int x = cursorX * 32;
-	int y = cursorY * 32;
-	DrawBox(x, y, x + 32, y + 32, 0x0000FF, 1);
-
-	const char* ALPHAchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	for (int i = 0; i < 26; i++) {
-		SetFontSize(32);
-		DrawFormatString(0 + i % 13 * 32, i / 13 * 32, 0xffff00, "%c", ALPHAchar[i]);
-	}
-	const char* alphachar = "abcdefghijklmnopqrstuvwxyz";
-	for (int i = 0; i < 26; i++) {
-		SetFontSize(32);
-		DrawFormatString(0 + i % 13 * 32, i / 13 * 32 + 64, 0xffff00, "%c", alphachar[i]);
-	}
-	const char* numchar = "0123456789";
-	for (int i = 0; i < 10; i++) {
-		SetFontSize(32);
-		DrawFormatString(0 + i * 32, 128, 0xffff00, "%c", numchar[i]);
-	}
-}
+//void DrawInput(void) {
+//	static int cursorX = 0;
+//	static int cursorY = 0;
+//
+//	if (hen.g_KeyFlg & PAD_INPUT_RIGHT) {
+//		if (++cursorX > 12)cursorX = 0;
+//	}
+//	if (hen.g_KeyFlg & PAD_INPUT_LEFT) {
+//		if (--cursorX < 0)cursorX = 12;
+//	}
+//	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
+//		if (++cursorY > 4)cursorY = 0;
+//	}
+//	if (hen.g_KeyFlg & PAD_INPUT_UP) {
+//		if (--cursorY < 0)cursorY = 4;
+//	}
+//
+//	int x = cursorX * 32;
+//	int y = cursorY * 32;
+//	DrawBox(x, y, x + 32, y + 32, 0x0000FF, 1);
+//
+//	const char* ALPHAchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//	for (int i = 0; i < 26; i++) {
+//		SetFontSize(32);
+//		DrawFormatString(0 + i % 13 * 32, i / 13 * 32, 0xffff00, "%c", ALPHAchar[i]);
+//	}
+//	const char* alphachar = "abcdefghijklmnopqrstuvwxyz";
+//	for (int i = 0; i < 26; i++) {
+//		SetFontSize(32);
+//		DrawFormatString(0 + i % 13 * 32, i / 13 * 32 + 64, 0xffff00, "%c", alphachar[i]);
+//	}
+//	const char* numchar = "0123456789";
+//	for (int i = 0; i < 10; i++) {
+//		SetFontSize(32);
+//		DrawFormatString(0 + i * 32, 128, 0xffff00, "%c", numchar[i]);
+//	}
+//}
 
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
@@ -163,7 +164,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	fontran = CreateFontToHandle("Tsunagi Gothic Black", 40, 1, DX_FONTTYPE_NORMAL);
 	fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL);
 	fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL);
-
+	fontking = CreateFontToHandle("MS ゴシック", 30, 5, DX_FONTTYPE_NORMAL);
 
 	//ゲームループ
 	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_START))
@@ -173,7 +174,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 		hen.g_KeyFlg = hen.g_NowKey & ~hen.g_OldKey;
 
 		ClearDrawScreen();
-		if (false)
+
 		switch (hen.g_GameState) {
 		case 0:DrawGameTitle();
 			break;
@@ -191,10 +192,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 			break;
 		case 7:InputRanking();
 			break;
-		}
-		DrawInput();
-		if (hen.g_KeyFlg & PAD_INPUT_7) {
-			hen.g_GameState = 99;
 		}
 
 		ScreenFlip();
@@ -227,10 +224,6 @@ void DrawGameTitle(void) {
 
 	//メニューカーソル
 	DrawRotaGraph(430, 300 + MenuNo * 42, 0.7f, 0, hen.applecursor, TRUE);
-
-	for (int i = 0; i < 14; i++) {
-		DrawRotaGraph(i * 45, 200, 0.5, 0, pad.ALAN[i], TRUE);
-	}
 }
 
 //ゲーム初期処理
@@ -259,7 +252,8 @@ void GameInit(void) {
 	hen.g_Time = 1800;
 
 
-
+	pad.inputnum = 0;
+	strcpy_s(pad.inputchar, "");
 
 	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
 
@@ -280,7 +274,7 @@ void DrawRanking(void) {
 	//ランキング一覧を表示
 	//SetFontSize(18);
 	for (int i = 0; i < RANKING_DATA; i++) {
-		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontran,"%2d %10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
+		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontking,"%2d %+10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
 	}
 	SetFontSize(25);
 	DrawString(150, 450, "---- Bボタンで戻る ----", 0xffffff, 0);
@@ -289,13 +283,13 @@ void DrawRanking(void) {
 ////ゲームヘルプ描画処理
 void DrawHelp(void) {
 	//スペースキーでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_M) hen.g_GameState = 0;
+	if (hen.g_KeyFlg & PAD_INPUT_2) hen.g_GameState = 0;
 	//zゲーム開始
-	if (hen.g_KeyFlg & PAD_INPUT_A) hen.g_GameState = 1;
+	if (hen.g_KeyFlg & PAD_INPUT_1) hen.g_GameState = 1;
 
 	//タイトル画像表示
 	DrawGraph(0, 0, hen.HelpImage, FALSE);
-	//SetFontSize(16);
+	SetFontSize(16);
 
 	DrawString(20, 160, "これは落ちてくるリンゴを拾うゲームです。", 0x000000, 0);
 	DrawString(20, 180, "左右に動いて落ちてくる様々なリンゴを拾います。", 0x000000, 0);
@@ -459,7 +453,7 @@ void PlayerControl() {
 //ゲームオーバー画像描画処理
 void DrawGameOver(void) {
 	//スペースキーでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_M) {
+	if (hen.g_KeyFlg & PAD_INPUT_2) {
 		if (g_Ranking[RANKING_DATA - 1].score >= hen.Score) {
 			hen.g_GameState = 0;
 		}
@@ -504,16 +498,28 @@ void InputRanking(void) {
 	//名前の入力
 	DrawString(110, 210, ">", 0xffffff);
 	DrawBox(120, 205, 260, 235, 0x000055, TRUE);
-	for (int i = 0; i < 13; i++) {
-		DrawGraph(i * 50, 200, pad.ALAN[i], TRUE);
+
+	pad.DrawInput();
+	try {
+		if (hen.g_KeyFlg & PAD_INPUT_8 && pad.inputnum > 0) {
+			//g_Ranking[4].name = pad.inputchar;
+			strcpy_s(g_Ranking[4].name, 11, pad.inputchar);
+			g_Ranking[4].score = hen.Score;
+			SortRanking();
+			SaveRanking();
+			hen.g_GameState = 2;
+		}
+	}
+	catch (int& err) {
+		printf("エラーコード%d\n", err);
 	}
 
-	if (KeyInputSingleCharString(130, 210, 10, g_Ranking[4].name, FALSE) == 1) {
-		g_Ranking[4].score = hen.Score;
-		SortRanking();
-		SaveRanking();
-		hen.g_GameState = 2;
-	}
+	//if (KeyInputSingleCharString(130, 210, 10, g_Ranking[4].name, FALSE) == 1) {
+	//	g_Ranking[4].score = hen.Score;
+	//	SortRanking();
+	//	SaveRanking();
+	//	hen.g_GameState = 2;
+	//}
 }
 
 //ランキング並び替え

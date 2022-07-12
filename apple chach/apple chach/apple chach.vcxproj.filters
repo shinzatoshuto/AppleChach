@@ -25,14 +25,17 @@
     <Filter Include="pad">
       <UniqueIdentifier>{07ba442a-a881-4b3f-bd73-f4fd74b69b45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Font">
-      <UniqueIdentifier>{a80080e4-f505-46ea-b36a-ebbbbd13dd77}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Help">
       <UniqueIdentifier>{880d040c-b18a-44e3-8017-5291c92befb4}</UniqueIdentifier>
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{df2be2ca-90f1-4d6b-bf6b-1bba70c2538a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="End">
+      <UniqueIdentifier>{7b323df5-c1b6-464f-b86d-9360caaa75a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Font">
+      <UniqueIdentifier>{a80080e4-f505-46ea-b36a-ebbbbd13dd77}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +69,12 @@
     <ClCompile Include="UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="End.cpp">
+      <Filter>End</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
@@ -88,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="End.h">
+      <Filter>End</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

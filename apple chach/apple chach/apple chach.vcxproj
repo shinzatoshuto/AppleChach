@@ -158,6 +158,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AppleControl.cpp" />
+    <ClCompile Include="End.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="Help.cpp" />
     <ClCompile Include="HItBoxPlayer.cpp" />
     <ClCompile Include="LoadSound.cpp" />
@@ -170,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h" />
+    <ClInclude Include="End.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Help.h" />
     <ClInclude Include="pad.h" />

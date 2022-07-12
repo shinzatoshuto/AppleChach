@@ -9,6 +9,7 @@ public:
 	int fontran = CreateFontToHandle("Tsunagi Gothic Black", 40, 1, DX_FONTTYPE_NORMAL);
 	int fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL);
 	int fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL);
+	int fontking = CreateFontToHandle("MS ÉSÉVÉbÉN", 30, 5, DX_FONTTYPE_NORMAL);
 private:
 
 };

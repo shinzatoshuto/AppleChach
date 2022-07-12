@@ -6,6 +6,7 @@
 #include "Font.h"
 #include"Help.h"
 #include"pad.h"
+#include"UI.h"
 
 #define  RANKING_DATA  5
 
@@ -14,6 +15,7 @@ HENSUU hen;
 PAD pad;
 FONT font;
 HELP help;
+UI ui;
 
 //定数の宣言
 //const int SCREEN_WIDTH = 640;
@@ -97,7 +99,7 @@ int ReadRanking(void);
 int LoadImages();
 void PlayerControl();
 
-void UIimages();
+//void UIimages();
 
 int nextTime;
 int g_AppleCount[4];
@@ -349,7 +351,7 @@ void DrawEnd(void) {
 void GameMain(void) {
 	DrawGraph(0, 0, hen.Backimg, FALSE);
 	PlayerControl();
-	UIimages();
+	ui.UIimages();
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].AppleControl();
 	}
@@ -436,27 +438,27 @@ void PlayerControl() {
 		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, font.fontpose);
 	}
 }
-void UIimages(){
-	//UIの枠表示
-	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ffff, TRUE);
-
-	//制限時間の表示
-	SetFontSize(25);
-	DrawFormatString(520, 20, 0x000000, "制限時間");
-	DrawFormatString(560, 60, 0x000000, "%d", hen.g_Time / 60);
-
-	//りんごを取った数を表示
-	SetFontSize(16);
-	for (int i = 0; i < 4; i++) {
-		DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
-		DrawFormatString(520 + i * 30, 140, 0x000000, "%02d", g_AppleCount[i]);
-	}
-
-	SetFontSize(30);
-	DrawFormatString(530, 180, 0x000000, "スコア");
-	SetFontSize(20);
-	DrawFormatString(543, 220, 0x000000, "%06d", hen.Score);
-}
+//void UIimages(){
+//	//UIの枠表示
+//	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ffff, TRUE);
+//
+//	//制限時間の表示
+//	SetFontSize(25);
+//	DrawFormatString(520, 20, 0x000000, "制限時間");
+//	DrawFormatString(560, 60, 0x000000, "%d", hen.g_Time / 60);
+//
+//	//りんごを取った数を表示
+//	SetFontSize(16);
+//	for (int i = 0; i < 4; i++) {
+//		DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
+//		DrawFormatString(520 + i * 30, 140, 0x000000, "%02d", g_AppleCount[i]);
+//	}
+//
+//	SetFontSize(30);
+//	DrawFormatString(530, 180, 0x000000, "スコア");
+//	SetFontSize(20);
+//	DrawFormatString(543, 220, 0x000000, "%06d", hen.Score);
+//}
 
 //ゲームオーバー画像描画処理
 void DrawGameOver(void) {

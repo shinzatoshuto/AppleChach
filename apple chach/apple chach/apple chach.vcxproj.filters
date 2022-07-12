@@ -31,6 +31,9 @@
     <Filter Include="Help">
       <UniqueIdentifier>{880d040c-b18a-44e3-8017-5291c92befb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{df2be2ca-90f1-4d6b-bf6b-1bba70c2538a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppleControl.cpp">
@@ -60,6 +63,9 @@
     <ClCompile Include="LoadSound.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
@@ -79,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="Help.h">
       <Filter>Help</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

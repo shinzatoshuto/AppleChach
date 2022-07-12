@@ -97,6 +97,8 @@ int ReadRanking(void);
 int LoadImages();
 void PlayerControl();
 
+void UIimages();
+
 int nextTime;
 int g_AppleCount[4];
 int GameSound;
@@ -347,6 +349,7 @@ void DrawEnd(void) {
 void GameMain(void) {
 	DrawGraph(0, 0, hen.Backimg, FALSE);
 	PlayerControl();
+	UIimages();
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].AppleControl();
 	}
@@ -382,7 +385,7 @@ void PlayerControl() {
 	//if (g_player.y < 60)  g_player.y = 60;
 	//if (g_player.y > SCREEN_HEIGHT - 60)  g_player.y = SCREEN_HEIGHT - 60;
 
-	
+
 	//プレイヤーの表示
 	//if (g_player.flg == TRUE) {
 	if (g_player.flg == TRUE || (hen.g_PauseFlg == FALSE && g_player.flg == FALSE && --g_player.count % 20 == 0)) {
@@ -417,7 +420,7 @@ void PlayerControl() {
 		//DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
 		DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.g_Player[2], TRUE);
 	}
-		if (g_player.count <= 0) g_player.flg = TRUE;
+	if (g_player.count <= 0) g_player.flg = TRUE;
 
 	//ポーズフラグ
 	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == FALSE) {
@@ -427,12 +430,13 @@ void PlayerControl() {
 	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == TRUE) {
 		hen.g_PauseFlg = FALSE;
 		PlaySoundMem(GameSound, DX_PLAYTYPE_BACK, FALSE);
-		
+
 	}
 	if (hen.g_PauseFlg == TRUE) {
 		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, font.fontpose);
 	}
-	
+}
+void UIimages(){
 	//UIの枠表示
 	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ffff, TRUE);
 

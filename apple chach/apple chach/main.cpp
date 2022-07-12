@@ -2,7 +2,8 @@
 #define _USE_MATH_DEFINES
 #include<math.h>
 #include"apple.h"
-#include"hensuu.h"
+#include "hensuu.h"
+#include "Font.h"
 #include"pad.h"
 
 #define  RANKING_DATA  5
@@ -10,6 +11,7 @@
 APPLE apple[APPLE_MAX];
 HENSUU hen;
 PAD pad;
+FONT font;
 
 //定数の宣言
 //const int SCREEN_WIDTH = 640;
@@ -165,9 +167,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL);
 	fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL);
 	fontking = CreateFontToHandle("MS ゴシック", 30, 5, DX_FONTTYPE_NORMAL);
-
+	
 	//ゲームループ
-	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_START))
+	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_7))
 	{
 		hen.g_OldKey = hen.g_NowKey;
 		hen.g_NowKey = GetJoypadInputState(DX_INPUT_KEY_PAD1);

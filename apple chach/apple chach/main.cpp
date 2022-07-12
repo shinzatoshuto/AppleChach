@@ -97,7 +97,7 @@ void PlayerControl();
 
 int nextTime;
 int g_AppleCount[4];
-int GameSound;
+
 
 int font00;
 int fonten;
@@ -156,8 +156,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	if (LoadImages() == -1)return-1;
 	if (ReadRanking() == -1)return-1;
 	if (LoadSound() == -1)return-1;
-	if ((GameSound = LoadSoundMem("sounds/Game.mp3")) == -1) return -1;
-	ChangeVolumeSoundMem(100, GameSound);
+
+	ChangeVolumeSoundMem(100, hen.GameSound);
+	ChangeVolumeSoundMem(150, hen.TitleSound);
 
 	//フォント
 	font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);
@@ -206,17 +207,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 //ゲームタイトル表示
 void DrawGameTitle(void) {
 	static int MenuNo = 0;
-
+	if (CheckSoundMem(hen.TitleSound) == 0)
+	PlaySoundMem(hen.TitleSound, DX_PLAYTYPE_BACK);
 	//メニューカーソル移動処理
 	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
 		if (++MenuNo > 3)MenuNo = 0;
+		PlaySoundMem(hen.MoveSE, DX_PLAYTYPE_BACK);
 	}
 	if (hen.g_KeyFlg & PAD_INPUT_UP) {
 		if (--MenuNo < 0)MenuNo = 3;
+		PlaySoundMem(hen.MoveSE, DX_PLAYTYPE_BACK);
 	}
 
 	//Zキーでメニュー選択
-	if (hen.g_KeyFlg & PAD_INPUT_A)hen.g_GameState = MenuNo + 1;
+	if (hen.g_KeyFlg & PAD_INPUT_A) {
+		hen.g_GameState = MenuNo + 1;
+		PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
+	}
 
 	//タイトル画像表示
 	DrawGraph(0, 0, hen.g_TitleImage, FALSE);
@@ -259,7 +266,8 @@ void GameInit(void) {
 
 	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
 
-	PlaySoundMem(GameSound, DX_PLAYTYPE_BACK);
+	StopSoundMem(hen.TitleSound);
+	PlaySoundMem(hen.GameSound, DX_PLAYTYPE_BACK);
 	//ゲームメイン処理へ
 	hen.g_GameState = 5;
 
@@ -270,24 +278,33 @@ void GameInit(void) {
 //ゲームランキング描画表示
 void DrawRanking(void) {
 	//スペースキーでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_2)  hen.g_GameState = 0;
+	if (hen.g_KeyFlg & PAD_INPUT_2) {
+		hen.g_GameState = 0;
+		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
+	}
 	//ランキング画像表示
 	DrawGraph(0, 0, hen.g_RankingImage, FALSE);
 	//ランキング一覧を表示
 	//SetFontSize(18);
 	for (int i = 0; i < RANKING_DATA; i++) {
-		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontking,"%2d %+10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
+		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontking,"%2d %10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
 	}
 	SetFontSize(25);
-	DrawString(150, 450, "---- Bボタンで戻る ----", 0xffffff, 0);
+	DrawString(150, 430, "---- Bボタンで戻る ----", 0xffffff, 0);
 }
 
 ////ゲームヘルプ描画処理
 void DrawHelp(void) {
 	//スペースキーでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_2) hen.g_GameState = 0;
+	if (hen.g_KeyFlg & PAD_INPUT_2) {
+		hen.g_GameState = 0;
+		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
+	}
 	//zゲーム開始
-	if (hen.g_KeyFlg & PAD_INPUT_1) hen.g_GameState = 1;
+	if (hen.g_KeyFlg & PAD_INPUT_1) {
+		hen.g_GameState = 1;
+		PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
+	}
 
 	//タイトル画像表示
 	DrawGraph(0, 0, hen.HelpImage, FALSE);
@@ -363,7 +380,7 @@ void GameMain(void) {
 void PlayerControl() {
 	//ゲームオーバー処理へ
 	if (hen.g_Time <= 0) {
-		StopSoundMem(GameSound);
+		StopSoundMem(hen.GameSound);
 		hen.g_GameState = 6;
 	}
 
@@ -420,11 +437,11 @@ void PlayerControl() {
 	//ポーズフラグ
 	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == FALSE) {
 		hen.g_PauseFlg = TRUE;
-		StopSoundMem(GameSound);
+		StopSoundMem(hen.GameSound);
 	}
 	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == TRUE) {
 		hen.g_PauseFlg = FALSE;
-		PlaySoundMem(GameSound, DX_PLAYTYPE_BACK, FALSE);
+		PlaySoundMem(hen.GameSound, DX_PLAYTYPE_BACK, FALSE);
 		
 	}
 	if (hen.g_PauseFlg == TRUE) {
@@ -454,8 +471,9 @@ void PlayerControl() {
 
 //ゲームオーバー画像描画処理
 void DrawGameOver(void) {
-	//スペースキーでメニューに戻る
+	//Bボタンでメニューに戻る
 	if (hen.g_KeyFlg & PAD_INPUT_2) {
+		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
 		if (g_Ranking[RANKING_DATA - 1].score >= hen.Score) {
 			hen.g_GameState = 0;
 		}
@@ -494,17 +512,18 @@ void InputRanking(void) {
 	SetFontSize(20);
 
 	//名前入力指示文字列の描画
-	DrawStringToHandle(110, 140, "ランキングに登録します", 0xffffff, fontrans);
-	DrawStringToHandle(110, 170, "名前を英字で入力してください", 0xffffff, fontrans);
+	DrawStringToHandle(110, 120, "ランキングに登録します", 0xffffff, fontrans);
+	DrawStringToHandle(110, 150, "名前を英字で入力してください", 0xffffff, fontrans);
 
 	//名前の入力
 	DrawString(110, 210, ">", 0xffffff);
-	DrawBox(120, 205, 260, 235, 0x000055, TRUE);
+	DrawBox(120, 200, 317, 240, 0x000055, TRUE);
 
 	pad.DrawInput();
 	try {
 		if (hen.g_KeyFlg & PAD_INPUT_8 && pad.inputnum > 0) {
 			//g_Ranking[4].name = pad.inputchar;
+			PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
 			strcpy_s(g_Ranking[4].name, 11, pad.inputchar);
 			g_Ranking[4].score = hen.Score;
 			SortRanking();

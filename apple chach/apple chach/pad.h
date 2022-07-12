@@ -7,6 +7,7 @@ int cursorX = 0;
 int cursorY = 0;
 char inputchar[10];
 int inputnum = 0;
+int OffSetX, OffSetY;
 
 	void DrawInput(void);
 };

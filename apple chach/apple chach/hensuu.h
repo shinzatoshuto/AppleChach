@@ -68,6 +68,9 @@ public:
 	//int v[3] = { -1,0,1 };
 
 	int g_PauseFlg;  //ポーズフラグ
-	int FallSE, ChachSE, PoisonSE;
+	int FallSE, CatchSE, PoisonSE, GetAppleSE;
+	int MoveSE, ClickSE, CancelSE;
+	int TitleSound;
+	int GameSound;
 };
 extern HENSUU hen;

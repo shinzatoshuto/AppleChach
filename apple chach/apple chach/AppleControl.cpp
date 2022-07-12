@@ -55,6 +55,9 @@ void APPLE::AppleControl() {
 					g_player.flg = FALSE;
 					g_player.count = 120;
 				}
+				else {
+					PlaySoundMem(hen.GetAppleSE, DX_PLAYTYPE_BACK);
+				}
 				//if (g_player.hp <= 0)  g_GameState = 6;
 			}
 		}

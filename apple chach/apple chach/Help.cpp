@@ -5,7 +5,7 @@
 
 void HELP::DrawHelp() {
 	//スペースキーでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_M) hen.g_GameState = 0;
+	if (hen.g_KeyFlg & PAD_INPUT_2) hen.g_GameState = 0;
 	//zゲーム開始
 	if (hen.g_KeyFlg & PAD_INPUT_A) hen.g_GameState = 1;
 

@@ -12,7 +12,7 @@ void PAD::DrawInput(void) {
 
 	DrawBox(x + OffSetX, y + OffSetY, x + 32 + OffSetX, y + 32 + OffSetY, 0x0000FF, 1);
 
-	const char keybord[5][14] = { "ABCDEFGHIJKLM" ,"NOPQRSTUVWXYZ" ,"abcdefghijklm" ,"nopqrstuvwxyz" ,"0123456789" };
+	const char keybord[5][14] = { "ABCDEFGHIJKLM" ,"NOPQRSTUVWXYZ" ,"abcdefghijklm" ,"nopqrstuvwxyz" ,"0123456789   " };
 
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 13; j++) {

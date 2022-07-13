@@ -262,8 +262,7 @@ void GameInit(void) {
 
 
 	pad.inputnum = 0;
-	//strcpy_s(pad.inputchar, "");
-	(*(char*)pad.inputchar) = *(char*)"\0";
+	strcpy_s(pad.inputchar, 10, "         ");
 
 	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
 
@@ -521,7 +520,7 @@ void InputRanking(void) {
 	DrawBox(120, 200, 317, 240, 0x000055, TRUE);
 
 	pad.DrawInput();
-	try {
+	//try {
 		if (hen.g_KeyFlg & PAD_INPUT_8 && pad.inputnum > 0) {
 			//g_Ranking[4].name = pad.inputchar;
 			PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
@@ -531,10 +530,10 @@ void InputRanking(void) {
 			SaveRanking();
 			hen.g_GameState = 2;
 		}
-	}
-	catch (int& err) {
-		printf("エラーコード%d\n", err);
-	}
+	//}
+	//catch (int& err) {
+	//	printf("エラーコード%d\n", err);
+	//}
 
 	//if (KeyInputSingleCharString(130, 210, 10, g_Ranking[4].name, FALSE) == 1) {
 	//	g_Ranking[4].score = hen.Score;

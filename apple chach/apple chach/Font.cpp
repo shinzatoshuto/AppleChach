@@ -10,4 +10,3 @@ int FONT::Fontset() {
 	 if((fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL))==-1)return-1;
 	if((fontking = CreateFontToHandle("Courier New", 30, 5, DX_FONTTYPE_NORMAL))==1)return-1;
 }
-//if ((hen.g_TitleImage = LoadGraph("images/back/Title.jpg")) == -1)return-1;

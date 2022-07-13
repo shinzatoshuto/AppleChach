@@ -17,8 +17,8 @@ int LoadImages() {
 	//ヘルプ
 	if ((hen.HelpImage = LoadGraph("images/back/Help.jpg")) == -1)return-1;
 
-	//エンディング
-	if ((hen.g_EndImage = LoadGraph("images/End.bmp")) == -1)return-1;
+	////エンディング
+	//if ((hen.g_EndImage = LoadGraph("images/End.bmp")) == -1)return-1;
 
 	//リンゴ
 		/*if ((apple.A = LoadGraph("images/apple/fruit_ringo.png")) == -1)return -1;
@@ -39,20 +39,13 @@ int LoadImages() {
 		if ((hen.g_Player[2] = LoadGraph("images/miniplayer/figure_aura2_orange_black.png")) == -1)return -1;
 	
 		if ((hen.g_Car = LoadGraph("images/miniplayer/figure_aura2_orange.png")) == -1)return -1;
-		if ((hen.g_Barrier = LoadGraph("images/barrier.png")) == -1)return -1;
+		//if ((hen.g_Barrier = LoadGraph("images/barrier.png")) == -1)return -1;
 
 		//背景画像
 		if ((hen.Backimg = LoadGraph("images/back/bg_natural_mori.jpg")) == -1)return-1;
 
 		//エンド画像
 		if ((hen.EndImg = LoadGraph("images/back/bg_yamamichi.jpg")) == -1)return-1;
-
-		//文字画像
-		if (LoadDivGraph("images/ReALAN.png", 14, 14, 1, 45, 80, pad.ALAN) == -1)return-1;
-		if (LoadDivGraph("images/ReALOZ.png", 12, 12, 1, 45, 80, pad.ALOZ) == -1)return-1;
-		if (LoadDivGraph("images/ReALAN_ko.png", 13, 13, 1, 49, 90, pad.alan) == -1)return-1;
-		if (LoadDivGraph("images/ReALOZ_ko.png", 12, 12, 1, 45, 82, pad.aloz) == -1)return-1;
-		if (LoadDivGraph("images/Resuuji.png", 10, 10, 1, 44, 74, pad.suuji) == -1)return-1;
 	
 	return 0;
 }

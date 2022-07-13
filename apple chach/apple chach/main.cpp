@@ -167,7 +167,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	fontran = CreateFontToHandle("Tsunagi Gothic Black", 40, 1, DX_FONTTYPE_NORMAL);
 	fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL);
 	fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL);
-	fontking = CreateFontToHandle("MS ゴシック", 30, 5, DX_FONTTYPE_NORMAL);
+	fontking = CreateFontToHandle("Courier New", 30, 5, DX_FONTTYPE_NORMAL);
 	
 	//ゲームループ
 	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_7))

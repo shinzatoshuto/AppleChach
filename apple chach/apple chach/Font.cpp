@@ -8,6 +8,6 @@ int FONT::Fontset() {
     if((fontran = CreateFontToHandle("Tsunagi Gothic Black", 40, 1, DX_FONTTYPE_NORMAL))==-1)return-1;
 	 if((fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL))==-1)return-1;
 	 if((fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL))==-1)return-1;
-	if((fontking = CreateFontToHandle("MS ÉSÉVÉbÉN", 30, 5, DX_FONTTYPE_NORMAL))==1)return-1;
+	if((fontking = CreateFontToHandle("Courier New", 30, 5, DX_FONTTYPE_NORMAL))==1)return-1;
 }
 //if ((hen.g_TitleImage = LoadGraph("images/back/Title.jpg")) == -1)return-1;

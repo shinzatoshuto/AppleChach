@@ -2,16 +2,22 @@
 #define _USE_MATH_DEFINES
 #include<math.h>
 #include"apple.h"
+#include"Player.h"
 #include "hensuu.h"
 #include "Font.h"
+#include "Ranking.h"
+#include "End.h"
 #include"pad.h"
 
-#define  RANKING_DATA  5
+//#define  RANKING_DATA  5
 
 APPLE apple[APPLE_MAX];
 HENSUU hen;
 PAD pad;
 FONT font;
+END end;
+PLAYER player;
+RANKING ranking;
 
 //定数の宣言
 //const int SCREEN_WIDTH = 640;
@@ -19,12 +25,12 @@ FONT font;
 //const int ENEMY_MAX = 8;
 //const int ITEM_MAX = 3;
 
-//自機の初期値
-const int PLAYER_POS_X = SCREEN_WIDTH / 2;
-const int PLAYER_POS_Y = SCREEN_HEIGHT - 80;
-const int PLAYER_WIDTH = 30;
-const int PLAYER_HEIGHT = 100;
-const int PLAYER_SPEED = 5;
+////自機の初期値
+//const int PLAYER_POS_X = SCREEN_WIDTH / 2;
+//const int PLAYER_POS_Y = SCREEN_HEIGHT - 80;
+//const int PLAYER_WIDTH = 30;
+//const int PLAYER_HEIGHT = 100;
+//const int PLAYER_SPEED = 5;
 //const int PLAYER_HP = 1000;
 //const int PLAYER_FUEL = 20000;
 //const int PLAYER_BARRIER = 3;
@@ -46,7 +52,7 @@ const int PLAYER_SPEED = 5;
 //};
 
 //自機
-PLAYER g_player;
+//PLAYER g_player;
 
 ////敵機の構造体
 //struct ENEMY {
@@ -67,15 +73,15 @@ PLAYER g_player;
 //struct ENEMY g_item[ITEM_MAX];
 //struct ENEMY g_item00 = { TRUE,0,0,0,-50,50,50,0,1 };
 
-//ランキングデータ（構造体）
-struct RankingData {
-	int no;
-	char name[11];
-	long score;
-};
-
-//ランキングデータ変数宣言
-struct RankingData  g_Ranking[RANKING_DATA];
+////ランキングデータ（構造体）
+//struct RankingData {
+//	int no;
+//	char name[11];
+//	long score;
+//};
+//
+////ランキングデータ変数宣言
+//struct RankingData  g_Ranking[RANKING_DATA];
 
 //関数のプロトタイプ宣言
 void GameInit(void);
@@ -86,11 +92,11 @@ void DrawGameOver(void);
 void DrawEnd(void);
 void DrawHelp(void);
 
-void DrawRanking(void);
-void InputRanking(void);
-void SortRanking(void);
-int SaveRanking(void);
-int ReadRanking(void);
+//void DrawRanking(void);
+//void InputRanking(void);
+//void SortRanking(void);
+//int SaveRanking(void);
+//int ReadRanking(void);
 
 int LoadImages();
 void PlayerControl();
@@ -154,11 +160,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	if (DxLib_Init() == -1)return-1;
 	SetDrawScreen(DX_SCREEN_BACK);
 	if (LoadImages() == -1)return-1;
-	if (ReadRanking() == -1)return-1;
+	if (ranking.ReadRanking() == -1)return-1;
 	if (LoadSound() == -1)return-1;
+	font.Fontset();
 
-	ChangeVolumeSoundMem(100, hen.GameSound);
-	ChangeVolumeSoundMem(150, hen.TitleSound);
+	ChangeVolumeSoundMem(100, hen.GameBGM);
+	ChangeVolumeSoundMem(150, hen.TitleBGM);
 
 	//フォント
 	font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);
@@ -183,17 +190,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 			break;
 		case 1:GameInit();
 			break;
-		case 2:DrawRanking();
+		case 2:ranking.DrawRanking();
 			break;
 		case 3:DrawHelp();
 			break;
-		case 4:DrawEnd();
+		case 4:end.DrawEnd();
 			break;
 		case 5:GameMain();
 			break;
 		case 6:DrawGameOver();
 			break;
-		case 7:InputRanking();
+		case 7:ranking.InputRanking();
 			break;
 		}
 
@@ -207,8 +214,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 //ゲームタイトル表示
 void DrawGameTitle(void) {
 	static int MenuNo = 0;
-	if (CheckSoundMem(hen.TitleSound) == 0)
-	PlaySoundMem(hen.TitleSound, DX_PLAYTYPE_BACK);
+	if (CheckSoundMem(hen.TitleBGM) == 0)
+	PlaySoundMem(hen.TitleBGM, DX_PLAYTYPE_BACK);
 	//メニューカーソル移動処理
 	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
 		if (++MenuNo > 3)MenuNo = 0;
@@ -241,17 +248,11 @@ void GameInit(void) {
 	hen.Score = 0;
 
 	//プレイヤーの初期設定
-	g_player.flg = TRUE;
-	g_player.x = PLAYER_POS_X;
-	g_player.y = PLAYER_POS_Y;
-	g_player.w = PLAYER_WIDTH;
-	g_player.h = PLAYER_HEIGHT;
-	g_player.count = 0;
-	g_player.speed = PLAYER_SPEED;
+	player.InitPlayer();
 
 	//りんごの初期設定
 	for (int i = 0; i < APPLE_MAX; i++) {
-		apple[i].flg = FALSE;
+		apple[i].InitApple();
 	}
 	//リンゴのカウントの初期化
 	for (int i = 0; i < 4; i++) {
@@ -266,32 +267,32 @@ void GameInit(void) {
 
 	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
 
-	StopSoundMem(hen.TitleSound);
-	PlaySoundMem(hen.GameSound, DX_PLAYTYPE_BACK);
+	StopSoundMem(hen.TitleBGM);
+	PlaySoundMem(hen.GameBGM, DX_PLAYTYPE_BACK);
 	//ゲームメイン処理へ
 	hen.g_GameState = 5;
 
 	//ポーズフラグ
 	hen.g_PauseFlg = 0;
 }
-
-//ゲームランキング描画表示
-void DrawRanking(void) {
-	//スペースキーでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_2) {
-		hen.g_GameState = 0;
-		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
-	}
-	//ランキング画像表示
-	DrawGraph(0, 0, hen.g_RankingImage, FALSE);
-	//ランキング一覧を表示
-	//SetFontSize(18);
-	for (int i = 0; i < RANKING_DATA; i++) {
-		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontking,"%2d %+10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
-	}
-	SetFontSize(25);
-	DrawString(150, 430, "---- Bボタンで戻る ----", 0xffffff, 0);
-}
+//
+////ゲームランキング描画表示
+//void DrawRanking(void) {
+//	//スペースキーでメニューに戻る
+//	if (hen.g_KeyFlg & PAD_INPUT_2) {
+//		hen.g_GameState = 0;
+//		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
+//	}
+//	//ランキング画像表示
+//	DrawGraph(0, 0, hen.g_RankingImage, FALSE);
+//	//ランキング一覧を表示
+//	//SetFontSize(18);
+//	for (int i = 0; i < RANKING_DATA; i++) {
+//		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontking,"%2d %+10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
+//	}
+//	SetFontSize(25);
+//	DrawString(150, 430, "---- Bボタンで戻る ----", 0xffffff, 0);
+//}
 
 ////ゲームヘルプ描画処理
 void DrawHelp(void) {
@@ -335,33 +336,33 @@ void DrawHelp(void) {
 
 
 //ゲームエンド描画処理
-void DrawEnd(void) {
-	
-
-	//エンド画像表示
-	DrawGraph(0, 0, hen.EndImg, FALSE);
-
-	DrawStringToHandle(65, 30, "Thank you for Playing !!", 0xffff00, fonten);
-
-	if (++hen.g_WaitTime < 90)hen.PosY = 90 - hen.g_WaitTime / 2;
-	DrawStringToHandle(80, 70 + hen.PosY, "タイトル　　AppleChach", 0xffffff, fontensc);
-	DrawStringToHandle(80, 110 + hen.PosY, "制作者　国際電子ビジネス専門学校", 0xffffff, fontensc);
-	DrawStringToHandle(80, 150 + hen.PosY, "　　　　　金城　大洋", 0xffffff, fontensc);
-	DrawStringToHandle(80, 190 + hen.PosY, "　　　　　志出盛　賢斗", 0xffffff, fontensc);
-	DrawStringToHandle(80, 230 + hen.PosY, "　　　　　城間　愛夢", 0xffffff, fontensc);
-	DrawStringToHandle(80, 270 + hen.PosY, "　　　　　新里　柊斗", 0xffffff, fontensc);
-	DrawStringToHandle(80, 310 + hen.PosY, "素材利用", 0xffffff, fontensc);
-	DrawStringToHandle(80, 350 + hen.PosY, "BGM　　　　魔王魂", 0xffffff, fontensc);
-	DrawStringToHandle(80, 390 + hen.PosY, "SE　　　　   魔王魂", 0xffffff, fontensc);
-
-	//タイムの加算処理&終了
-	if (++hen.g_WaitTime > 160) hen.g_GameState = 99;
-}
+//void DrawEnd(void) {
+//	
+//
+//	//エンド画像表示
+//	DrawGraph(0, 0, hen.EndImage, FALSE);
+//
+//	DrawStringToHandle(65, 30, "Thank you for Playing !!", 0xffff00, fonten);
+//
+//	if (++hen.g_WaitTime < 90)hen.PosY = 90 - hen.g_WaitTime / 2;
+//	DrawStringToHandle(80, 70 + hen.PosY, "タイトル　　AppleChach", 0xffffff, fontensc);
+//	DrawStringToHandle(80, 110 + hen.PosY, "制作者　国際電子ビジネス専門学校", 0xffffff, fontensc);
+//	DrawStringToHandle(80, 150 + hen.PosY, "　　　　　金城　大洋", 0xffffff, fontensc);
+//	DrawStringToHandle(80, 190 + hen.PosY, "　　　　　志出盛　賢斗", 0xffffff, fontensc);
+//	DrawStringToHandle(80, 230 + hen.PosY, "　　　　　城間　愛夢", 0xffffff, fontensc);
+//	DrawStringToHandle(80, 270 + hen.PosY, "　　　　　新里　柊斗", 0xffffff, fontensc);
+//	DrawStringToHandle(80, 310 + hen.PosY, "素材利用", 0xffffff, fontensc);
+//	DrawStringToHandle(80, 350 + hen.PosY, "BGM　　　　魔王魂", 0xffffff, fontensc);
+//	DrawStringToHandle(80, 390 + hen.PosY, "SE　　　　   魔王魂", 0xffffff, fontensc);
+//
+//	//タイムの加算処理&終了
+//	if (++hen.g_WaitTime > 160) hen.g_GameState = 99;
+//}
 
 //ゲームメイン
 void GameMain(void) {
-	DrawGraph(0, 0, hen.Backimg, FALSE);
-	PlayerControl();
+	DrawGraph(0, 0, hen.GameImage, FALSE);
+	player.PlayerControl();
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].AppleControl();
 	}
@@ -377,104 +378,104 @@ void GameMain(void) {
 	}
 }
 
-void PlayerControl() {
-	//ゲームオーバー処理へ
-	if (hen.g_Time <= 0) {
-		StopSoundMem(hen.GameSound);
-		hen.g_GameState = 6;
-	}
-
-	//上下左右移動
-	if (hen.g_PauseFlg == 0) {
-		if (g_player.flg == TRUE || true) {
-			if (hen.g_NowKey & PAD_INPUT_LEFT) g_player.x -= g_player.speed;
-			if (hen.g_NowKey & PAD_INPUT_RIGHT) g_player.x += g_player.speed;
-		}
-	}
-	//画面をはみ出さないようにする
-	if (g_player.x < 16)  g_player.x = 16;
-	if (g_player.x > SCREEN_WIDTH - 146)  g_player.x = SCREEN_WIDTH - 146;
-	//if (g_player.y < 60)  g_player.y = 60;
-	//if (g_player.y > SCREEN_HEIGHT - 60)  g_player.y = SCREEN_HEIGHT - 60;
-
-	
-	//プレイヤーの表示
-	//if (g_player.flg == TRUE) {
-	if (g_player.flg == TRUE || (hen.g_PauseFlg == FALSE && g_player.flg == FALSE && --g_player.count % 20 == 0)) {
-		if (hen.g_NowKey & PAD_INPUT_LEFT) {
-			//po-zu
-			if (hen.g_PauseFlg == FALSE) {
-				//DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[0], TRUE);
-				DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.g_Player[0], TRUE);
-			}
-			else {
-				//DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
-				DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.g_Player[2], TRUE);
-			}
-		}
-		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
-			//po-zu
-			if (hen.g_PauseFlg == FALSE) {
-				//DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.g_Player[1], TRUE);
-				DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.g_Player[1], TRUE);
-			}
-			else {
-				//DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
-				DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.g_Player[2], TRUE);
-			}
-		}
-		else {
-			//DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
-			DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.g_Player[2], TRUE);
-		}
-	}
-	if (hen.g_PauseFlg == TRUE) {
-		//DrawGraph(g_player.x - 86, g_player.y - 125, hen.g_Player[2], TRUE);
-		DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.g_Player[2], TRUE);
-	}
-		if (g_player.count <= 0) g_player.flg = TRUE;
-
-	//ポーズフラグ
-	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == FALSE) {
-		hen.g_PauseFlg = TRUE;
-		StopSoundMem(hen.GameSound);
-	}
-	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == TRUE) {
-		hen.g_PauseFlg = FALSE;
-		PlaySoundMem(hen.GameSound, DX_PLAYTYPE_BACK, FALSE);
-		
-	}
-	if (hen.g_PauseFlg == TRUE) {
-		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, fontpose);
-	}
-	
-	//UIの枠表示
-	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ffff, TRUE);
-
-	//制限時間の表示
-	SetFontSize(25);
-	DrawFormatString(520, 20, 0x000000, "制限時間");
-	DrawFormatString(560, 60, 0x000000, "%d", hen.g_Time / 60);
-
-	//りんごを取った数を表示
-	SetFontSize(16);
-	for (int i = 0; i < 4; i++) {
-		DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
-		DrawFormatString(520 + i * 30, 140, 0x000000, "%02d", g_AppleCount[i]);
-	}
-
-	SetFontSize(30);
-	DrawFormatString(530, 180, 0x000000, "スコア");
-	SetFontSize(20);
-	DrawFormatString(543, 220, 0x000000, "%06d", hen.Score);
-}
+//void PlayerControl() {
+//	//ゲームオーバー処理へ
+//	if (hen.g_Time <= 0) {
+//		StopSoundMem(hen.GameBGM);
+//		hen.g_GameState = 6;
+//	}
+//
+//	//上下左右移動
+//	if (hen.g_PauseFlg == 0) {
+//		if (g_player.flg == TRUE || true) {
+//			if (hen.g_NowKey & PAD_INPUT_LEFT) g_player.x -= g_player.speed;
+//			if (hen.g_NowKey & PAD_INPUT_RIGHT) g_player.x += g_player.speed;
+//		}
+//	}
+//	//画面をはみ出さないようにする
+//	if (g_player.x < 16)  g_player.x = 16;
+//	if (g_player.x > SCREEN_WIDTH - 146)  g_player.x = SCREEN_WIDTH - 146;
+//	//if (g_player.y < 60)  g_player.y = 60;
+//	//if (g_player.y > SCREEN_HEIGHT - 60)  g_player.y = SCREEN_HEIGHT - 60;
+//
+//	
+//	//プレイヤーの表示
+//	//if (g_player.flg == TRUE) {
+//	if (g_player.flg == TRUE || (hen.g_PauseFlg == FALSE && g_player.flg == FALSE && --g_player.count % 20 == 0)) {
+//		if (hen.g_NowKey & PAD_INPUT_LEFT) {
+//			//po-zu
+//			if (hen.g_PauseFlg == FALSE) {
+//				//DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.PlayerImages[0], TRUE);
+//				DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.PlayerImages[0], TRUE);
+//			}
+//			else {
+//				//DrawGraph(g_player.x - 86, g_player.y - 125, hen.PlayerImages[2], TRUE);
+//				DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.PlayerImages[2], TRUE);
+//			}
+//		}
+//		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
+//			//po-zu
+//			if (hen.g_PauseFlg == FALSE) {
+//				//DrawGraph(g_player.x - 86, g_player.y - g_player.h / 2, hen.PlayerImages[1], TRUE);
+//				DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.PlayerImages[1], TRUE);
+//			}
+//			else {
+//				//DrawGraph(g_player.x - 86, g_player.y - 125, hen.PlayerImages[2], TRUE);
+//				DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.PlayerImages[2], TRUE);
+//			}
+//		}
+//		else {
+//			//DrawGraph(g_player.x - 86, g_player.y - 125, hen.PlayerImages[2], TRUE);
+//			DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.PlayerImages[2], TRUE);
+//		}
+//	}
+//	if (hen.g_PauseFlg == TRUE) {
+//		//DrawGraph(g_player.x - 86, g_player.y - 125, hen.PlayerImages[2], TRUE);
+//		DrawRotaGraph(g_player.x, g_player.y, 1, 0, hen.PlayerImages[2], TRUE);
+//	}
+//		if (g_player.count <= 0) g_player.flg = TRUE;
+//
+//	//ポーズフラグ
+//	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == FALSE) {
+//		hen.g_PauseFlg = TRUE;
+//		StopSoundMem(hen.GameBGM);
+//	}
+//	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == TRUE) {
+//		hen.g_PauseFlg = FALSE;
+//		PlaySoundMem(hen.GameBGM, DX_PLAYTYPE_BACK, FALSE);
+//		
+//	}
+//	if (hen.g_PauseFlg == TRUE) {
+//		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, fontpose);
+//	}
+//	
+//	//UIの枠表示
+//	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ffff, TRUE);
+//
+//	//制限時間の表示
+//	SetFontSize(25);
+//	DrawFormatString(520, 20, 0x000000, "制限時間");
+//	DrawFormatString(560, 60, 0x000000, "%d", hen.g_Time / 60);
+//
+//	//りんごを取った数を表示
+//	SetFontSize(16);
+//	for (int i = 0; i < 4; i++) {
+//		DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
+//		DrawFormatString(520 + i * 30, 140, 0x000000, "%02d", g_AppleCount[i]);
+//	}
+//
+//	SetFontSize(30);
+//	DrawFormatString(530, 180, 0x000000, "スコア");
+//	SetFontSize(20);
+//	DrawFormatString(543, 220, 0x000000, "%06d", hen.Score);
+//}
 
 //ゲームオーバー画像描画処理
 void DrawGameOver(void) {
 	//Bボタンでメニューに戻る
 	if (hen.g_KeyFlg & PAD_INPUT_2) {
 		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
-		if (g_Ranking[RANKING_DATA - 1].score >= hen.Score) {
+		if (ranking.g_Ranking[RANKING_DATA - 1].score >= hen.Score) {
 			hen.g_GameState = 0;
 		}
 		else {
@@ -506,112 +507,112 @@ void DrawGameOver(void) {
 }
 
 //ランキング入力処理
-void InputRanking(void) {
-	//ランキング画像表示
-	DrawGraph(0, 0, hen.g_RankingImage, FALSE);
-	SetFontSize(20);
-
-	//名前入力指示文字列の描画
-	DrawStringToHandle(110, 120, "ランキングに登録します", 0xffffff, fontrans);
-	DrawStringToHandle(110, 150, "名前を英字で入力してください", 0xffffff, fontrans);
-
-	//名前の入力
-	DrawString(110, 210, ">", 0xffffff);
-	DrawBox(120, 200, 317, 240, 0x000055, TRUE);
-
-	pad.DrawInput();
-	//try {
-		if (hen.g_KeyFlg & PAD_INPUT_8 && pad.inputnum > 0) {
-			//g_Ranking[4].name = pad.inputchar;
-			PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
-			strcpy_s(g_Ranking[4].name, 11, pad.inputchar);
-			g_Ranking[4].score = hen.Score;
-			SortRanking();
-			SaveRanking();
-			hen.g_GameState = 2;
-		}
-	//}
-	//catch (int& err) {
-	//	printf("エラーコード%d\n", err);
-	//}
-
-	//if (KeyInputSingleCharString(130, 210, 10, g_Ranking[4].name, FALSE) == 1) {
-	//	g_Ranking[4].score = hen.Score;
-	//	SortRanking();
-	//	SaveRanking();
-	//	hen.g_GameState = 2;
-	//}
-}
-
-//ランキング並び替え
-void SortRanking(void) {
-	int i, j;
-	RankingData work;
-
-	//選択ソート
-	for (i = 0; i < 4; i++) {
-		for (j = i + 1; j < 5; j++) {
-			if (g_Ranking[i].score <= g_Ranking[j].score) {
-				work = g_Ranking[i];
-				g_Ranking[i] = g_Ranking[j];
-				g_Ranking[j] = work;
-			}
-		}
-	}
-
-	//順位付け
-	for (i = 0; i < 5; i++) {
-		g_Ranking[i].no = 1;
-	}
-	//得点が同じだった場合は、同じ順位とする
-	//同順位があった場合の次の順位はデータ個数が加算された順位とする
-	for (i = 0; i < 4; i++) {
-		for (j = i + 1; j < 5; j++) {
-			if (g_Ranking[i].score > g_Ranking[j].score) {
-				g_Ranking[j].no++;
-			}
-		}
-	}
-}
-
-//ランキングデータの保存
-int SaveRanking(void) {
-	FILE* fp;
-#pragma warning(disable:4996)
-
-	//ファイルオープン
-	if ((fp = fopen("rankingdata.txt", "w")) == NULL) {
-		//エラー処理
-		printf("Ranking Data Error\n");
-		return-1;
-	}
-
-	//ランキングデータ分配列データを書き込む
-	for (int i = 0; i < 5; i++) {
-		fprintf(fp, "%2d %10s %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
-	}
-
-	//ファイルクローズ
-	fclose(fp);
-
-	return 0;
-}
-
-//ランキングデータ読み込み
-int ReadRanking(void) {
-	FILE* fp;
-#pragma warning(disable:4996)
-	if ((fp = fopen("rankingdata.txt", "r")) == NULL) {
-		printf("Ranking Data Error\n");
-		return-1;
-	}
-
-	for (int i = 0; i < 5; i++) {
-		fscanf(fp, "%2d %10s %10d\n", &g_Ranking[i].no, g_Ranking[i].name, &g_Ranking[i].score);
-	}
-
-	fclose(fp);
-
-	
-	return 0;
-}
+//void InputRanking(void) {
+//	//ランキング画像表示
+//	DrawGraph(0, 0, hen.g_RankingImage, FALSE);
+//	SetFontSize(20);
+//
+//	//名前入力指示文字列の描画
+//	DrawStringToHandle(110, 120, "ランキングに登録します", 0xffffff, fontrans);
+//	DrawStringToHandle(110, 150, "名前を英字で入力してください", 0xffffff, fontrans);
+//
+//	//名前の入力
+//	DrawString(110, 210, ">", 0xffffff);
+//	DrawBox(120, 200, 317, 240, 0x000055, TRUE);
+//
+//	pad.DrawInput();
+//	//try {
+//		if (hen.g_KeyFlg & PAD_INPUT_8 && pad.inputnum > 0) {
+//			//g_Ranking[4].name = pad.inputchar;
+//			PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
+//			strcpy_s(g_Ranking[4].name, 11, pad.inputchar);
+//			g_Ranking[4].score = hen.Score;
+//			SortRanking();
+//			SaveRanking();
+//			hen.g_GameState = 2;
+//		}
+//	//}
+//	//catch (int& err) {
+//	//	printf("エラーコード%d\n", err);
+//	//}
+//
+//	//if (KeyInputSingleCharString(130, 210, 10, g_Ranking[4].name, FALSE) == 1) {
+//	//	g_Ranking[4].score = hen.Score;
+//	//	SortRanking();
+//	//	SaveRanking();
+//	//	hen.g_GameState = 2;
+//	//}
+//}
+//
+////ランキング並び替え
+//void SortRanking(void) {
+//	int i, j;
+//	RankingData work;
+//
+//	//選択ソート
+//	for (i = 0; i < 4; i++) {
+//		for (j = i + 1; j < 5; j++) {
+//			if (g_Ranking[i].score <= g_Ranking[j].score) {
+//				work = g_Ranking[i];
+//				g_Ranking[i] = g_Ranking[j];
+//				g_Ranking[j] = work;
+//			}
+//		}
+//	}
+//
+//	//順位付け
+//	for (i = 0; i < 5; i++) {
+//		g_Ranking[i].no = 1;
+//	}
+//	//得点が同じだった場合は、同じ順位とする
+//	//同順位があった場合の次の順位はデータ個数が加算された順位とする
+//	for (i = 0; i < 4; i++) {
+//		for (j = i + 1; j < 5; j++) {
+//			if (g_Ranking[i].score > g_Ranking[j].score) {
+//				g_Ranking[j].no++;
+//			}
+//		}
+//	}
+//}
+//
+////ランキングデータの保存
+//int SaveRanking(void) {
+//	FILE* fp;
+//#pragma warning(disable:4996)
+//
+//	//ファイルオープン
+//	if ((fp = fopen("rankingdata.txt", "w")) == NULL) {
+//		//エラー処理
+//		printf("Ranking Data Error\n");
+//		return-1;
+//	}
+//
+//	//ランキングデータ分配列データを書き込む
+//	for (int i = 0; i < 5; i++) {
+//		fprintf(fp, "%2d %10s %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
+//	}
+//
+//	//ファイルクローズ
+//	fclose(fp);
+//
+//	return 0;
+//}
+//
+////ランキングデータ読み込み
+//int ReadRanking(void) {
+//	FILE* fp;
+//#pragma warning(disable:4996)
+//	if ((fp = fopen("rankingdata.txt", "r")) == NULL) {
+//		printf("Ranking Data Error\n");
+//		return-1;
+//	}
+//
+//	for (int i = 0; i < 5; i++) {
+//		fscanf(fp, "%2d %10s %10d\n", &g_Ranking[i].no, g_Ranking[i].name, &g_Ranking[i].score);
+//	}
+//
+//	fclose(fp);
+//
+//	
+//	return 0;
+//}

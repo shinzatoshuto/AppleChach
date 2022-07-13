@@ -14,8 +14,8 @@ int LoadSound() {
 	if ((hen.CancelSE = LoadSoundMem("sounds/SE5.wav")) == -1)return-1;
 
 
-	if ((hen.GameSound = LoadSoundMem("sounds/Game.mp3")) == -1) return -1;
-	if ((hen.TitleSound = LoadSoundMem("sounds/Title.mp3")) == -1)return-1;
+	if ((hen.TitleBGM = LoadSoundMem("sounds/Title.mp3")) == -1)return-1;
+	if ((hen.GameBGM = LoadSoundMem("sounds/Game.mp3")) == -1) return -1;
 
 	return 0;
 }

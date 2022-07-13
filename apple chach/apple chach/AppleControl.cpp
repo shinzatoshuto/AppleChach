@@ -1,5 +1,6 @@
 #define _USE_MATH_DEFINES
 #include "apple.h"
+#include "Player.h"
 #include "hensuu.h"
 #include "DxLib.h"
 
@@ -42,7 +43,7 @@ void APPLE::AppleControl() {
 			}*/
 
 			//“–‚½‚è”»’è
-			if (HitBoxPlayer(&g_player) == TRUE) {
+			if (HitBoxPlayer(&player) == TRUE) {
 				//g_player.flg = FALSE;
 				//g_player.speed = PLAYER_SPEED;
 				//g_player.count = 0;
@@ -52,8 +53,8 @@ void APPLE::AppleControl() {
 				flg = FALSE;
 				if (type == 3) {
 					PlaySoundMem(hen.PoisonSE, DX_PLAYTYPE_BACK);
-					g_player.flg = FALSE;
-					g_player.count = 120;
+					player.flg = FALSE;
+					player.count = 120;
 				}
 				else {
 					PlaySoundMem(hen.GetAppleSE, DX_PLAYTYPE_BACK);

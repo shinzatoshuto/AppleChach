@@ -168,6 +168,7 @@
     <ClCompile Include="CreateApple.cpp" />
     <ClCompile Include="LoadGraph.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +179,7 @@
     <ClInclude Include="pad.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="hensuu.h" />
+    <ClInclude Include="Ranking.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

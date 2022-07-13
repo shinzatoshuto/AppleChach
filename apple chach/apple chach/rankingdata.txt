@@ -1,5 +1,5 @@
  1 RREFSþþþþþ       7900
- 2      ABBCC       6650
- 3 GFEDRþþþþþ       6450
- 4 AABCEþþþþþ       5900
- 5       BCCD       5550
+ 2  AAAAAAA         7800
+ 3      ABBCC       6650
+ 4 GFEDRþþþþþ       6450
+ 5 AABCEþþþþþ       5900

@@ -34,18 +34,18 @@ int LoadImages() {
 		if ((hen.AppleImages[2] = LoadGraph("images/apple/fruit_ao_ringo.png")) == -1)return -1;
 		if ((hen.AppleImages[3] = LoadGraph("images/apple/apple_doku_ringo.png")) == -1)return -1;
 
-		if ((hen.g_Player[0] = LoadGraph("images/miniplayer/figure_hashiru2.png")) == -1)return -1;
-		if ((hen.g_Player[1] = LoadGraph("images/miniplayer/figure_hashiru.png")) == -1)return -1;
-		if ((hen.g_Player[2] = LoadGraph("images/miniplayer/figure_aura2_orange_black.png")) == -1)return -1;
+		if ((hen.PlayerImages[0] = LoadGraph("images/miniplayer/figure_hashiru2.png")) == -1)return -1;
+		if ((hen.PlayerImages[1] = LoadGraph("images/miniplayer/figure_hashiru.png")) == -1)return -1;
+		if ((hen.PlayerImages[2] = LoadGraph("images/miniplayer/figure_aura2_orange_black.png")) == -1)return -1;
 	
-		if ((hen.g_Car = LoadGraph("images/miniplayer/figure_aura2_orange.png")) == -1)return -1;
+		//if ((hen.g_Car = LoadGraph("images/miniplayer/figure_aura2_orange.png")) == -1)return -1;
 		//if ((hen.g_Barrier = LoadGraph("images/barrier.png")) == -1)return -1;
 
 		//”wŒi‰æ‘œ
-		if ((hen.Backimg = LoadGraph("images/back/bg_natural_mori.jpg")) == -1)return-1;
+		if ((hen.GameImage = LoadGraph("images/back/bg_natural_mori.jpg")) == -1)return-1;
 
 		//ƒGƒ“ƒh‰æ‘œ
-		if ((hen.EndImg = LoadGraph("images/back/bg_yamamichi.jpg")) == -1)return-1;
+		if ((hen.EndImage = LoadGraph("images/back/bg_yamamichi.jpg")) == -1)return-1;
 	
 	return 0;
 }

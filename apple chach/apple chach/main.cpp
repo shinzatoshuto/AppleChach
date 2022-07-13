@@ -262,7 +262,8 @@ void GameInit(void) {
 
 
 	pad.inputnum = 0;
-	strcpy_s(pad.inputchar, "");
+	//strcpy_s(pad.inputchar, "");
+	(*(char*)pad.inputchar) = *(char*)"\0";
 
 	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
 

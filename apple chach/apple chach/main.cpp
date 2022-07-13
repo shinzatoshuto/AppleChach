@@ -288,7 +288,7 @@ void DrawRanking(void) {
 	//ランキング一覧を表示
 	//SetFontSize(18);
 	for (int i = 0; i < RANKING_DATA; i++) {
-		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontking,"%2d %10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
+		DrawFormatStringToHandle(140, 170 + i * 35, 0xffffff, fontking,"%2d %+10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
 	}
 	SetFontSize(25);
 	DrawString(150, 430, "---- Bボタンで戻る ----", 0xffffff, 0);

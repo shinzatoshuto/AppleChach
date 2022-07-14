@@ -3,7 +3,7 @@
 #include<math.h>
 #include"apple.h"
 #include"Player.h"
-#include "hensuu.h"
+#include "variable.h"
 #include "Font.h"
 #include "Ranking.h"
 #include "Help.h"
@@ -46,6 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	if (ranking.ReadRanking() == -1) return -1;
 
 	SetDrawScreen(DX_SCREEN_BACK);
+
 	ChangeVolumeSoundMem(100, hen.GameBGM);
 	ChangeVolumeSoundMem(150, hen.TitleBGM);
 	ChangeVolumeSoundMem(255, hen.FallSE);

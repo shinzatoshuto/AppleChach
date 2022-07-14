@@ -1,5 +1,5 @@
 #include"DxLib.h"
-#include"hensuu.h"
+#include"variable.h"
 #include"UI.h"
 
 void UI::UIimages() {

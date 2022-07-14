@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
 #include "apple.h"
 #include "Player.h"
-#include "hensuu.h"
+#include "variable.h"
 #include "DxLib.h"
 
 void APPLE::AppleControl() {

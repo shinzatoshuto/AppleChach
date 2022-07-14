@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "Player.h"
-#include"hensuu.h"
+#include"variable.h"
 #include "Font.h"
 
 void PLAYER::InitPlayer() {

@@ -1,5 +1,5 @@
 #include "DxLib.h"
-#include "hensuu.h"
+#include "variable.h"
 #include "pad.h"
 #include "string.h"
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "hensuu.h"
+#include "variable.h"
 
 class PLAYER {
 public:

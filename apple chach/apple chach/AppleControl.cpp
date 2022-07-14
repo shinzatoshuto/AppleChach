@@ -27,6 +27,9 @@ void APPLE::AppleControl() {
 				PlaySoundMem(hen.PoisonSE, DX_PLAYTYPE_BACK);
 				player.flg = FALSE;
 				player.count = 120;
+				if (hen.Score < 0) {
+					hen.Score = 0;
+				}
 			}
 			else {
 				PlaySoundMem(hen.GetAppleSE, DX_PLAYTYPE_BACK);

@@ -3,7 +3,7 @@
 
 class PLAYER {
 public:
-	const int PLAYER_POS_X = SCREEN_WIDTH / 2;
+	const int PLAYER_POS_X = SCREEN_WIDTH / 2 - 50;
 	const int PLAYER_POS_Y = SCREEN_HEIGHT - 80;
 	const int PLAYER_WIDTH = 30;
 	const int PLAYER_HEIGHT = 100;

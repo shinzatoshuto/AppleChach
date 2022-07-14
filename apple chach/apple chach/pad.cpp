@@ -3,21 +3,19 @@
 #include "pad.h"
 #include "string.h"
 
+const char keyboard[5][14] = { "ABCDEFGHIJKLM" ,"NOPQRSTUVWXYZ" ,"abcdefghijklm" ,"nopqrstuvwxyz" ,"0123456789   " };
+
 void PAD::DrawInput(void) {
 
 	int x = cursorX * 32;
 	int y = cursorY * 32;
-	OffSetX = 120;
-	OffSetY = 250;
 
 	DrawBox(x + OffSetX, y + OffSetY, x + 32 + OffSetX, y + 32 + OffSetY, 0x0000FF, 1);
-
-	const char keybord[5][14] = { "ABCDEFGHIJKLM" ,"NOPQRSTUVWXYZ" ,"abcdefghijklm" ,"nopqrstuvwxyz" ,"0123456789" };
 
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 13; j++) {
 			SetFontSize(32);
-			DrawFormatString(j * 32 + OffSetX, i * 32 + OffSetY, 0xffff00, "%c", keybord[i][j]);
+			DrawFormatString(j * 32 + OffSetX, i * 32 + OffSetY, 0xffff00, "%c", keyboard[i][j]);
 		}
 	}
 
@@ -39,7 +37,7 @@ void PAD::DrawInput(void) {
 	}
 
 	if (hen.g_KeyFlg & PAD_INPUT_1 && inputnum < 10) {
-		inputchar[inputnum++] = keybord[cursorY][cursorX];
+		inputchar[inputnum++] = keyboard[cursorY][cursorX];
 		PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
 	}
 	if (hen.g_KeyFlg & PAD_INPUT_2 && inputnum > 0) {

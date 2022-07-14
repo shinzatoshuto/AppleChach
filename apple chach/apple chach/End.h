@@ -2,11 +2,12 @@
 
 class END
 {
-public:
-void DrawEnd(void);
-
 private:
+	int PosY = 0;
+	int g_WaitTime = 0;
 
+public:
+	void DrawEnd(void);
 };
 
 extern END end;

@@ -37,6 +37,9 @@
     <Filter Include="Font">
       <UniqueIdentifier>{a80080e4-f505-46ea-b36a-ebbbbd13dd77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ranking">
+      <UniqueIdentifier>{fca1cfa4-9e23-47fd-9c88-b5a79fc0939d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppleControl.cpp">
@@ -75,6 +78,9 @@
     <ClCompile Include="Font.cpp">
       <Filter>Font</Filter>
     </ClCompile>
+    <ClCompile Include="Ranking.cpp">
+      <Filter>Ranking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
@@ -100,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="End.h">
       <Filter>End</Filter>
+    </ClInclude>
+    <ClInclude Include="Ranking.h">
+      <Filter>Ranking</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,12 +13,13 @@ private:
 	int point;
 	int speed;
 	int appleimgs[4];
+
+	int GetType();
 public:
 	void InitApple();
 	int CreateApple();
 	void AppleControl();
 	int HitBoxPlayer(PLAYER* p);
-	int GetType();
 };
 
 extern APPLE apple[APPLE_MAX];

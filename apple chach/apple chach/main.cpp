@@ -42,10 +42,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 	if (LoadImages() == -1)return-1;
 	if (ranking.ReadRanking() == -1)return-1;
+	if (font.LoadFont() == -1)return-1;
 	if (LoadSound() == -1)return-1;
-
-	//ƒtƒHƒ“ƒg
-	font.Fontset();
 
 	ChangeVolumeSoundMem(100, hen.GameBGM);
 	ChangeVolumeSoundMem(150, hen.TitleBGM);

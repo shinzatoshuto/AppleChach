@@ -10,9 +10,9 @@ public:
 	int fontrans;
 	int fontpose;
 	int fontking;
-	int Fontset();
-private:
-	
+
+public:
+	int Fontset();	
 
 };
 

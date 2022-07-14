@@ -15,9 +15,13 @@ public:
 	int count;
 	int speed;
 
+	int inertia;
+	int DirFlg;
+
 public:
 	void InitPlayer();
 	void PlayerControl();
+	void PlayerInertia();
 };
 
 extern PLAYER player;

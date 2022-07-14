@@ -11,6 +11,7 @@ void PLAYER::InitPlayer() {
 	h = PLAYER_HEIGHT;
 	count = 0;
 	speed = PLAYER_SPEED;
+	DirFlg = 0;
 }
 
 void PLAYER::PlayerControl() {
@@ -20,12 +21,27 @@ void PLAYER::PlayerControl() {
 		hen.g_GameState = 6;
 	}
 
-	//è„â∫ç∂âEà⁄ìÆ
+	//ç∂âEà⁄ìÆ
 	if (hen.g_PauseFlg == 0) {
-		if (flg == TRUE || true) {
-			if (hen.g_NowKey & PAD_INPUT_LEFT) x -= speed;
-			if (hen.g_NowKey & PAD_INPUT_RIGHT) x += speed;
+		//if (flg == TRUE || true) {
+		if (hen.g_NowKey & PAD_INPUT_LEFT) { 
+			x -= speed;
+			inertia = 5;
+			DirFlg = 1;
 		}
+		else if (hen.g_NowKey & PAD_INPUT_RIGHT) { 
+			x += speed; 
+			inertia = 5;
+			DirFlg = 2;
+		}
+			else { 
+			if (inertia != 0) {//x += inertia * -1 - 1;
+				if (DirFlg == 1) x -= inertia--;
+				else if (DirFlg == 2) x += inertia--;
+					
+			}
+			}
+		//}
 	}
 	//âÊñ ÇÇÕÇ›èoÇ≥Ç»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
 	if (x < 16)  x = 16;

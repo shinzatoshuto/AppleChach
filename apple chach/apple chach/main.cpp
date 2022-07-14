@@ -9,8 +9,7 @@
 #include "Help.h"
 #include "End.h"
 #include"pad.h"
-
-//#define  RANKING_DATA  5
+#include "Font.h"
 
 APPLE apple[APPLE_MAX];
 HENSUU hen;
@@ -21,137 +20,17 @@ PLAYER player;
 RANKING ranking;
 HELP help;
 
-//定数の宣言
-//const int SCREEN_WIDTH = 640;
-//const int SCREEN_HEIGHT = 480;
-//const int ENEMY_MAX = 8;
-//const int ITEM_MAX = 3;
-
-////自機の初期値
-//const int PLAYER_POS_X = SCREEN_WIDTH / 2;
-//const int PLAYER_POS_Y = SCREEN_HEIGHT - 80;
-//const int PLAYER_WIDTH = 30;
-//const int PLAYER_HEIGHT = 100;
-//const int PLAYER_SPEED = 5;
-//const int PLAYER_HP = 1000;
-//const int PLAYER_FUEL = 20000;
-//const int PLAYER_BARRIER = 3;
-//const int PLAYER_BARRIERUP = 10;
-
-//自機の構造体
-//struct PLAYER {
-//	int flg;
-//	int x, y;
-//	int w, h;
-//	double angle;
-//	int count;
-//	int speed;
-//	int hp;
-//	int fuel;
-//	int bari;
-//	int baricnt;
-//	int bariup;
-//};
-
-//自機
-//PLAYER g_player;
-
-////敵機の構造体
-//struct ENEMY {
-//	int flg;
-//	int type;
-//	int img;
-//	int x, y, w, h;
-//	int speed;
-//	int point;
-//	int cnt;
-//};
-//
-////敵機
-//struct ENEMY g_enemy[ENEMY_MAX];
-//struct ENEMY g_enemy00 = { TRUE,0,0,0,-50,63,120,0,1 };
-//struct ENEMY g_enemyCn = { TRUE,4,0,0,-50,18,18,0,1 };
-//
-//struct ENEMY g_item[ITEM_MAX];
-//struct ENEMY g_item00 = { TRUE,0,0,0,-50,50,50,0,1 };
-
-////ランキングデータ（構造体）
-//struct RankingData {
-//	int no;
-//	char name[11];
-//	long score;
-//};
-//
-////ランキングデータ変数宣言
-//struct RankingData  g_Ranking[RANKING_DATA];
-
 //関数のプロトタイプ宣言
 void GameInit(void);
 void GameMain(void);
 
 void DrawGameTitle(void);
 void DrawGameOver(void);
-//void DrawEnd(void);
-//void DrawHelp(void);
-
-//void DrawRanking(void);
-//void InputRanking(void);
-//void SortRanking(void);
-//int SaveRanking(void);
-//int ReadRanking(void);
 
 int LoadImages();
-//void PlayerControl();
 
 int nextTime;
 int g_AppleCount[4];
-
-
-int font00;
-int fonten;
-int fontensc;
-int fontran;
-int fontrans;
-int fontpose;
-int fontking;
-
-//void DrawInput(void) {
-//	static int cursorX = 0;
-//	static int cursorY = 0;
-//
-//	if (hen.g_KeyFlg & PAD_INPUT_RIGHT) {
-//		if (++cursorX > 12)cursorX = 0;
-//	}
-//	if (hen.g_KeyFlg & PAD_INPUT_LEFT) {
-//		if (--cursorX < 0)cursorX = 12;
-//	}
-//	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
-//		if (++cursorY > 4)cursorY = 0;
-//	}
-//	if (hen.g_KeyFlg & PAD_INPUT_UP) {
-//		if (--cursorY < 0)cursorY = 4;
-//	}
-//
-//	int x = cursorX * 32;
-//	int y = cursorY * 32;
-//	DrawBox(x, y, x + 32, y + 32, 0x0000FF, 1);
-//
-//	const char* ALPHAchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//	for (int i = 0; i < 26; i++) {
-//		SetFontSize(32);
-//		DrawFormatString(0 + i % 13 * 32, i / 13 * 32, 0xffff00, "%c", ALPHAchar[i]);
-//	}
-//	const char* alphachar = "abcdefghijklmnopqrstuvwxyz";
-//	for (int i = 0; i < 26; i++) {
-//		SetFontSize(32);
-//		DrawFormatString(0 + i % 13 * 32, i / 13 * 32 + 64, 0xffff00, "%c", alphachar[i]);
-//	}
-//	const char* numchar = "0123456789";
-//	for (int i = 0; i < 10; i++) {
-//		SetFontSize(32);
-//		DrawFormatString(0 + i * 32, 128, 0xffff00, "%c", numchar[i]);
-//	}
-//}
 
 //プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
@@ -164,20 +43,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	if (LoadImages() == -1)return-1;
 	if (ranking.ReadRanking() == -1)return-1;
 	if (LoadSound() == -1)return-1;
+
+	//フォント
 	font.Fontset();
 
 	ChangeVolumeSoundMem(100, hen.GameBGM);
 	ChangeVolumeSoundMem(150, hen.TitleBGM);
 
-	//フォント
-	font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);
-	fonten = CreateFontToHandle("Tsunagi Gothic Black", 50, 1, DX_FONTTYPE_NORMAL);
-	fontensc = CreateFontToHandle("游ゴシック Medium", 20, 3, DX_FONTTYPE_NORMAL);
-	fontran = CreateFontToHandle("Tsunagi Gothic Black", 40, 1, DX_FONTTYPE_NORMAL);
-	fontrans = CreateFontToHandle("Tsunagi Gothic Black", 30, 1, DX_FONTTYPE_NORMAL);
-	fontpose = CreateFontToHandle("wb_font", 50, 5, DX_FONTTYPE_NORMAL);
-	fontking = CreateFontToHandle("Courier New", 30, 5, DX_FONTTYPE_NORMAL);
-	
+
 	//ゲームループ
 	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_7))
 	{

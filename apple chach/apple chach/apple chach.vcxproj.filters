@@ -92,9 +92,6 @@
     <ClInclude Include="Player.h">
       <Filter>player</Filter>
     </ClInclude>
-    <ClInclude Include="pad.h">
-      <Filter>pad</Filter>
-    </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Font</Filter>
     </ClInclude>
@@ -109,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="Ranking.h">
       <Filter>Ranking</Filter>
+    </ClInclude>
+    <ClInclude Include="pad.h">
+      <Filter>pad</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

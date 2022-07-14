@@ -11,7 +11,7 @@ void HELP::DrawHelp() {
 
 	//タイトル画像表示
 	DrawGraph(0, 0, hen.HelpImage, FALSE);
-	//SetFontSize(16);
+	SetFontSize(16);
 
 	DrawString(20, 160, "これは落ちてくるリンゴを拾うゲームです。", 0x000000, 0);
 	DrawString(20, 180, "左右に動いて落ちてくる様々なリンゴを拾います。", 0x000000, 0);

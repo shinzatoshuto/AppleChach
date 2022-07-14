@@ -1,74 +1,39 @@
 #define _USE_MATH_DEFINES
 #include "apple.h"
 #include "Player.h"
-#include "hensuu.h"
+#include "variable.h"
 #include "DxLib.h"
 
 void APPLE::AppleControl() {
-	//for (int i = 0; i < APPLE_MAX; i++) {
-		if (flg == TRUE) {
-			//“G‚Ì•\Ž¦
-			DrawGraph(x, y, img, TRUE);
+	if (flg == TRUE) {
+		//ãƒªãƒ³ã‚´ã®è¡¨ç¤º
 
-			//if (g_player.flg == FALSE) continue;
+		DrawGraph(x, y, img, TRUE);
 
-			//‚Ü‚Á‚·‚®‰º‚ÉˆÚ“®
-			//g_enemy[i].y += g_enemy[i].speed + g_player.speed - PLAYER_SPEED + 1;
-			//if (hen.g_PauseFlg == 1) {
-			//}
-			if (hen.g_PauseFlg == 0) {
-				y += speed;
-			}
+		//ãƒãƒ¼ã‚ºâ€•ä¸­ã˜ã‚ƒãªã„é–“å‹•ã‹ã™
+		if (hen.g_PauseFlg == 0) {
+			y += speed;
+		}
 
-			//‰æ–Ê‚ð‚Í‚Ýo‚µ‚½‚çÁ‹Ž
-			if (y > SCREEN_HEIGHT + h) flg = FALSE;
+		//ç”»é¢ã‚’ã¯ã¿å‡ºã—ãŸã‚‰æ¶ˆåŽ»
+		if (y > SCREEN_HEIGHT + h) flg = FALSE;
 
-			//“G‹@‚ð’Ç‚¢‰z‚µ‚½‚çƒJƒEƒ“ƒg
-			/*if (g_enemy[i].y > g_player.y && g_enemy[i].point == 1) {
-				g_enemy[i].point = 0;
-				if (g_enemy[i].type == 0)g_EnemyCount1++;
-				if (g_enemy[i].type == 1)g_EnemyCount2++;
-				if (g_enemy[i].type == 2)g_EnemyCount3++;
-				if (g_enemy[i].type == 3)g_EnemyCount4++;
-			}*/
-
-			/*if (++g_Time < 120) {
-				if (g_enemy[i].type == 3)g_enemy[i].x += v[g_enemy[i].cnt] + g_enemy[i].speed - PLAYER_SPEED + 3;
-			}
-			else if (++g_Time < 240) {
-				if (g_enemy[i].type == 3)g_enemy[i].x -= v[g_enemy[i].cnt] + g_enemy[i].speed - PLAYER_SPEED + 3;
-			}
-			else if (g_Time > 300) {
-				g_Time = 0;
-			}*/
-
-			//“–‚½‚è”»’è
-			if (HitBoxPlayer(&player) == TRUE) {
-				//g_player.flg = FALSE;
-				//g_player.speed = PLAYER_SPEED;
-				//g_player.count = 0;
-				//g_player.hp -= 100;
-				g_AppleCount[type]++;
-				hen.Score += point;
-				flg = FALSE;
-				if (type == 3) {
-					PlaySoundMem(hen.PoisonSE, DX_PLAYTYPE_BACK);
-					player.flg = FALSE;
-					player.count = 120;
-					if (hen.Score < 0) {
-						hen.Score = 0;
-					}
+		//å½“ãŸã‚Šåˆ¤å®š
+		if (HitBoxPlayer(&player) == TRUE) {
+			g_AppleCount[type]++;
+			hen.Score += point;
+			flg = FALSE;
+			if (type == 3) {
+				PlaySoundMem(hen.PoisonSE, DX_PLAYTYPE_BACK);
+				player.flg = FALSE;
+				player.count = 120;
+				if (hen.Score < 0) {
+					hen.Score = 0;
 				}
-				else {
-					PlaySoundMem(hen.GetAppleSE, DX_PLAYTYPE_BACK);
-				}
-				//if (g_player.hp <= 0)  g_GameState = 6;
+			}
+			else {
+				PlaySoundMem(hen.GetAppleSE, DX_PLAYTYPE_BACK);
 			}
 		}
-	//}
-
-	//‘–s‹——£‚²‚Æ‚É“GoŒ»ƒpƒ^[ƒ“‚ð§Œä‚·‚é
-	/*if (g_Mileage / 10 % 50 == 0) {
-		CreateEnemy();
-	}*/
+	}
 }

@@ -86,7 +86,7 @@
     <ClInclude Include="apple.h">
       <Filter>Apple</Filter>
     </ClInclude>
-    <ClInclude Include="hensuu.h">
+    <ClInclude Include="variable.h">
       <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">

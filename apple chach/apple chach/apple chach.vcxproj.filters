@@ -40,6 +40,9 @@
     <Filter Include="Ranking">
       <UniqueIdentifier>{fca1cfa4-9e23-47fd-9c88-b5a79fc0939d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameOver">
+      <UniqueIdentifier>{354c5ef2-f42f-4fda-bf75-5512cf7dc299}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppleControl.cpp">
@@ -81,6 +84,9 @@
     <ClCompile Include="Ranking.cpp">
       <Filter>Ranking</Filter>
     </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>GameOver</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
@@ -109,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="pad.h">
       <Filter>pad</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>GameOver</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

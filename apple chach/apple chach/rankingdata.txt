@@ -1,5 +1,5 @@
- 1  AAAAAAA         9350
+ 1    AAAAAAA       9350
  2      BCDEF       9200
  3        ANN       8550
- 4      ABCPP       7300
- 5 ABqrrþþþþþ       6050
+ 4 BBCCEþþþþþ       7650
+ 5      ABCPP       7300

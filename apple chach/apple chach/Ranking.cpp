@@ -14,7 +14,6 @@ void RANKING::DrawRanking(void) {
 	//ランキング画像表示
 	DrawGraph(0, 0, hen.g_RankingImage, FALSE);
 	//ランキング一覧を表示
-	//SetFontSize(18);
 	for (int i = 0; i < RANKING_DATA; i++) {
 		DrawFormatStringToHandle(90, 170 + i * 35, 0xffffff, font.fontking, "%2d %+10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
 	}
@@ -36,9 +35,7 @@ void RANKING::InputRanking(void) {
 	DrawBox(120, 200, 317, 240, 0x000055, TRUE);
 
 	pad.DrawInput();
-	//try {
 	if (hen.g_KeyFlg & PAD_INPUT_8 && pad.inputnum > 0) {
-		//g_Ranking[4].name = pad.inputchar;
 		PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
 		strcpy_s(g_Ranking[4].name, 11, pad.inputchar);
 		g_Ranking[4].score = hen.Score;
@@ -46,17 +43,6 @@ void RANKING::InputRanking(void) {
 		SaveRanking();
 		hen.g_GameState = 2;
 	}
-	//}
-	//catch (int& err) {
-	//	printf("エラーコード%d\n", err);
-	//}
-
-	//if (KeyInputSingleCharString(130, 210, 10, g_Ranking[4].name, FALSE) == 1) {
-	//	g_Ranking[4].score = hen.Score;
-	//	SortRanking();
-	//	SaveRanking();
-	//	hen.g_GameState = 2;
-	//}
 }
 
 //ランキング並び替え

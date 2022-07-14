@@ -3,9 +3,7 @@
 class UI
 {
 public:
-
-	void UIimages();
-
+	void DrawUI();
 };
 
 extern UI ui;

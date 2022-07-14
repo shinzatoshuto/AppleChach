@@ -2,7 +2,7 @@
 #include"hensuu.h"
 #include"UI.h"
 
-void UI::UIimages() {
+void UI::DrawUI() {
 	//UI‚Ì˜g•\Ž¦
 	DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ffff, TRUE);
 

@@ -4,16 +4,6 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int MAX_INTERVAL = 1 * 60;
 
-//struct PLAYER {
-//	int flg;
-//	int x, y;
-//	int w, h;
-//	int count;
-//	int speed;
-//};
-//
-//extern PLAYER g_player;
-
 extern int g_AppleCount[4];
 
 int LoadSound();
@@ -29,8 +19,6 @@ public:
 	int Score = 0;  // スコア
 	int g_Time;   //時間
 	int g_PauseFlg;  //ポーズフラグ
-	//int g_WaitTime = 0;  //待ち時間
-	//int PosY;
 
 	int applecursor;//タイトルのカーソル画像
 	int AppleImages[4];//リンゴの画像

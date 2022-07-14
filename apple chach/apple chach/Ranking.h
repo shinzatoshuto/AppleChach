@@ -14,11 +14,13 @@ public:
 	//ランキングデータ変数宣言
 	struct RankingData  g_Ranking[RANKING_DATA];
 
+	int ReadRanking(void);
 	void DrawRanking(void);
 	void InputRanking(void);
+
+private:
 	void SortRanking(void);
 	int SaveRanking(void);
-	int ReadRanking(void);
 };
 
 extern RANKING ranking;

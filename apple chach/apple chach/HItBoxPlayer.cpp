@@ -4,15 +4,14 @@
 #include "Player.h"
 
 int APPLE::HitBoxPlayer(PLAYER* p) {
-	//x,y‚Í’†SÀ•W‚Æ‚·‚é
+	//x,y‚Í¶ã‚ÌÀ•W‚Æ‚·‚é
 	int sx1 = p->x - p->w / 2;
 	int sy1 = p->y - p->h / 2;
 	int sx2 = p->x + p->w / 2;
 	int sy2 = p->y + p->h / 2;
-	//DrawBox(sx1 + 10, sy1, sx2 + 10, sy2, 0xff0000, TRUE);
 
-	int dx1 = this->x;// -(this->w / 2);
-	int dy1 = this->y;// -(this->h / 2);
+	int dx1 = this->x;
+	int dy1 = this->y;
 	int dx2 = this->x + this->w;
 	int dy2 = this->y + this->h;
 

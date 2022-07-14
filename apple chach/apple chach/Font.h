@@ -11,8 +11,9 @@ public:
 	int fontpose;
 	int fontking;
 
-public:
-	int Fontset();	
+	int LoadFont();
+private:
+	
 
 };
 

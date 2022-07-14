@@ -1,5 +1,5 @@
 #include "Ranking.h"
-#include "hensuu.h"
+#include "variable.h"
 #include "font.h"
 #include "pad.h"
 #include "DxLib.h"

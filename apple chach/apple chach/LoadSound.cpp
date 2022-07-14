@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "apple.h"
-#include "hensuu.h"
+#include "variable.h"
 
 int LoadSound() {
 	if ((hen.FallSE = LoadSoundMem("sounds/SE2.wav")) == -1) return -1;

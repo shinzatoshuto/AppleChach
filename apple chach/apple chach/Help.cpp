@@ -1,6 +1,6 @@
 #include"DxLib.h"
 #include"Help.h"
-#include"hensuu.h"
+#include"variable.h"
 #include"Font.h"
 
 void HELP::DrawHelp() {

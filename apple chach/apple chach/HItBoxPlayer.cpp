@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "apple.h"
-#include "hensuu.h"
+#include "variable.h"
 #include "Player.h"
 
 int APPLE::HitBoxPlayer(PLAYER* p) {

@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "apple.h"
-#include "hensuu.h"
+#include "variable.h"
 
 int applePoints[4] = { 150, 300, 500, -1000 };
 

@@ -2,7 +2,7 @@
 #include"DxLib.h"
 #include"apple.h"
 #include"Player.h"
-#include"hensuu.h"
+#include"variable.h"
 #include"pad.h"
 
 //‰æ‘œ“Ç‚İ‚İ

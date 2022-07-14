@@ -1,5 +1,5 @@
 #pragma once
-#include"hensuu.h"
+#include"variable.h"
 #include "Player.h"
 const int APPLE_MAX = 7;
 

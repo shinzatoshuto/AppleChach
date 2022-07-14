@@ -20,7 +20,7 @@ PLAYER player;
 RANKING ranking;
 HELP help;
 
-//�֐��̃v���g�^�C�v�錾
+//関数のプロトタイプ宣言
 void GameInit(void);
 void GameMain(void);
 
@@ -32,10 +32,10 @@ int LoadImages();
 int nextTime;
 int g_AppleCount[4];
 
-//�v���O�����J�n
+//プログラム開始
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine, int nCmdShow)
 {
-	SetMainWindowText("Apple Catch");   //�^�C�g����ݒ�
+	SetMainWindowText("Apple Catch");   //タイトルを設定
 	ChangeWindowMode(TRUE);
 	SetWindowSize(640, 480);
 
@@ -52,7 +52,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	ChangeVolumeSoundMem(255, hen.FallSE);
 
 
-	//�Q�[�����[�v
+	//ゲームループ
 	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_7))
 	{
 		hen.g_OldKey = hen.g_NowKey;
@@ -87,7 +87,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	return 0;
 }
 
-//�Q�[���^�C�g���\��
+//ゲームタイトル表示
 void DrawGameTitle(void) {
 	static int MenuNo = 0;
 	if (CheckSoundMem(hen.TitleBGM) == 0)
@@ -118,19 +118,19 @@ void DrawGameTitle(void) {
 	DrawRotaGraph(430, 300 + MenuNo * 42, 0.7f, 0, hen.applecursor, TRUE);
 }
 
-//�Q�[����������
+//ゲーム初期処理
 void GameInit(void) {
-	//�X�R�A�̏�����
+	//スコアの初期化
 	hen.Score = 0;
 
-	//�v���C���[�̏����ݒ�
+	//プレイヤーの初期設定
 	player.InitPlayer();
 
-	//��񂲂̏����ݒ�
+	//りんごの初期設定
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].InitApple();
 	}
-	//�����S�̃J�E���g�̏�����
+	//リンゴのカウントの初期化
 	for (int i = 0; i < 4; i++) {
 		g_AppleCount[i] = 0;
 	}
@@ -145,10 +145,10 @@ void GameInit(void) {
 
 	StopSoundMem(hen.TitleBGM);
 	PlaySoundMem(hen.GameBGM, DX_PLAYTYPE_BACK);
-	//�Q�[�����C��������
+	//ゲームメイン処理へ
 	hen.g_GameState = 5;
 
-	//�|�[�Y�t���O
+	//ポーズフラグ
 	hen.g_PauseFlg = 0;
 }
 //
@@ -235,7 +235,7 @@ void GameInit(void) {
 //	if (++hen.g_WaitTime > 160) hen.g_GameState = 99;
 //}
 
-//�Q�[�����C��
+//ゲームメイン
 void GameMain(void) {
 	DrawGraph(0, 0, hen.GameImage, FALSE);
 	player.PlayerControl();
@@ -346,9 +346,9 @@ void GameMain(void) {
 //	DrawFormatString(543, 220, 0x000000, "%06d", hen.Score);
 //}
 
-//�Q�[���I�[�o�[�摜�`�揈��
+//ゲームオーバー画像描画処理
 void DrawGameOver(void) {
-	//B�{�^���Ń��j���[�ɖ߂�
+	//Bボタンでメニューに戻る
 	if (hen.g_KeyFlg & PAD_INPUT_2) {
 		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
 		if (ranking.g_Ranking[RANKING_DATA - 1].score >= hen.Score) {
@@ -363,7 +363,7 @@ void DrawGameOver(void) {
 	DrawBox(150, 150, 490, 330, 0x000000, FALSE);
 
 	SetFontSize(20);
-	DrawString(220, 170, "�Q�[���I�[�o�[", 0xcc0000);
+	DrawString(220, 170, "ゲームオーバー", 0xcc0000);
 	SetFontSize(18);
 
 	DrawRotaGraph(215, 220, 0.5f, 0, hen.AppleImages[0], TRUE, FALSE);
@@ -376,10 +376,10 @@ void DrawGameOver(void) {
 	DrawFormatString(210, 254, 0xFFFFFF, "%6d x   500 = %6d", g_AppleCount[2], g_AppleCount[2] * 500);
 	DrawFormatString(210, 275, 0xFFFFFF, "%6d x -1000 = %6d", g_AppleCount[3], g_AppleCount[3] * -1000);
 
-	DrawString(310, 310, "�X�R�A", 0x000000);
+	DrawString(310, 310, "スコア", 0x000000);
 	DrawFormatString(260, 310, 0xFFFFFF, "             = %6d", hen.Score);
 	SetFontSize(25);
-	DrawString(150, 450, "---- B�{�^���Ŗ߂� ----", 0xffffff, 0);
+	DrawString(150, 450, "---- Bボタンで戻る ----", 0xffffff, 0);
 }
 
 //�����L���O���͏���

@@ -12,7 +12,7 @@ public:
 	int fontking;
 
 public:
-	int Fontset();	
+	int LoadFont();	
 
 };
 

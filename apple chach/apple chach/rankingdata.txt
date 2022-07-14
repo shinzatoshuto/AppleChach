@@ -1,5 +1,5 @@
  1      BCDEF       9200
  2        ANN       8550
- 3      ABCPP       7300
- 4 ABqrrþþþþþ       6050
- 5        PQe       5800
+ 3  AAAA            7550
+ 4      ABCPP       7300
+ 5 ABqrrþþþþþ       6050

@@ -10,6 +10,8 @@
 #include "End.h"
 #include"pad.h"
 #include "UI.h"
+#include "Title.h"
+#include"Load.h"
 
 APPLE apple[APPLE_MAX];
 HENSUU hen;
@@ -20,15 +22,13 @@ PLAYER player;
 RANKING ranking;
 HELP help;
 UI ui;
+TITLE title;
+Load load;
 
 //関数のプロトタイプ宣言
 void GameInit(void);
 void GameMain(void);
-
-void DrawGameTitle(void);
 void DrawGameOver(void);
-
-int LoadImages();
 
 int nextTime;
 int g_AppleCount[4];
@@ -41,13 +41,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	SetWindowSize(640, 480);
 	if (DxLib_Init() == -1)return-1;
 	SetDrawScreen(DX_SCREEN_BACK);
-	if (LoadImages() == -1)return-1;
+	if (load.LoadImages() == -1)return-1;
 	if (ranking.ReadRanking() == -1)return-1;
 	if (font.LoadFont() == -1)return-1;
-	if (LoadSound() == -1)return-1;
+	if (load.LoadSound() == -1)return-1;
 
 	ChangeVolumeSoundMem(100, hen.GameBGM);
-	ChangeVolumeSoundMem(150, hen.TitleBGM);
+	ChangeVolumeSoundMem(150, title.TitleBGM);
 
 
 	//ゲームループ
@@ -60,7 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 		ClearDrawScreen();
 
 		switch (hen.g_GameState) {
-		case 0:DrawGameTitle();
+		case 0:title.DrawGameTitle();
 			break;
 		case 1:GameInit();
 			break;
@@ -86,32 +86,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 }
 
 //ゲームタイトル表示
-void DrawGameTitle(void) {
-	static int MenuNo = 0;
-	if (CheckSoundMem(hen.TitleBGM) == 0)
-	PlaySoundMem(hen.TitleBGM, DX_PLAYTYPE_BACK);
-	//メニューカーソル移動処理
-	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
-		if (++MenuNo > 3)MenuNo = 0;
-		PlaySoundMem(hen.MoveSE, DX_PLAYTYPE_BACK);
-	}
-	if (hen.g_KeyFlg & PAD_INPUT_UP) {
-		if (--MenuNo < 0)MenuNo = 3;
-		PlaySoundMem(hen.MoveSE, DX_PLAYTYPE_BACK);
-	}
-
-	//Zキーでメニュー選択
-	if (hen.g_KeyFlg & PAD_INPUT_A) {
-		hen.g_GameState = MenuNo + 1;
-		PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
-	}
-
-	//タイトル画像表示
-	DrawGraph(0, 0, hen.g_TitleImage, FALSE);
-
-	//メニューカーソル
-	DrawRotaGraph(430, 300 + MenuNo * 42, 0.7f, 0, hen.applecursor, TRUE);
-}
 
 //ゲーム初期処理
 void GameInit(void) {
@@ -138,7 +112,7 @@ void GameInit(void) {
 
 	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
 
-	StopSoundMem(hen.TitleBGM);
+	StopSoundMem(title.TitleBGM);
 	PlaySoundMem(hen.GameBGM, DX_PLAYTYPE_BACK);
 	//ゲームメイン処理へ
 	hen.g_GameState = 5;

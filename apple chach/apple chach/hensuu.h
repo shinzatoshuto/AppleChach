@@ -6,8 +6,6 @@ const int MAX_INTERVAL = 1 * 60;
 
 extern int g_AppleCount[4];
 
-int LoadSound();
-
 class HENSUU {
 public:
 	//変数の宣言
@@ -20,14 +18,11 @@ public:
 	int g_Time;   //時間
 	int g_PauseFlg;  //ポーズフラグ
 
-	int applecursor;//タイトルのカーソル画像
 	int AppleImages[4];//リンゴの画像
 	int PlayerImages[3];//キャラ画像
 
-	int g_TitleImage;
 	int GameImage;
 	int g_RankingImage;
-	int HelpImage;
 	int EndImage;
 
 	//SE
@@ -35,7 +30,6 @@ public:
 	int MoveSE, ClickSE, CancelSE; //Button SE
 
 	//BGM
-	int TitleBGM;
 	int GameBGM;
 };
 extern HENSUU hen;

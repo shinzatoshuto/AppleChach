@@ -40,6 +40,15 @@
     <Filter Include="Ranking">
       <UniqueIdentifier>{fca1cfa4-9e23-47fd-9c88-b5a79fc0939d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameTitle">
+      <UniqueIdentifier>{0314e788-1efa-4d18-9de2-7245104a94f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameOver">
+      <UniqueIdentifier>{add8d51a-c507-44ba-9e35-28ec8da7bcbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Load">
+      <UniqueIdentifier>{b1796c3f-b603-47df-be39-d15d9527c76b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppleControl.cpp">
@@ -47,9 +56,6 @@
     </ClCompile>
     <ClCompile Include="CreateApple.cpp">
       <Filter>Apple</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadGraph.cpp">
-      <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="Playercon.cpp">
       <Filter>player</Filter>
@@ -66,9 +72,6 @@
     <ClCompile Include="main.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="LoadSound.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -80,6 +83,15 @@
     </ClCompile>
     <ClCompile Include="Ranking.cpp">
       <Filter>Ranking</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>GameTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadSound.cpp">
+      <Filter>Load</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadImages.cpp">
+      <Filter>Load</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="pad.h">
       <Filter>pad</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>GameTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="Load.h">
+      <Filter>Load</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,18 +4,23 @@
 #include"Player.h"
 #include"hensuu.h"
 #include"pad.h"
+#include"Title.h"
+#include"Help.h"
+#include "Load.h"
 
 //画像読み込み
-int LoadImages() {
+int Load::LoadImages() {
 	//タイトル
-	if ((hen.g_TitleImage = LoadGraph("images/back/Title.jpg")) == -1)return-1;
+	if ((title.g_TitleImage = LoadGraph("images/back/Title.jpg")) == -1)return-1;
+	
 	//メニュー
-	//if ((hen.g_Menu = LoadGraph("images/menu.bmp")) == -1)return-1;
-	if ((hen.applecursor = LoadGraph("images/apple/fruit_ringo.png")) == -1)return-1;
+	if ((title.applecursor = LoadGraph("images/apple/fruit_ringo.png")) == -1)return-1;
+	
 	//ランキング画像データの読み込み
 	if ((hen.g_RankingImage = LoadGraph("images/back/Ranking1.png")) == -1)return-1;
+	
 	//ヘルプ
-	if ((hen.HelpImage = LoadGraph("images/back/Help.jpg")) == -1)return-1;
+	if ((help.HelpImage = LoadGraph("images/back/Help.jpg")) == -1)return-1;
 
 	//リンゴ
 	if ((hen.AppleImages[0] = LoadGraph("images/apple/fruit_ringo.png")) == -1)return -1;

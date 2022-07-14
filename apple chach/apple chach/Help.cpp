@@ -4,13 +4,19 @@
 #include"Font.h"
 
 void HELP::DrawHelp() {
-	//スペースキーでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_2) hen.g_GameState = 0;
-	//zゲーム開始
-	if (hen.g_KeyFlg & PAD_INPUT_A) hen.g_GameState = 1;
+	//Bボタンでメニューに戻る
+	if (hen.g_KeyFlg & PAD_INPUT_2) { 
+		hen.g_GameState = 0; 
+		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
+	}
+	//ゲーム開始
+	if (hen.g_KeyFlg & PAD_INPUT_A) { 
+		hen.g_GameState = 1; 
+		PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
+	}
 
-	//タイトル画像表示
-	DrawGraph(0, 0, hen.HelpImage, FALSE);
+	//ヘルプ画像表示
+	DrawGraph(0, 0, HelpImage, FALSE);
 	SetFontSize(16);
 
 	DrawString(20, 160, "これは落ちてくるリンゴを拾うゲームです。", 0x000000, 0);

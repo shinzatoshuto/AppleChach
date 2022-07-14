@@ -4,8 +4,8 @@
 class HELP
 {
 public:
-
-
+	int HelpImage;
+public:
 	void DrawHelp(void);
 };
 extern HELP help;

@@ -159,15 +159,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	SetMainWindowText("Apple Catch");   //タイトルを設定
 	ChangeWindowMode(TRUE);
 	SetWindowSize(640, 480);
-	if (DxLib_Init() == -1)return-1;
-	SetDrawScreen(DX_SCREEN_BACK);
-	if (LoadImages() == -1)return-1;
-	if (ranking.ReadRanking() == -1)return-1;
-	if (LoadSound() == -1)return-1;
-	font.Fontset();
 
+	if (DxLib_Init() == -1) return -1;
+	if (LoadImages() == -1) return -1;
+	if (LoadSound() == -1) return -1;
+	if (font.LoadFont() == -1) return -1;
+	if (ranking.ReadRanking() == -1) return -1;
+
+	SetDrawScreen(DX_SCREEN_BACK);
 	ChangeVolumeSoundMem(100, hen.GameBGM);
 	ChangeVolumeSoundMem(150, hen.TitleBGM);
+	ChangeVolumeSoundMem(255, hen.FallSE);
 
 	//フォント
 	font00 = CreateFontToHandle("Tsunagi Gothic Black", 20, 1, DX_FONTTYPE_NORMAL);

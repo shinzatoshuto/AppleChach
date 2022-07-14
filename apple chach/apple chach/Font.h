@@ -10,7 +10,7 @@ public:
 	int fontrans;
 	int fontpose;
 	int fontking;
-	int Fontset();
+	int LoadFont();
 private:
 	
 

@@ -16,8 +16,8 @@ int Load::LoadSound() {
 	if ((load.CancelSE = LoadSoundMem("sounds/SE5.wav")) == -1)return-1;
 
 
-	if ((title.TitleBGM = LoadSoundMem("sounds/Title.mp3")) == -1)return-1;
-	if ((var.GameBGM = LoadSoundMem("sounds/Game.mp3")) == -1) return -1;
+	if ((title.TitleBGM = LoadSoundMem("sounds/Title.wav")) == -1)return-1;
+	if ((var.GameBGM = LoadSoundMem("sounds/Game.wav")) == -1) return -1;
 
 	return 0;
 }

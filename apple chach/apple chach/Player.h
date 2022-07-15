@@ -1,5 +1,5 @@
 #pragma once
-#include "hensuu.h"
+#include "variable.h"
 
 class PLAYER {
 private:
@@ -14,6 +14,7 @@ public:
 	int w, h;
 	int flg;
 	int count;
+	int g_PauseFlg;  //ポーズフラグ
 
 private:
 	int speed;

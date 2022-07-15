@@ -3,7 +3,7 @@
 #include<math.h>
 #include"apple.h"
 #include"Player.h"
-#include "hensuu.h"
+#include "variable.h"
 #include "Font.h"
 #include "Ranking.h"
 #include "Help.h"
@@ -12,9 +12,10 @@
 #include "UI.h"
 #include "Title.h"
 #include"Load.h"
+#include"GameOver.h"
 
 APPLE apple[APPLE_MAX];
-HENSUU hen;
+Variable var;
 PAD pad;
 FONT font;
 END end;
@@ -24,11 +25,11 @@ HELP help;
 UI ui;
 TITLE title;
 Load load;
+GameOver GO;
 
 //関数のプロトタイプ宣言
 void GameInit(void);
 void GameMain(void);
-void DrawGameOver(void);
 
 int nextTime;
 int g_AppleCount[4];
@@ -46,20 +47,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	if (font.LoadFont() == -1)return-1;
 	if (load.LoadSound() == -1)return-1;
 
-	ChangeVolumeSoundMem(100, hen.GameBGM);
+	ChangeVolumeSoundMem(100, var.GameBGM);
 	ChangeVolumeSoundMem(150, title.TitleBGM);
 
 
 	//ゲームループ
-	while (ProcessMessage() == 0 && hen.g_GameState != 99 && !(hen.g_KeyFlg & PAD_INPUT_7))
+	while (ProcessMessage() == 0 && var.g_GameState != 99 && !(pad.g_KeyFlg & PAD_INPUT_7))
 	{
-		hen.g_OldKey = hen.g_NowKey;
-		hen.g_NowKey = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-		hen.g_KeyFlg = hen.g_NowKey & ~hen.g_OldKey;
+		pad.g_OldKey = pad.g_NowKey;
+		pad.g_NowKey = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+		pad.g_KeyFlg = pad.g_NowKey & ~pad.g_OldKey;
 
 		ClearDrawScreen();
 
-		switch (hen.g_GameState) {
+		switch (var.g_GameState) {
 		case 0:title.DrawGameTitle();
 			break;
 		case 1:GameInit();
@@ -72,7 +73,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 			break;
 		case 5:GameMain();
 			break;
-		case 6:DrawGameOver();
+		case 6:GO.DrawGameOver();
 			break;
 		case 7:ranking.InputRanking();
 			break;
@@ -85,12 +86,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR IpCmdLine
 	return 0;
 }
 
-//ゲームタイトル表示
-
 //ゲーム初期処理
 void GameInit(void) {
 	//スコアの初期化
-	hen.Score = 0;
+	var.Score = 0;
 
 	//プレイヤーの初期設定
 	player.InitPlayer();
@@ -104,26 +103,26 @@ void GameInit(void) {
 		g_AppleCount[i] = 0;
 	}
 
-	hen.g_Time = 1800;
+	var.g_Time = 1800;
 
 
 	pad.inputnum = 0;
 	strcpy_s(pad.inputchar, 10, "         ");
 
-	nextTime = hen.g_Time - GetRand(MAX_INTERVAL);
+	nextTime = var.g_Time - GetRand(MAX_INTERVAL);
 
 	StopSoundMem(title.TitleBGM);
-	PlaySoundMem(hen.GameBGM, DX_PLAYTYPE_BACK);
+	PlaySoundMem(var.GameBGM, DX_PLAYTYPE_BACK);
 	//ゲームメイン処理へ
-	hen.g_GameState = 5;
+	var.g_GameState = 5;
 
 	//ポーズフラグ
-	hen.g_PauseFlg = 0;
+	player.g_PauseFlg = 0;
 }
 
 //ゲームメイン
 void GameMain(void) {
-	DrawGraph(0, 0, hen.GameImage, FALSE);
+	DrawGraph(0, 0, var.GameImage, FALSE);
 	player.PlayerControl();
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].AppleControl();
@@ -132,8 +131,8 @@ void GameMain(void) {
 	//UI描画
 	ui.DrawUI();
 
-	if (hen.g_PauseFlg == 0) {
-		if (--hen.g_Time < nextTime) {
+	if (player.g_PauseFlg == 0) {
+		if (--var.g_Time < nextTime) {
 			for (int i = 0; i < APPLE_MAX; i++) {
 				if (apple[i].CreateApple()) {
 					nextTime -= GetRand(MAX_INTERVAL);
@@ -142,40 +141,4 @@ void GameMain(void) {
 			}
 		}
 	}
-}
-
-//ゲームオーバー画像描画処理
-void DrawGameOver(void) {
-	//Bボタンでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_2) {
-		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
-		if (ranking.g_Ranking[RANKING_DATA - 1].score >= hen.Score) {
-			hen.g_GameState = 0;
-		}
-		else {
-			hen.g_GameState = 7;
-		}
-	}
-
-	DrawBox(150, 150, 490, 330, 0x009900, TRUE);
-	DrawBox(150, 150, 490, 330, 0x000000, FALSE);
-
-	SetFontSize(20);
-	DrawString(220, 170, "ゲームオーバー", 0xcc0000);
-	SetFontSize(18);
-
-	DrawRotaGraph(215, 220, 0.5f, 0, hen.AppleImages[0], TRUE, FALSE);
-	DrawRotaGraph(215, 240, 0.5f, 0, hen.AppleImages[1], TRUE, FALSE);
-	DrawRotaGraph(215, 260, 0.5f, 0, hen.AppleImages[2], TRUE, FALSE);
-	DrawRotaGraph(215, 280, 0.5f, 0, hen.AppleImages[3], TRUE, FALSE); 
-
-	DrawFormatString(210, 212, 0xFFFFFF, "%6d x   150 = %6d", g_AppleCount[0], g_AppleCount[0] * 150);
-	DrawFormatString(210, 233, 0xFFFFFF, "%6d x   300 = %6d", g_AppleCount[1], g_AppleCount[1] * 300);
-	DrawFormatString(210, 254, 0xFFFFFF, "%6d x   500 = %6d", g_AppleCount[2], g_AppleCount[2] * 500);
-	DrawFormatString(210, 275, 0xFFFFFF, "%6d x -1000 = %6d", g_AppleCount[3], g_AppleCount[3] * -1000);
-
-	DrawString(310, 310, "スコア", 0x000000);
-	DrawFormatString(260, 310, 0xFFFFFF, "             = %6d", hen.Score);
-	SetFontSize(25);
-	DrawString(150, 450, "---- Bボタンで戻る ----", 0xffffff, 0);
 }

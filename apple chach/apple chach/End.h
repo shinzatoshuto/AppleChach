@@ -7,6 +7,9 @@ private:
 	int g_WaitTime = 0;
 
 public:
+	int EndImage;
+
+public:
 	void DrawEnd(void);
 };
 

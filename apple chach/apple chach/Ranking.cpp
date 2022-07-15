@@ -1,21 +1,23 @@
-#include "Ranking.h"
-#include "hensuu.h"
+#include "DxLib.h"
+#include "variable.h"
 #include "font.h"
 #include "pad.h"
 #include "DxLib.h"
+#include "Ranking.h"
+#include "Load.h"
 
 //ゲームランキング描画表示
 void RANKING::DrawRanking(void) {
 	//スペースキーでメニューに戻る
-	if (hen.g_KeyFlg & PAD_INPUT_2) {
-		hen.g_GameState = 0;
-		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
+	if (pad.g_KeyFlg & PAD_INPUT_2) {
+		var.g_GameState = 0;
+		PlaySoundMem(load.CancelSE, DX_PLAYTYPE_BACK);
 	}
 	//ランキング画像表示
-	DrawGraph(0, 0, hen.g_RankingImage, FALSE);
+	DrawGraph(0, 0, ranking.g_RankingImage, FALSE);
 	//ランキング一覧を表示
 	for (int i = 0; i < RANKING_DATA; i++) {
-		DrawFormatStringToHandle(90, 170 + i * 35, 0xffffff, font.fontking, "%2d %+10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
+		DrawFormatStringToHandle(90, 170 + i * 35, 0xffffff, font.fontRanking, "%2d %+10s %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score);
 	}
 	SetFontSize(25);
 	DrawString(150, 430, "---- Bボタンで戻る ----", 0xffffff, 0);
@@ -23,25 +25,25 @@ void RANKING::DrawRanking(void) {
 
 void RANKING::InputRanking(void) {
 	//ランキング画像表示
-	DrawGraph(0, 0, hen.g_RankingImage, FALSE);
+	DrawGraph(0, 0, ranking.g_RankingImage, FALSE);
 	SetFontSize(20);
 
 	//名前入力指示文字列の描画
-	DrawStringToHandle(110, 120, "ランキングに登録します", 0xffffff, font.fontrans);
-	DrawStringToHandle(110, 150, "名前を英字で入力してください", 0xffffff, font.fontrans);
+	DrawStringToHandle(110, 120, "ランキングに登録します", 0xffffff, font.fontRankingInput);
+	DrawStringToHandle(110, 150, "名前を英字で入力してください", 0xffffff, font.fontRankingInput);
 
 	//名前の入力
 	DrawString(110, 210, ">", 0xffffff);
 	DrawBox(120, 200, 317, 240, 0x000055, TRUE);
 
 	pad.DrawInput();
-	if (hen.g_KeyFlg & PAD_INPUT_8 && pad.inputnum > 0) {
-		PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
+	if (pad.g_KeyFlg & PAD_INPUT_8 && pad.inputnum > 0) {
+		PlaySoundMem(load.ClickSE, DX_PLAYTYPE_BACK);
 		strcpy_s(g_Ranking[4].name, 11, pad.inputchar);
-		g_Ranking[4].score = hen.Score;
+		g_Ranking[4].score = var.Score;
 		SortRanking();
 		SaveRanking();
-		hen.g_GameState = 2;
+		var.g_GameState = 2;
 	}
 }
 

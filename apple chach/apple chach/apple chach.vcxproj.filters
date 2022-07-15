@@ -93,12 +93,15 @@
     <ClCompile Include="LoadImages.cpp">
       <Filter>Load</Filter>
     </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>GameOver</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="apple.h">
       <Filter>Apple</Filter>
     </ClInclude>
-    <ClInclude Include="hensuu.h">
+    <ClInclude Include="variable.h">
       <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -127,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Load.h">
       <Filter>Load</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>GameOver</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

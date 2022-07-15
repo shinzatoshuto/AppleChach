@@ -3,13 +3,12 @@
 class FONT
 {
 public:
-	int font00;
-	int fonten;
-	int fontensc;
-	int fontran;
-	int fontrans;
-	int fontpose;
-	int fontking;
+	int fontHelp;
+	int fontEnd;
+	int fontEndContent;
+	int fontRankingInput;
+	int fontPause;
+	int fontRanking;
 
 public:
 	int LoadFont();	

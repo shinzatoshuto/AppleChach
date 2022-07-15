@@ -182,7 +182,7 @@
     <ClInclude Include="Load.h" />
     <ClInclude Include="pad.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="hensuu.h" />
+    <ClInclude Include="variable.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="UI.h" />

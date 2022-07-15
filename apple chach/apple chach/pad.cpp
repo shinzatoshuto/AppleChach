@@ -1,7 +1,8 @@
 #include "DxLib.h"
-#include "hensuu.h"
+#include "variable.h"
 #include "pad.h"
 #include "string.h"
+#include "Load.h"
 
 const char keyboard[5][14] = { "ABCDEFGHIJKLM" ,"NOPQRSTUVWXYZ" ,"abcdefghijklm" ,"nopqrstuvwxyz" ,"0123456789   " };
 
@@ -19,31 +20,30 @@ void PAD::DrawInput(void) {
 		}
 	}
 
-	if (hen.g_KeyFlg & PAD_INPUT_RIGHT) {
+	if (pad.g_KeyFlg & PAD_INPUT_RIGHT) {
 		if (++cursorX > 12)cursorX = 0;
-		PlaySoundMem(hen.MoveSE, DX_PLAYTYPE_BACK);
+		PlaySoundMem(load.MoveSE, DX_PLAYTYPE_BACK);
 	}
-	if (hen.g_KeyFlg & PAD_INPUT_LEFT) {
+	if (pad.g_KeyFlg & PAD_INPUT_LEFT) {
 		if (--cursorX < 0)cursorX = 12;
-		PlaySoundMem(hen.MoveSE, DX_PLAYTYPE_BACK);
+		PlaySoundMem(load.MoveSE, DX_PLAYTYPE_BACK);
 	}
-	if (hen.g_KeyFlg & PAD_INPUT_DOWN) {
+	if (pad.g_KeyFlg & PAD_INPUT_DOWN) {
 		if (++cursorY > 4)cursorY = 0;
-		PlaySoundMem(hen.MoveSE, DX_PLAYTYPE_BACK);
+		PlaySoundMem(load.MoveSE, DX_PLAYTYPE_BACK);
 	}
-	if (hen.g_KeyFlg & PAD_INPUT_UP) {
+	if (pad.g_KeyFlg & PAD_INPUT_UP) {
 		if (--cursorY < 0)cursorY = 4;
-		PlaySoundMem(hen.MoveSE, DX_PLAYTYPE_BACK);
+		PlaySoundMem(load.MoveSE, DX_PLAYTYPE_BACK);
 	}
 
-	if (hen.g_KeyFlg & PAD_INPUT_1 && inputnum < 10) {
+	if (pad.g_KeyFlg & PAD_INPUT_1 && inputnum < 10) {
 		inputchar[inputnum++] = keyboard[cursorY][cursorX];
-		PlaySoundMem(hen.ClickSE, DX_PLAYTYPE_BACK);
+		PlaySoundMem(load.ClickSE, DX_PLAYTYPE_BACK);
 	}
-	if (hen.g_KeyFlg & PAD_INPUT_2 && inputnum > 0) {
-		//inputchar[inputnum--] = ' ';
+	if (pad.g_KeyFlg & PAD_INPUT_2 && inputnum > 0) {
 		strncpy_s(inputchar, inputchar, --inputnum);
-		PlaySoundMem(hen.CancelSE, DX_PLAYTYPE_BACK);
+		PlaySoundMem(load.CancelSE, DX_PLAYTYPE_BACK);
 	}
 	DrawString(120, 205, inputchar, 0xffffff);
 	DrawBox(120 + inputnum * 18, 201, 120 + inputnum * 18 + 16, 205 + 34, 0xff0000, 1);

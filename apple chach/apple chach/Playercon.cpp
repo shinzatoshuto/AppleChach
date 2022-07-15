@@ -1,7 +1,8 @@
 #include "DxLib.h"
 #include "Player.h"
-#include"hensuu.h"
+#include"variable.h"
 #include "Font.h"
+#include "pad.h"
 
 void PLAYER::InitPlayer() {
 	flg = TRUE;
@@ -16,19 +17,19 @@ void PLAYER::InitPlayer() {
 
 void PLAYER::PlayerControl() {
 	//ゲームオーバー処理へ
-	if (hen.g_Time <= 0) {
-		StopSoundMem(hen.GameBGM);
-		hen.g_GameState = 6;
+	if (var.g_Time <= 0) {
+		StopSoundMem(var.GameBGM);
+		var.g_GameState = 6;
 	}
 
 	//左右移動
-	if (hen.g_PauseFlg == 0) {
-		if (hen.g_NowKey & PAD_INPUT_LEFT) {
+	if (player.g_PauseFlg == 0) {
+		if (pad.g_NowKey & PAD_INPUT_LEFT) {
 			x -= speed;
 			inertia = 5;
 			DirFlg = 1;
 		}
-		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
+		else if (pad.g_NowKey & PAD_INPUT_RIGHT) {
 			x += speed;
 			inertia = 5;
 			DirFlg = 2;
@@ -47,64 +48,45 @@ void PLAYER::PlayerControl() {
 	if (x > SCREEN_WIDTH - 146)  x = SCREEN_WIDTH - 146;
 
 	//プレイヤーの表示
-	if (flg == TRUE || (hen.g_PauseFlg == FALSE && flg == FALSE && --count % 20 == 0)) {
-		if (hen.g_NowKey & PAD_INPUT_LEFT) {
+	if (flg == TRUE || (player.g_PauseFlg == FALSE && flg == FALSE && --count % 20 == 0)) {
+		if (pad.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
-			if (hen.g_PauseFlg == FALSE) {
-				DrawRotaGraph(x, y, 1, 0, hen.PlayerImages[0], TRUE);
+			if (player.g_PauseFlg == FALSE) {
+				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[0], TRUE);
 			}
 			else {
-				DrawRotaGraph(x, y, 1, 0, hen.PlayerImages[2], TRUE);
+				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
 			}
 		}
-		else if (hen.g_NowKey & PAD_INPUT_RIGHT) {
+		else if (pad.g_NowKey & PAD_INPUT_RIGHT) {
 			//po-zu
-			if (hen.g_PauseFlg == FALSE) {
-				DrawRotaGraph(x, y, 1, 0, hen.PlayerImages[1], TRUE);
+			if (player.g_PauseFlg == FALSE) {
+				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[1], TRUE);
 			}
 			else {
-				DrawRotaGraph(x, y, 1, 0, hen.PlayerImages[2], TRUE);
+				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
 			}
 		}
 		else {
-			DrawRotaGraph(x, y, 1, 0, hen.PlayerImages[2], TRUE);
+			DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
 		}
 	}
-	if (hen.g_PauseFlg == TRUE) {
-		DrawRotaGraph(x, y, 1, 0, hen.PlayerImages[2], TRUE);
+	if (player.g_PauseFlg == TRUE) {
+		DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
 	}
 	if (count <= 0) flg = TRUE;
 
 	//ポーズフラグ
-	if (hen.g_NowKey & PAD_INPUT_B && hen.g_PauseFlg == FALSE) {
-		hen.g_PauseFlg = TRUE;
-		StopSoundMem(hen.GameBGM);
+	if (pad.g_NowKey & PAD_INPUT_B && player.g_PauseFlg == FALSE) {
+		player.g_PauseFlg = TRUE;
+		StopSoundMem(var.GameBGM);
 	}
-	if (hen.g_NowKey & PAD_INPUT_X && hen.g_PauseFlg == TRUE) {
-		hen.g_PauseFlg = FALSE;
-		PlaySoundMem(hen.GameBGM, DX_PLAYTYPE_BACK, FALSE);
+	if (pad.g_NowKey & PAD_INPUT_X && player.g_PauseFlg == TRUE) {
+		player.g_PauseFlg = FALSE;
+		PlaySoundMem(var.GameBGM, DX_PLAYTYPE_BACK, FALSE);
 
 	}
-	if (hen.g_PauseFlg == TRUE) {
-		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, font.fontpose);
+	if (player.g_PauseFlg == TRUE) {
+		DrawStringToHandle(120, 180, "ぽーずちゅう", 0x000000, font.fontPause);
 	}
-	////UIの枠表示
-	//DrawBox(SCREEN_WIDTH - 130, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x00ffff, TRUE);
-
-	////制限時間の表示
-	//SetFontSize(25);
-	//DrawFormatString(520, 20, 0x000000, "制限時間");
-	//DrawFormatString(560, 60, 0x000000, "%d", hen.g_Time / 60);
-
-	////りんごを取った数を表示
-	//SetFontSize(16);
-	//for (int i = 0; i < 4; i++) {
-	//	DrawRotaGraph(528 + i * 30, 120, 0.5f, 0, hen.AppleImages[i], TRUE, FALSE);
-	//	DrawFormatString(520 + i * 30, 140, 0x000000, "%02d", g_AppleCount[i]);
-	//}
-
-	//SetFontSize(30);
-	//DrawFormatString(530, 180, 0x000000, "スコア");
-	//SetFontSize(20);
-	//DrawFormatString(543, 220, 0x000000, "%06d", hen.Score);
 }

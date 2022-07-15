@@ -11,6 +11,8 @@ public:
 		long score;
 	};
 
+	int g_RankingImage;
+
 	//ランキングデータ変数宣言
 	struct RankingData  g_Ranking[RANKING_DATA];
 

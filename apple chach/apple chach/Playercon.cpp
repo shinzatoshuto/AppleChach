@@ -77,11 +77,11 @@ void PLAYER::PlayerControl() {
 	if (count <= 0) flg = TRUE;
 
 	//ポーズフラグ
-	if (pad.g_NowKey & PAD_INPUT_B && player.g_PauseFlg == FALSE) {
+	if (pad.g_KeyFlg & PAD_INPUT_8 && player.g_PauseFlg == FALSE) {
 		player.g_PauseFlg = TRUE;
 		StopSoundMem(var.GameBGM);
 	}
-	if (pad.g_NowKey & PAD_INPUT_X && player.g_PauseFlg == TRUE) {
+	else if (pad.g_KeyFlg & PAD_INPUT_8 && player.g_PauseFlg == TRUE) {
 		player.g_PauseFlg = FALSE;
 		PlaySoundMem(var.GameBGM, DX_PLAYTYPE_BACK, FALSE);
 

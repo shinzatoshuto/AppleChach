@@ -1,7 +1,7 @@
 #include "GameOver.h"
 #include "DxLib.h"
 #include "variable.h"
-#include "ranking.h"
+#include "ranking.h" 
 #include "pad.h"
 #include "Load.h"
 

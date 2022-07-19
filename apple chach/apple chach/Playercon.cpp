@@ -51,6 +51,8 @@ void PLAYER::PlayerControl() {
 			}
 			else {
 				DirFlg = 0;
+				if (pad.g_NowKey & PAD_INPUT_LEFT) DirFlg = 1;
+				if (pad.g_NowKey & PAD_INPUT_RIGHT) DirFlg = 2;
 			}
 		}
 
@@ -62,7 +64,7 @@ void PLAYER::PlayerControl() {
 	static int Alpha = 255;
 	static int Add = -25;
 
-	if (--count > 0) {
+	if (player.g_PauseFlg == FALSE && --count > 0) {
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, Alpha);
 		Alpha = Alpha + Add;
 	}
@@ -73,34 +75,34 @@ void PLAYER::PlayerControl() {
 	if (Alpha >= 255)Add = -25;
 
 	//プレイヤーの表示
-	if (flg == TRUE || (player.g_PauseFlg == FALSE && flg == FALSE)) {
-		if (pad.g_NowKey & PAD_INPUT_LEFT) {
+	if (player.g_PauseFlg == FALSE){//flg == TRUE || (player.g_PauseFlg == FALSE && flg == FALSE)) {
+		if (DirFlg == 1){//pad.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
-			if (player.g_PauseFlg == FALSE) {
+			//if (player.g_PauseFlg == FALSE) {
 				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[0], TRUE);
-			}
-			else {
-				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
-			}
+			//}
+			//else {
+			//	DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
+			//}
 		}
-		else if (pad.g_NowKey & PAD_INPUT_RIGHT) {
+		else if (DirFlg == 2) {//pad.g_NowKey & PAD_INPUT_RIGHT) {
 			//po-zu
-			if (player.g_PauseFlg == FALSE) {
+			//if (player.g_PauseFlg == FALSE) {
 				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[1], TRUE);
-			}
-			else {
-				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
-			}
+			//}
+			//else {
+			//	DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
+			//}
 		}
 		else {
 			DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
 		}
 	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	if (player.g_PauseFlg == TRUE) {
 		DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
 	}
 	if (count <= 0) flg = TRUE;
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	//ポーズフラグ
 	if (pad.g_KeyFlg & PAD_INPUT_8 && player.g_PauseFlg == FALSE) {

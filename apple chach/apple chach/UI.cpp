@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"variable.h"
 #include"UI.h"
+#include <math.h>
 
 void UI::DrawUI() {
 	//UIの枠表示
@@ -9,7 +10,7 @@ void UI::DrawUI() {
 	//制限時間の表示
 	SetFontSize(25);
 	DrawFormatString(520, 20, 0x000000, "制限時間");
-	DrawFormatString(560, 60, 0x000000, "%d", var.g_Time / 60);
+	DrawFormatString(560, 60, 0x000000, "%d", (int)ceil((double)var.g_Time / 60.0));
 
 	//りんごを取った数を表示
 	SetFontSize(16);
@@ -20,6 +21,6 @@ void UI::DrawUI() {
 
 	SetFontSize(30);
 	DrawFormatString(530, 180, 0x000000, "スコア");
-	SetFontSize(20);
-	DrawFormatString(543, 220, 0x000000, "%06d", var.Score);
+	SetFontSize(32);
+	DrawFormatString(522, 220, 0x000000, "%06d", var.Score);
 }

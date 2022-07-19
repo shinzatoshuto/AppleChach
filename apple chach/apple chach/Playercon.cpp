@@ -11,7 +11,7 @@ void PLAYER::InitPlayer() {
 	w = PLAYER_WIDTH;
 	h = PLAYER_HEIGHT;
 	count = 0;
-	speed = PLAYER_SPEED;
+	speed = 1;// PLAYER_SPEED;
 	DirFlg = 0;
 }
 
@@ -26,11 +26,15 @@ void PLAYER::PlayerControl() {
 	if (player.g_PauseFlg == 0) {
 		if (pad.g_NowKey & PAD_INPUT_LEFT) {
 			x -= speed;
+			speed+=0.5f;
+			if (speed >= PLAYER_SPEED) speed = PLAYER_SPEED;
 			inertia = 5;
 			DirFlg = 1;
 		}
 		else if (pad.g_NowKey & PAD_INPUT_RIGHT) {
 			x += speed;
+			speed+=0.5f;
+			if (speed >= PLAYER_SPEED) speed = PLAYER_SPEED;
 			inertia = 5;
 			DirFlg = 2;
 		}
@@ -38,7 +42,7 @@ void PLAYER::PlayerControl() {
 			if (inertia != 0) {//x += inertia * -1 - 1;
 				if (DirFlg == 1) x -= inertia--;
 				else if (DirFlg == 2) x += inertia--;
-
+				speed = 0;
 			}
 		}
 
@@ -86,7 +90,17 @@ void PLAYER::PlayerControl() {
 		PlaySoundMem(var.GameBGM, DX_PLAYTYPE_BACK, FALSE);
 
 	}
+	static int alpha = 255, add = 5;
 	if (player.g_PauseFlg == TRUE) {
-		DrawStringToHandle(120, 180, "Ç€Å[Ç∏ÇøÇ„Ç§", 0x000000, font.fontPause);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+		DrawStringToHandle(110, 180, "Ç€Å[Ç∏ÇøÇ„Ç§", 0x000000, font.fontPause);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		alpha -= add;
+		if (alpha < 0) add *= -1;
+		if (alpha > 255) add *= -1;
+	}
+	else {
+		alpha = 255;
+		add = 10;
 	}
 }

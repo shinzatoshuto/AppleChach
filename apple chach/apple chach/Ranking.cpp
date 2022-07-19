@@ -45,6 +45,8 @@ void RANKING::InputRanking(void) {
 		SaveRanking();
 		var.g_GameState = 2;
 	}
+	SetFontSize(24);
+	DrawString(147, 440, "---- STARTボタンで決定 ----", 0xffffff);
 }
 
 //ランキング並び替え

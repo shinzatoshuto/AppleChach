@@ -16,7 +16,7 @@ int Load::LoadImages() {
 	if ((title.g_TitleImage = LoadGraph("images/back/Title.png")) == -1)return-1;
 	
 	//メニュー
-	if ((title.applecursor = LoadGraph("images/apple/fruit_ringo.png")) == -1)return-1;
+	if ((title.applecursor = LoadGraph("images/apple/AppleCursor.png")) == -1)return-1;
 	
 	//ランキング画像データの読み込み
 	if ((ranking.g_RankingImage = LoadGraph("images/back/Ranking1.png")) == -1)return-1;

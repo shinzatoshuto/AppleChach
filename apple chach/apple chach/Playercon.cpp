@@ -11,7 +11,7 @@ void PLAYER::InitPlayer() {
 	w = PLAYER_WIDTH;
 	h = PLAYER_HEIGHT;
 	count = 0;
-	speed = PLAYER_SPEED;
+	speed = 0;
 	DirFlg = 0;
 }
 
@@ -24,13 +24,15 @@ void PLAYER::PlayerControl() {
 
 	//ç∂âEà⁄ìÆ
 	if (player.g_PauseFlg == 0) {
-		if (pad.g_NowKey & PAD_INPUT_LEFT) {
+		if (pad.g_NowKey & PAD_INPUT_LEFT && DirFlg != 2) {
 			x -= speed;
+			if (speed < PLAYER_SPEED) speed += 0.3f;
 			inertia = 10;
 			DirFlg = 1;
 		}
-		else if (pad.g_NowKey & PAD_INPUT_RIGHT) {
+		else if (pad.g_NowKey & PAD_INPUT_RIGHT && DirFlg != 1) {
 			x += speed;
+			if (speed < PLAYER_SPEED) speed += 0.3f;
 			inertia = 10;
 			DirFlg = 2;
 		}
@@ -40,9 +42,15 @@ void PLAYER::PlayerControl() {
 				if (s > speed) {
 					s = speed;
 				}
+				else {
+					speed = 0;
+				}
 				if (DirFlg == 1) x -= s;
 				else if (DirFlg == 2) x += s;
 
+			}
+			else {
+				DirFlg = 0;
 			}
 		}
 

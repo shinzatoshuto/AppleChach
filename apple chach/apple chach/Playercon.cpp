@@ -26,18 +26,22 @@ void PLAYER::PlayerControl() {
 	if (player.g_PauseFlg == 0) {
 		if (pad.g_NowKey & PAD_INPUT_LEFT) {
 			x -= speed;
-			inertia = 5;
+			inertia = 10;
 			DirFlg = 1;
 		}
 		else if (pad.g_NowKey & PAD_INPUT_RIGHT) {
 			x += speed;
-			inertia = 5;
+			inertia = 10;
 			DirFlg = 2;
 		}
 		else {
 			if (inertia != 0) {//x += inertia * -1 - 1;
-				if (DirFlg == 1) x -= inertia--;
-				else if (DirFlg == 2) x += inertia--;
+				int s = inertia--;
+				if (s > speed) {
+					s = speed;
+				}
+				if (DirFlg == 1) x -= s;
+				else if (DirFlg == 2) x += s;
 
 			}
 		}
@@ -47,8 +51,21 @@ void PLAYER::PlayerControl() {
 	if (x < 16)  x = 16;
 	if (x > SCREEN_WIDTH - 146)  x = SCREEN_WIDTH - 146;
 
+	static int Alpha = 255;
+	static int Add = -25;
+
+	if (--count > 0) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, Alpha);
+		Alpha = Alpha + Add;
+	}
+	else {
+		Alpha = 255;
+	}
+	if (Alpha <= 0)Add = 25;
+	if (Alpha >= 255)Add = -25;
+
 	//プレイヤーの表示
-	if (flg == TRUE || (player.g_PauseFlg == FALSE && flg == FALSE && --count % 20 == 0)) {
+	if (flg == TRUE || (player.g_PauseFlg == FALSE && flg == FALSE)) {
 		if (pad.g_NowKey & PAD_INPUT_LEFT) {
 			//po-zu
 			if (player.g_PauseFlg == FALSE) {
@@ -75,6 +92,7 @@ void PLAYER::PlayerControl() {
 		DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
 	}
 	if (count <= 0) flg = TRUE;
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	//ポーズフラグ
 	if (pad.g_KeyFlg & PAD_INPUT_8 && player.g_PauseFlg == FALSE) {

@@ -4,7 +4,7 @@
 #include "string.h"
 #include "Load.h"
 
-const char keyboard[5][14] = { "ABCDEFGHIJKLM" ,"NOPQRSTUVWXYZ" ,"abcdefghijklm" ,"nopqrstuvwxyz" ,"0123456789   " };
+const char keyboard[5][14] = { "ABCDEFGHIJKLM" ,"NOPQRSTUVWXYZ" ,"abcdefghijklm" ,"nopqrstuvwxyz" ,"0123456789" };
 
 void PAD::DrawInput(void) {
 
@@ -22,18 +22,22 @@ void PAD::DrawInput(void) {
 
 	if (pad.g_KeyFlg & PAD_INPUT_RIGHT) {
 		if (++cursorX > 12)cursorX = 0;
+		if (cursorY == 4 && cursorX >= 10)cursorX = 0;
 		PlaySoundMem(load.MoveSE, DX_PLAYTYPE_BACK);
 	}
 	if (pad.g_KeyFlg & PAD_INPUT_LEFT) {
 		if (--cursorX < 0)cursorX = 12;
+		if (cursorY == 4 && cursorX >= 10)cursorX = 9;
 		PlaySoundMem(load.MoveSE, DX_PLAYTYPE_BACK);
 	}
 	if (pad.g_KeyFlg & PAD_INPUT_DOWN) {
 		if (++cursorY > 4)cursorY = 0;
+		if (cursorY == 4 && cursorX > 9)cursorY = 0;
 		PlaySoundMem(load.MoveSE, DX_PLAYTYPE_BACK);
 	}
 	if (pad.g_KeyFlg & PAD_INPUT_UP) {
 		if (--cursorY < 0)cursorY = 4;
+		if (cursorY == 4 && cursorX > 9)cursorY = 3;
 		PlaySoundMem(load.MoveSE, DX_PLAYTYPE_BACK);
 	}
 

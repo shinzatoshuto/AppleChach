@@ -123,13 +123,9 @@ void GameInit(void) {
 //ƒQ[ƒ€ƒƒCƒ“
 void GameMain(void) {
 	DrawGraph(0, 0, var.GameImage, FALSE);
-	player.PlayerControl();
 	for (int i = 0; i < APPLE_MAX; i++) {
 		apple[i].AppleControl();
 	}
-
-	//UI•`‰æ
-	ui.DrawUI();
 
 	if (player.g_PauseFlg == 0) {
 		if (--var.g_Time < nextTime) {
@@ -141,4 +137,7 @@ void GameMain(void) {
 			}
 		}
 	}
+	player.PlayerControl();
+	//UI•`‰æ
+	ui.DrawUI();
 }

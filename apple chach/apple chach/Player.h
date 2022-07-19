@@ -17,7 +17,7 @@ public:
 	int g_PauseFlg;  //ポーズフラグ
 
 private:
-	int speed;
+	float speed;
 	int inertia;
 	int DirFlg;
 

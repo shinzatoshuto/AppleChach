@@ -35,6 +35,10 @@ int Load::LoadImages() {
 	if ((var.PlayerImages[1] = LoadGraph("images/miniplayer/figure_hashiru.png")) == -1)return -1;
 	if ((var.PlayerImages[2] = LoadGraph("images/miniplayer/figure_aura2_orange_black.png")) == -1)return -1;
 
+	if ((end.Player = LoadGraph("images/player/figure_aura2_orange.png")) == -1)return-1;
+	if ((title.Player2 = LoadGraph("images/player/figure_aura2_orange.png")) == -1)return-1;
+	if ((title.Player3 = LoadGraph("images/player/figure_barrier_plate.png")) == -1)return-1;
+
 	//”wŒi‰æ‘œ
 	if ((var.GameImage = LoadGraph("images/back/bg_natural_mori.png")) == -1)return-1;
 

@@ -8,9 +8,13 @@ private:
 
 public:
 	int EndImage;
+	int Player;
 
 public:
 	void DrawEnd(void);
+
+private:
+	void DrawPlayer();
 };
 
 extern END end;

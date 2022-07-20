@@ -5,6 +5,8 @@ class HELP
 {
 public:
 	int HelpImage;
+	int GamepadImage;
+
 public:
 	void DrawHelp(void);
 };

@@ -2,6 +2,8 @@
 
 class GameOver {
 public:
+	int GameOverImage;
+public:
 	void DrawGameOver(void);
 };
 

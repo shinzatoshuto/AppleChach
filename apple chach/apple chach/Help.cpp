@@ -19,27 +19,32 @@ void HELP::DrawHelp() {
 
 	//ヘルプ画像表示
 	DrawGraph(0, 0, HelpImage, FALSE);
-	SetFontSize(16);
+	DrawRotaGraph(480, 250, 0.7f, 0, GamepadImage, TRUE);
 
-	DrawString(20, 160, "これは落ちてくるリンゴを拾うゲームです。", 0x000000, 0);
-	DrawString(20, 180, "左右に動いて落ちてくる様々なリンゴを拾います。", 0x000000, 0);
-	DrawString(20, 200, "※上下移動はできません", 0x000000, 0);
-	DrawString(20, 220, "制限時間は30秒です。", 0x000000, 0);
-	DrawString(20, 250, "リンゴ一覧", 0x000000, 0);
-	DrawGraph(20, 260, var.AppleImages[0], TRUE);
-	DrawString(62, 275, "+150P", 0x0000ff, 0);
-	DrawGraph(120, 260, var.AppleImages[1], TRUE);
-	DrawString(162, 275, "+300P", 0x0000ff, 0);
-	DrawGraph(220, 260, var.AppleImages[2], TRUE);
-	DrawString(262, 275, "+500P", 0x0000ff, 0);
-	DrawString(20, 315, "赤、黄、緑色のリンゴをとるとスコアが増えるよ。", 0x000000, 0);
-	DrawGraph(20, 335, var.AppleImages[3], TRUE);
-	DrawString(60, 350, "-1000P", 0xff0000, 0);
-	DrawString(20, 385, "毒リンゴに触れるとすこあが減るよ。", 0x000000, 0);
-	DrawString(20, 425, "プレイ中にSTARTボタンを押すとポーズに移行します。", 0x000000, 0);
-	DrawString(20, 445, "(もう一度押すとプレイ画面に戻ります)", 0x000000, 0);
-	DrawString(490, 450, "ゲームへ[Aボタン]", 0x000000, 0);
-	DrawString(524, 430, "戻る[Bボタン]", 0x000000, 0);
+	DrawBox(10, 130, 310, 355, 0xffffff, 1);
+    DrawStringToHandle(20, 140, "左右に動いて落ちてくる\n様々なリンゴを拾うゲームです。", 0x000000, font.fontHelp);
+	DrawStringToHandle(20, 180, "※上下移動はできません", 0x000000, font.fontHelp);
+	DrawStringToHandle(20, 200, "制限時間は30秒です。", 0x000000, font.fontHelp);
+	DrawStringToHandle(20, 220, "左スティック：移動", 0xff00ff, font.fontHelp);
+	DrawStringToHandle(20, 240, "Aボタン：決定  Bボタン：戻る", 0xff00ff, font.fontHelp);
+	DrawStringToHandle(20, 260, "プレイ中にSTARTボタンを押すと\nポーズに移行します。", 0xff00ff, font.fontHelp);
+	DrawStringToHandle(20, 300, "(もう一度押すと\nプレイ画面に戻ります)", 0xff00ff, font.fontHelp);
 
-	DrawStringToHandle(20, 120, "ヘルプ画面", 0xffffff, font.fontHelp);
+	SetFontSize(20);
+	DrawBox(10, 355, 310, 475, 0xffffff, 1);
+	DrawStringToHandle(20, 360, "リンゴ一覧", 0x000000, font.fontHelp);
+	DrawGraph(20, 380, var.AppleImages[0], TRUE);
+	DrawString(62, 395, "+150P", 0x000000, 0);
+	DrawGraph(120, 380, var.AppleImages[1], TRUE);
+	DrawString(162, 395, "+300P", 0x000000, 0);
+	DrawGraph(20, 430, var.AppleImages[2], TRUE);
+	DrawString(62, 445, "+500P", 0x000000, 0);
+	DrawGraph(120, 430, var.AppleImages[3], TRUE);
+	DrawString(160, 445, "-1000P", 0xff0000, 0);
+
+	SetFontSize(23);
+	DrawString(470, 420, "戻る[Bボタン]", 0xff0000,1);
+	DrawString(420, 450, "ゲームへ[Aボタン]", 0x0000ff,1);
+
+	//DrawStringToHandle(20, 120, "ヘルプ画面", 0xffffff, font.fontHelp);
 }

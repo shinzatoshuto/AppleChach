@@ -26,18 +26,18 @@ void PLAYER::PlayerControl() {
 	if (player.g_PauseFlg == 0) {
 		if (pad.g_NowKey & PAD_INPUT_LEFT && DirFlg != 2) {
 			x -= speed;
-			if (speed < PLAYER_SPEED) speed += 0.3f;
+			if (speed < PLAYER_SPEED) speed += 0.15f;
 			inertia = 10;
 			DirFlg = 1;
 		}
 		else if (pad.g_NowKey & PAD_INPUT_RIGHT && DirFlg != 1) {
 			x += speed;
-			if (speed < PLAYER_SPEED) speed += 0.3f;
+			if (speed < PLAYER_SPEED) speed += 0.15f;
 			inertia = 10;
 			DirFlg = 2;
 		}
 		else {
-			if (inertia != 0) {//x += inertia * -1 - 1;
+			if (inertia != 0) {
 				int s = inertia--;
 				if (s > speed) {
 					s = speed;
@@ -75,24 +75,14 @@ void PLAYER::PlayerControl() {
 	if (Alpha >= 255)Add = -25;
 
 	//プレイヤーの表示
-	if (player.g_PauseFlg == FALSE){//flg == TRUE || (player.g_PauseFlg == FALSE && flg == FALSE)) {
-		if (DirFlg == 1){//pad.g_NowKey & PAD_INPUT_LEFT) {
+	if (player.g_PauseFlg == FALSE){
+		if (DirFlg == 1){
 			//po-zu
-			//if (player.g_PauseFlg == FALSE) {
-				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[0], TRUE);
-			//}
-			//else {
-			//	DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
-			//}
+			DrawRotaGraph(x, y, 1, 0, var.PlayerImages[0], TRUE);
 		}
-		else if (DirFlg == 2) {//pad.g_NowKey & PAD_INPUT_RIGHT) {
+		else if (DirFlg == 2) {
 			//po-zu
-			//if (player.g_PauseFlg == FALSE) {
-				DrawRotaGraph(x, y, 1, 0, var.PlayerImages[1], TRUE);
-			//}
-			//else {
-			//	DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);
-			//}
+			DrawRotaGraph(x, y, 1, 0, var.PlayerImages[1], TRUE);
 		}
 		else {
 			DrawRotaGraph(x, y, 1, 0, var.PlayerImages[2], TRUE);

@@ -9,6 +9,7 @@
 #include "Load.h"
 #include"End.h"
 #include"Ranking.h"
+#include"GameOver.h"
 
 //‰æ‘œ“Ç‚İ‚İ
 int Load::LoadImages() {
@@ -38,9 +39,11 @@ int Load::LoadImages() {
 	if ((end.Player = LoadGraph("images/player/figure_aura2_orange.png")) == -1)return-1;
 	if ((title.Player2 = LoadGraph("images/player/figure_aura2_orange.png")) == -1)return-1;
 	if ((title.Player3 = LoadGraph("images/player/figure_barrier_plate.png")) == -1)return-1;
+	if ((help.GamepadImage = LoadGraph("images/player/game_controller.png")) == -1)return-1;
 
 	//”wŒi‰æ‘œ
 	if ((var.GameImage = LoadGraph("images/back/bg_natural_mori.png")) == -1)return-1;
+	if ((GO.GameOverImage = LoadGraph("images/back/bg_rain_natural_mori.png")) == -1)return-1;
 
 	//ƒGƒ“ƒh‰æ‘œ
 	if ((end.EndImage = LoadGraph("images/back/bg_yamamichi.png")) == -1)return-1;
